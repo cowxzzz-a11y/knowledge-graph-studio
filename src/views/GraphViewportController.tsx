@@ -2,32 +2,48 @@ import { useSigma } from "@react-sigma/core";
 import { getCameraStateToFitViewportToNodes } from "@sigma/utils";
 import { FC, PropsWithChildren, useEffect } from "react";
 
-const GraphViewportController: FC<PropsWithChildren> = ({ children }) => {
+type Props = PropsWithChildren<{
+  viewportKey: string;
+}>;
+
+const GraphViewportController: FC<Props> = ({ viewportKey, children }) => {
   const sigma = useSigma();
 
   useEffect(() => {
     let cancelled = false;
+    let frame = 0;
+    let attempts = 0;
 
-    const frame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const nodes = sigma.getGraph().nodes();
-        if (!nodes.length || cancelled) return;
+    const fitViewport = () => {
+      if (cancelled) return;
 
-        const camera = sigma.getCamera();
-        const state = getCameraStateToFitViewportToNodes(sigma, nodes);
+      const nodes = sigma.getGraph().nodes();
+      if (!nodes.length) {
+        attempts += 1;
+        if (attempts < 24) {
+          frame = requestAnimationFrame(fitViewport);
+        }
+        return;
+      }
 
-        camera.setState({
-          ...state,
-          ratio: state.ratio * 1.02,
-        });
+      const camera = sigma.getCamera();
+      const state = getCameraStateToFitViewportToNodes(sigma, nodes);
+
+      camera.setState({
+        ...state,
+        ratio: state.ratio * 1.08,
       });
+    };
+
+    frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(fitViewport);
     });
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(frame);
     };
-  }, [sigma]);
+  }, [sigma, viewportKey]);
 
   return <>{children}</>;
 };

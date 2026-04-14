@@ -26,16 +26,8 @@ function mixTone(tone: number) {
 }
 
 export function drawHover(context: CanvasRenderingContext2D, data: PlainObject) {
-  const x = Math.round(data.x);
-  const y = Math.round(data.y);
-  const size = Math.max(5, data.size + 2.2);
-
-  context.beginPath();
-  context.arc(x, y, size, 0, Math.PI * 2);
-  context.closePath();
-  context.strokeStyle = "rgba(128, 182, 255, 0.88)";
-  context.lineWidth = 1.15;
-  context.stroke();
+  void context;
+  void data;
 }
 
 export function drawLabel(

@@ -1,8 +1,49 @@
+export type GraphViewMode = "structure" | "relations";
+
+export interface NodeStat {
+  label: string;
+  value: string;
+}
+
+export interface NodeAttribute {
+  key: string;
+  value: string;
+}
+
+export interface NodeEvidence {
+  locator: string;
+  quote: string;
+  evidenceType: string;
+  supportType: string;
+}
+
+export interface NodeRelationDetail {
+  relation: string;
+  relationType: string;
+  direction: "outgoing" | "incoming";
+  otherNodeKey: string;
+  otherLabel: string;
+  confidence?: string;
+  locator?: string;
+  quote?: string;
+}
+
+export interface NodeDetail {
+  summary: string;
+  stats: NodeStat[];
+  aliases: string[];
+  attributes: NodeAttribute[];
+  evidence: NodeEvidence[];
+  relations: NodeRelationDetail[];
+  children: string[];
+}
+
 export interface KnowledgeNode {
   key: string;
   label: string;
   nodeType: string;
-  parentKey?: string;
+  nodeRole?: "root" | "primary_category" | "secondary_category" | "entity";
+  parentKey?: string | null;
   group: string;
   level: number;
   x: number;
@@ -13,6 +54,10 @@ export interface KnowledgeNode {
   relationHint?: string;
   childCount: number;
   color: string;
+  schemaId?: string;
+  categoryPath?: string;
+  confidence?: string;
+  detail?: NodeDetail;
 }
 
 export interface KnowledgeEdge {
@@ -20,9 +65,28 @@ export interface KnowledgeEdge {
   source: string;
   target: string;
   relation: string;
+  edgeKind?: "structure" | "relation" | "family";
+  confidence?: string;
+  locator?: string;
+  quote?: string;
+}
+
+export interface DatasetMetadata {
+  knowledgeBaseId: string;
+  title: string;
+  documentTitle: string;
+  documentName: string;
+  runLabel: string;
+  entityCount: number;
+  categoryCount: number;
+  relationCount: number;
+  structureEdgeCount: number;
+  dbPath: string;
+  generatedFrom: string;
 }
 
 export interface Dataset {
+  metadata?: DatasetMetadata;
   nodes: KnowledgeNode[];
   edges: KnowledgeEdge[];
 }
@@ -34,8 +98,11 @@ export interface GraphNodeAttributes extends KnowledgeNode {
   homeX?: number;
   homeY?: number;
   degree: number;
+  relationDegree?: number;
+  familyKey?: string;
   importance: number;
   isSynthetic?: boolean;
+  hiddenByView?: boolean;
   alwaysShowLabel?: boolean;
 }
 
@@ -43,6 +110,7 @@ export interface GraphEdgeAttributes extends KnowledgeEdge {
   size: number;
   color: string;
   isSynthetic?: boolean;
+  hiddenByView?: boolean;
 }
 
 export interface GraphScene {
@@ -58,24 +126,11 @@ export interface GraphControls {
   textOpacity: number;
   nodeScale: number;
   edgeScale: number;
+  edgeOpacity: number;
+  edgeGray: number;
   gravity: number;
   repulsion: number;
   neighborAttraction: number;
   linkLength: number;
-}
-
-export interface Cluster {
-  key: string;
-  color: string;
-  clusterLabel: string;
-}
-
-export interface Tag {
-  key: string;
-  image: string;
-}
-
-export interface FiltersState {
-  clusters: Record<string, boolean>;
-  tags: Record<string, boolean>;
+  viewMode: GraphViewMode;
 }

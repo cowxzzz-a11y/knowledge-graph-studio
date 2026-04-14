@@ -14,20 +14,20 @@ type NodeSnapshot = {
   y: number;
   size: number;
   degree: number;
+  relationDegree: number;
+  familyKey?: string;
   homeX: number;
   homeY: number;
   isSynthetic?: boolean;
 };
 
-const BOUNDARY_RADIUS = 24.5;
-const INNER_BOUNDARY_RADIUS = 23.5;
-const SETTLE_FRAMES = 120;
+const SETTLE_FRAMES = 160;
 
 function toPoint(value: { x: number; y: number }) {
   return { x: value.x, y: value.y };
 }
 
-function projectInsideBoundary(point: Point, radius = INNER_BOUNDARY_RADIUS): Point {
+function projectInsideBoundary(point: Point, radius: number): Point {
   const distance = Math.hypot(point.x, point.y);
   if (distance <= radius) return point;
   return {
@@ -36,14 +36,20 @@ function projectInsideBoundary(point: Point, radius = INNER_BOUNDARY_RADIUS): Po
   };
 }
 
+function getBoundaryRadius(nodeCount: number) {
+  return Math.max(24.5, 12 + Math.sqrt(Math.max(1, nodeCount)) * 1.5);
+}
+
 function getSpacing(left: NodeSnapshot, right: NodeSnapshot) {
   const base = (left.size + right.size) * 0.3 + 1.65;
+  if (left.familyKey && right.familyKey && left.familyKey !== right.familyKey) return base + 1.45;
+  if (left.familyKey && right.familyKey && left.familyKey === right.familyKey) return Math.max(1.8, base - 0.18);
   if (left.degree === 0 && right.degree === 0) return base + 0.55;
   if (left.degree === 0 || right.degree === 0) return base + 0.28;
   return base + 0.1;
 }
 
-const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>> = ({ children, controls }) => {
+const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; settleKey: string }>> = ({ children, controls, settleKey }) => {
   const sigma = useSigma();
   const graph = sigma.getGraph();
   const registerEvents = useRegisterEvents();
@@ -73,6 +79,8 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
         y: attributes.y,
         size: attributes.size || 1,
         degree: attributes.degree || 0,
+        relationDegree: attributes.relationDegree || 0,
+        familyKey: attributes.familyKey,
         homeX: typeof attributes.homeX === "number" ? attributes.homeX : attributes.x,
         homeY: typeof attributes.homeY === "number" ? attributes.homeY : attributes.y,
         isSynthetic: attributes.isSynthetic,
@@ -84,6 +92,9 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
   const runRelaxationStep = useCallback(
     (lockedNode: string | null) => {
       const snapshots = collectSnapshots();
+      const snapshotByNode = new Map(snapshots.map((snapshot) => [snapshot.node, snapshot]));
+      const boundaryRadius = getBoundaryRadius(snapshots.length);
+      const innerBoundaryRadius = Math.max(boundaryRadius - 1.2, boundaryRadius * 0.94);
       const shifts = new Map<string, Point>();
       let maxMovement = 0;
 
@@ -121,19 +132,23 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
         }
       }
 
-      graph.forEachEdge((_, __, source, target) => {
-        const left = snapshots.find((entry) => entry.node === source);
-        const right = snapshots.find((entry) => entry.node === target);
+      graph.forEachEdge((_, attributes, source, target) => {
+        const left = snapshotByNode.get(source);
+        const right = snapshotByNode.get(target);
         if (!left || !right) return;
 
         const dx = right.x - left.x;
         const dy = right.y - left.y;
         const distance = Math.max(0.001, Math.hypot(dx, dy));
-        const desired = 3.2 * controls.linkLength + (Math.max(left.size, right.size) - 2.6) * 0.15;
+        const isRelationEdge = attributes.edgeKind === "relation";
+        const isFamilyEdge = attributes.edgeKind === "family";
+        const desiredBase = isRelationEdge ? 2.5 : isFamilyEdge ? 1.95 : 3.45;
+        const desired = desiredBase * controls.linkLength + (Math.max(left.size, right.size) - 2.6) * 0.15;
         const delta = distance - desired;
         if (Math.abs(delta) < 0.02) return;
 
-        const strength = delta * 0.012 * controls.neighborAttraction;
+        const attractionWeight = isFamilyEdge ? 0.032 : isRelationEdge ? 0.012 : 0.0075;
+        const strength = delta * attractionWeight * controls.neighborAttraction;
         const nx = dx / distance;
         const ny = dy / distance;
         const leftShift = shifts.get(left.node)!;
@@ -157,31 +172,42 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
         if (snapshot.node === lockedNode) return;
 
         const shift = shifts.get(snapshot.node)!;
-        const homeStrength = snapshot.degree === 0 ? 0.026 * controls.gravity : snapshot.isSynthetic ? 0.03 * controls.gravity : 0.036 * controls.gravity;
+        const homeStrength =
+          snapshot.isSynthetic
+            ? 0.034 * controls.gravity
+            : controls.viewMode === "relations"
+              ? snapshot.relationDegree > 0
+                ? 0.032 * controls.gravity
+                : 0.052 * controls.gravity
+              : snapshot.relationDegree > 0
+                ? 0.016 * controls.gravity
+                : snapshot.degree === 0
+                  ? 0.024 * controls.gravity
+                  : 0.03 * controls.gravity;
         shift.x += (snapshot.homeX - snapshot.x) * homeStrength;
         shift.y += (snapshot.homeY - snapshot.y) * homeStrength;
 
         const radius = Math.hypot(snapshot.x, snapshot.y);
-        if (radius > INNER_BOUNDARY_RADIUS) {
-          const overflow = radius - INNER_BOUNDARY_RADIUS;
+        if (radius > innerBoundaryRadius) {
+          const overflow = radius - innerBoundaryRadius;
           shift.x -= (snapshot.x / radius) * overflow * 0.22;
           shift.y -= (snapshot.y / radius) * overflow * 0.22;
-        } else if (snapshot.degree === 0 && radius > INNER_BOUNDARY_RADIUS - 1.8) {
-          const rimBias = radius - (INNER_BOUNDARY_RADIUS - 1.8);
+        } else if (snapshot.degree === 0 && radius > innerBoundaryRadius - 1.8) {
+          const rimBias = radius - (innerBoundaryRadius - 1.8);
           shift.x -= (snapshot.x / radius) * rimBias * 0.018;
           shift.y -= (snapshot.y / radius) * rimBias * 0.018;
         }
 
         const step = Math.hypot(shift.x, shift.y);
-        const maxStep = 0.22;
+        const maxStep = controls.viewMode === "relations" ? 0.12 : 0.22;
         const ratio = step > maxStep ? maxStep / step : 1;
         const nextPoint = {
           x: snapshot.x + shift.x * ratio,
           y: snapshot.y + shift.y * ratio,
         };
 
-        const boundedPoint = Math.hypot(nextPoint.x, nextPoint.y) > BOUNDARY_RADIUS + 2
-          ? projectInsideBoundary(nextPoint, BOUNDARY_RADIUS + 2)
+        const boundedPoint = Math.hypot(nextPoint.x, nextPoint.y) > boundaryRadius + 2
+          ? projectInsideBoundary(nextPoint, boundaryRadius + 2)
           : nextPoint;
 
         graph.mergeNodeAttributes(snapshot.node, {
@@ -224,6 +250,22 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
   }, [tickSettle]);
 
   useEffect(() => {
+    let frame = 0;
+
+    frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        if (graph.order > 0) {
+          startSettle();
+        }
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [graph, settleKey, startSettle]);
+
+  useEffect(() => {
     registerEvents({
       downNode({ node, event }) {
         if (settleFrameRef.current) {
@@ -250,7 +292,7 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
         if (!draggedNode) return;
 
         const attributes = graph.getNodeAttributes(draggedNode) as { x: number; y: number };
-        const homePoint = projectInsideBoundary(toPoint(attributes));
+        const homePoint = projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
         graph.mergeNodeAttributes(draggedNode, {
           homeX: homePoint.x,
           homeY: homePoint.y,
@@ -264,7 +306,7 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls }>>
         if (!draggedNode) return;
 
         const attributes = graph.getNodeAttributes(draggedNode) as { x: number; y: number };
-        const homePoint = projectInsideBoundary(toPoint(attributes));
+        const homePoint = projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
         graph.mergeNodeAttributes(draggedNode, {
           homeX: homePoint.x,
           homeY: homePoint.y,

@@ -10,15 +10,34 @@ const BASE_NODE_COLOR = "rgba(212, 219, 229, 0.92)";
 const BASE_SYNTHETIC_COLOR = "rgba(109, 118, 131, 0.62)";
 const DIM_NODE_COLOR = "rgba(82, 91, 103, 0.18)";
 const DIM_SYNTHETIC_COLOR = "rgba(72, 79, 90, 0.14)";
-const BASE_EDGE_COLOR = "rgba(110, 119, 132, 0.16)";
-const BASE_SYNTHETIC_EDGE_COLOR = "rgba(94, 104, 118, 0.075)";
-const DIM_EDGE_COLOR = "rgba(76, 85, 96, 0.08)";
-const NEIGHBOR_COLOR = "rgba(233, 240, 249, 0.96)";
-const HOVER_COLOR = "rgba(117, 178, 255, 1)";
-const SELECTED_COLOR = "rgba(159, 204, 255, 0.96)";
+const BASE_EDGE_COLOR = "rgba(142, 142, 142, 0.3)";
+const BASE_SYNTHETIC_EDGE_COLOR = "rgba(128, 128, 128, 0.18)";
+const FAMILY_EDGE_COLOR = "rgba(150, 150, 150, 0.28)";
+const RELATION_EDGE_COLOR = "rgba(164, 164, 164, 0.34)";
+const NEIGHBOR_COLOR = "rgba(218, 225, 233, 0.96)";
+const SELECTED_COLOR = "rgba(255, 255, 255, 0.98)";
+const ACTIVE_EDGE_COLOR = "rgba(81, 138, 231, 0.7)";
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
+}
+
+function withAlpha(color: string, alpha: number) {
+  const match = color.match(/rgba?\(([^)]+)\)/);
+  if (!match) return color;
+
+  const channels = match[1].split(",").map((part) => part.trim());
+  const [r, g, b] = channels;
+  return `rgba(${r}, ${g}, ${b}, ${clamp(alpha, 0, 1)})`;
+}
+
+function getEdgeOpacityStrength(value: number) {
+  return clamp(value, 0.05, 1.6);
+}
+
+function getEdgeGrayColor(gray: number, alpha: number) {
+  const channel = clamp(Math.round(gray), 96, 220);
+  return `rgba(${channel}, ${channel}, ${channel}, ${clamp(alpha, 0, 1)})`;
 }
 
 function getLabelFade(cameraRatio: number, data: Attributes) {
@@ -45,6 +64,79 @@ function getAdaptiveNodeScale(cameraRatio: number, data: Attributes, controls: G
   const zoomAdaptiveScale = clamp(Math.pow(cameraRatio, 0.04), 0.97, 1.05);
   const orphanBoost = data.degree === 0 ? 1.96 : data.isSynthetic ? 1.4 : 1.08;
   return controls.nodeScale * zoomAdaptiveScale * orphanBoost;
+}
+
+function getRelationViewNodeColor(data: Attributes) {
+  if (data.nodeRole === "primary_category" || data.nodeRole === "secondary_category") {
+    return "rgba(214, 220, 228, 0.94)";
+  }
+
+  if (data.relationDegree > 0) {
+    return "rgba(78, 88, 101, 0.94)";
+  }
+
+  if (data.degree > 0) {
+    return "rgba(104, 113, 124, 0.88)";
+  }
+
+  return "rgba(224, 230, 237, 0.92)";
+}
+
+function getBaseNodeColor(data: Attributes, controls: GraphControls) {
+  if (controls.viewMode === "relations") return getRelationViewNodeColor(data);
+  if (typeof data.color === "string" && data.color) return data.color;
+  return data.degree === 0 ? "rgba(210, 217, 226, 0.92)" : data.isSynthetic ? BASE_SYNTHETIC_COLOR : BASE_NODE_COLOR;
+}
+
+function getActiveNodeColor(data: Attributes, controls: GraphControls) {
+  if (controls.viewMode === "structure") {
+    return getBaseNodeColor(data, controls);
+  }
+
+  if (data.nodeRole === "primary_category" || data.nodeRole === "secondary_category") {
+    return "rgba(240, 244, 248, 0.98)";
+  }
+
+  return SELECTED_COLOR;
+}
+
+function getBaseEdgeColor(data: Attributes, controls: GraphControls, isCrossFamilyRelation: boolean) {
+  const opacityStrength = getEdgeOpacityStrength(controls.edgeOpacity);
+  const gray = controls.edgeGray;
+
+  if (controls.viewMode === "relations") {
+    if (data.edgeKind === "relation") {
+      return isCrossFamilyRelation
+        ? getEdgeGrayColor(gray - 10, 0.1 + 0.16 * opacityStrength)
+        : getEdgeGrayColor(gray + 6, 0.18 + 0.24 * opacityStrength);
+    }
+
+    if (data.edgeKind === "family") {
+      return getEdgeGrayColor(gray, 0.16 + 0.24 * opacityStrength);
+    }
+  }
+
+  if (typeof data.color === "string" && data.color) return data.color;
+  if (data.edgeKind === "relation") return RELATION_EDGE_COLOR;
+  if (data.edgeKind === "family") return FAMILY_EDGE_COLOR;
+  return data.isSynthetic ? BASE_SYNTHETIC_EDGE_COLOR : BASE_EDGE_COLOR;
+}
+
+function getBaseEdgeSize(data: Attributes, controls: GraphControls, isCrossFamilyRelation: boolean) {
+  if (data.edgeKind === "family") return 0.76 * controls.edgeScale;
+  if (data.edgeKind === "relation") return (isCrossFamilyRelation ? 0.68 : 0.9) * controls.edgeScale;
+  return (data.isSynthetic ? 0.56 : 0.68) * controls.edgeScale;
+}
+
+function getActiveEdgeSize(data: Attributes, controls: GraphControls, isCrossFamilyRelation: boolean) {
+  if (data.edgeKind === "family") return 1.04 * controls.edgeScale;
+  if (data.edgeKind === "relation") return (isCrossFamilyRelation ? 1.08 : 1.32) * controls.edgeScale;
+  return (data.isSynthetic ? 0.92 : 1.12) * controls.edgeScale;
+}
+
+function getDimEdgeSize(data: Attributes, controls: GraphControls) {
+  if (data.edgeKind === "family") return 0.42 * controls.edgeScale;
+  return (data.isSynthetic ? 0.34 : 0.38) * controls.edgeScale;
 }
 
 const GraphSettingsController: FC<
@@ -100,12 +192,15 @@ const GraphSettingsController: FC<
     setSettings({
       defaultDrawNodeLabel: (context, data, settings) => drawLabel(context, data, settings),
       defaultDrawNodeHover: drawHover,
+      minEdgeThickness: clamp(0.5 + controls.edgeScale * 0.4, 0.82, 2.1),
+      antiAliasingFeather: 0.92,
       nodeReducer: (node: string, data: Attributes) => {
         const matchesSearch = !normalizedQuery || searchMatches.has(node);
         const allowOrphan = controls.showOrphans || data.degree > 0;
         const labelFade = getLabelFade(cameraRatio, data);
         const adaptiveNodeScale = getAdaptiveNodeScale(cameraRatio, data, controls);
         const visibleByZoom = labelFade > 0;
+        const hiddenByView = Boolean(data.hiddenByView);
         const shouldShowLabel = !activeNode
           ? normalizedQuery
             ? matchesSearch
@@ -116,14 +211,14 @@ const GraphSettingsController: FC<
         const baseLabelTone = clamp(0.04 + Math.pow(labelFade, 1.08) * 0.96, 0, 1);
         const base = {
           ...data,
-          color: data.degree === 0 ? "rgba(210, 217, 226, 0.92)" : data.isSynthetic ? BASE_SYNTHETIC_COLOR : BASE_NODE_COLOR,
+          color: getBaseNodeColor(data, controls),
           label: shouldShowLabel ? data.label : "",
           forceLabel: shouldShowLabel,
           highlighted: false,
           dimmed: false,
           selected: false,
           labelSize: baseLabelSize,
-          hidden: !allowOrphan,
+          hidden: hiddenByView || !allowOrphan,
           labelOpacity: shouldShowLabel ? baseLabelOpacity : 0,
           labelTone: baseLabelTone,
           size: data.size * adaptiveNodeScale,
@@ -155,13 +250,13 @@ const GraphSettingsController: FC<
         if (node === debouncedHoveredNode) {
           return {
             ...base,
-            color: HOVER_COLOR,
-            highlighted: true,
+            color: getActiveNodeColor(data, controls),
+            highlighted: false,
             zIndex: 2,
             label: data.label,
             forceLabel: true,
-            size: data.size * adaptiveNodeScale * 1.08,
-            labelSize: Math.max(13, baseLabelSize + 1),
+            size: data.size * adaptiveNodeScale,
+            labelSize: baseLabelSize,
             labelOpacity: 1,
             labelTone: 1,
           };
@@ -170,14 +265,14 @@ const GraphSettingsController: FC<
         if (node === selectedNode) {
           return {
             ...base,
-            color: SELECTED_COLOR,
+            color: getActiveNodeColor(data, controls),
             selected: true,
-            highlighted: true,
+            highlighted: false,
             zIndex: 2,
             label: data.label,
             forceLabel: true,
-            size: data.size * adaptiveNodeScale * 1.06,
-            labelSize: Math.max(13, baseLabelSize + 1),
+            size: data.size * adaptiveNodeScale,
+            labelSize: baseLabelSize,
             labelOpacity: 1,
             labelTone: 1,
           };
@@ -186,8 +281,8 @@ const GraphSettingsController: FC<
         if (neighborhood.has(node)) {
           return {
             ...base,
-            color: NEIGHBOR_COLOR,
-            highlighted: true,
+            color: controls.viewMode === "structure" ? getBaseNodeColor(data, controls) : NEIGHBOR_COLOR,
+            highlighted: false,
             zIndex: 1,
             label: data.label,
             forceLabel: true,
@@ -214,40 +309,63 @@ const GraphSettingsController: FC<
         const allowByOrphan =
           controls.showOrphans || (!sourceAttributes.isSynthetic && !targetAttributes.isSynthetic);
         const matchesSearch = !normalizedQuery || (searchMatches.has(source) && searchMatches.has(target));
+        const hiddenByView = Boolean(data.hiddenByView);
+        const isCrossFamilyRelation =
+          data.edgeKind === "relation" &&
+          sourceAttributes.familyKey &&
+          targetAttributes.familyKey &&
+          sourceAttributes.familyKey !== targetAttributes.familyKey;
 
         if (!activeNode) {
+          const baseColor = getBaseEdgeColor(data, controls, Boolean(isCrossFamilyRelation));
           return {
             ...data,
-            hidden: !allowByOrphan || !matchesSearch,
-            color: data.isSynthetic ? BASE_SYNTHETIC_EDGE_COLOR : BASE_EDGE_COLOR,
-            size: (data.isSynthetic ? 0.55 : 0.92) * controls.edgeScale,
+            hidden: hiddenByView || !allowByOrphan || !matchesSearch,
+            color: baseColor,
+            size: getBaseEdgeSize(data, controls, Boolean(isCrossFamilyRelation)),
             type: controls.showArrows && !data.isSynthetic ? "arrow" : "line",
             zIndex: 0,
           };
         }
 
         if (graph.hasExtremity(edge, activeNode)) {
+          const activeColor = withAlpha(
+            ACTIVE_EDGE_COLOR,
+            clamp(0.28 + getEdgeOpacityStrength(controls.edgeOpacity) * 0.26, 0.16, 0.72),
+          );
           return {
             ...data,
-            hidden: !allowByOrphan || !matchesSearch,
-            color: debouncedHoveredNode ? "rgba(109, 165, 255, 0.92)" : "rgba(135, 184, 255, 0.52)",
-            size: (data.isSynthetic ? 0.9 : debouncedHoveredNode ? 1.8 : 1.45) * controls.edgeScale,
+            hidden: hiddenByView || !allowByOrphan || !matchesSearch,
+            color: activeColor,
+            size: getActiveEdgeSize(data, controls, Boolean(isCrossFamilyRelation)),
             type: controls.showArrows && !data.isSynthetic ? "arrow" : "line",
             zIndex: 1,
           };
         }
 
+        const dimColor = getEdgeGrayColor(
+          controls.edgeGray - (data.edgeKind === "family" ? 12 : isCrossFamilyRelation ? 18 : 10),
+          clamp(0.08 + getEdgeOpacityStrength(controls.edgeOpacity) * 0.1, 0.08, 0.26),
+        );
         return {
           ...data,
-          hidden: !allowByOrphan || !matchesSearch,
-          color: DIM_EDGE_COLOR,
-          size: (data.isSynthetic ? 0.3 : 0.45) * controls.edgeScale,
+          hidden: hiddenByView || !allowByOrphan || !matchesSearch,
+          color: dimColor,
+          size: getDimEdgeSize(data, controls),
           type: controls.showArrows && !data.isSynthetic ? "arrow" : "line",
           zIndex: 0,
         };
       },
     });
   }, [cameraRatio, controls, debouncedHoveredNode, graph, normalizedQuery, selectedNode, setSettings]);
+
+  useEffect(() => {
+    sigma.scheduleRefresh({
+      partialGraph: {
+        edges: graph.edges(),
+      },
+    });
+  }, [controls.edgeGray, controls.edgeOpacity, controls.edgeScale, controls.showArrows, graph, sigma]);
 
   useEffect(() => {
     sigma.scheduleRefresh();
