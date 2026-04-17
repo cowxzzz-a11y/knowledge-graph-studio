@@ -15,6 +15,14 @@ export interface NodeEvidence {
   quote: string;
   evidenceType: string;
   supportType: string;
+  documentId?: string;
+  documentTitle?: string;
+  documentName?: string;
+  confidence?: string;
+}
+
+export interface RelationEvidence extends NodeEvidence {
+  confidence?: string;
 }
 
 export interface NodeRelationDetail {
@@ -26,6 +34,10 @@ export interface NodeRelationDetail {
   confidence?: string;
   locator?: string;
   quote?: string;
+  supportCount?: number;
+  documentCount?: number;
+  documents?: string[];
+  evidence?: RelationEvidence[];
 }
 
 export interface NodeDetail {
@@ -57,7 +69,15 @@ export interface KnowledgeNode {
   schemaId?: string;
   categoryPath?: string;
   confidence?: string;
+  documentIds?: string[];
+  documentNames?: string[];
   detail?: NodeDetail;
+}
+
+export interface EdgeDocumentRef {
+  documentId?: string;
+  documentTitle?: string;
+  documentName?: string;
 }
 
 export interface KnowledgeEdge {
@@ -69,6 +89,10 @@ export interface KnowledgeEdge {
   confidence?: string;
   locator?: string;
   quote?: string;
+  supportCount?: number;
+  documentCount?: number;
+  documents?: Array<string | EdgeDocumentRef>;
+  evidence?: RelationEvidence[];
 }
 
 export interface DatasetMetadata {
@@ -76,6 +100,9 @@ export interface DatasetMetadata {
   title: string;
   documentTitle: string;
   documentName: string;
+  documentCount?: number;
+  documentTitles?: string[];
+  documentNames?: string[];
   runLabel: string;
   entityCount: number;
   categoryCount: number;
@@ -91,7 +118,25 @@ export interface Dataset {
   edges: KnowledgeEdge[];
 }
 
+export interface DocumentZone {
+  key: string;
+  label: string;
+  title?: string;
+  name?: string;
+  centerX: number;
+  centerY: number;
+  radius: number;
+  nodeCount: number;
+}
+
 export interface GraphNodeAttributes extends KnowledgeNode {
+  originKey: string;
+  documentKey?: string;
+  documentName?: string;
+  documentTitle?: string;
+  documentCenterX?: number;
+  documentCenterY?: number;
+  documentRadius?: number;
   size: number;
   anchorX: number;
   anchorY: number;
@@ -117,6 +162,7 @@ export interface GraphScene {
   nodes: GraphNodeAttributes[];
   edges: GraphEdgeAttributes[];
   nodeIndex: Record<string, GraphNodeAttributes>;
+  documentZones: DocumentZone[];
 }
 
 export interface GraphControls {

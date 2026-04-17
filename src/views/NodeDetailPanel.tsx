@@ -13,7 +13,9 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
       <aside className="detail-panel">
         <div className="detail-panel-header">
           <div className="detail-panel-title">实体详情</div>
-          <div className="detail-panel-subtitle">点击左侧图谱中的节点后，这里会显示属性、证据和关系。</div>
+          <div className="detail-panel-subtitle">
+            点击图中的节点后，这里会显示摘要、属性、证据、关系以及该节点所属文档。
+          </div>
         </div>
       </aside>
     );
@@ -35,6 +37,7 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         <div className="detail-panel-title">{node.label}</div>
         <div className="detail-panel-subtitle">{node.nodeType}</div>
         <div className="detail-chip-row">
+          {node.documentName ? <span className="detail-chip">{node.documentName}</span> : null}
           {node.categoryPath ? <span className="detail-chip">{node.categoryPath}</span> : null}
           {node.schemaId ? <span className="detail-chip">{node.schemaId}</span> : null}
           {node.confidence ? <span className="detail-chip">{node.confidence}</span> : null}
@@ -94,6 +97,7 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
             {detail.evidence.map((item, index) => (
               <article key={`${item.locator}:${index}`} className="detail-list-item">
                 <div className="detail-list-meta">
+                  {item.documentName ? <span>{item.documentName}</span> : null}
                   <span>{item.locator}</span>
                   <span>{item.evidenceType}</span>
                   <span>{item.supportType}</span>
@@ -115,11 +119,13 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
                   <span>{item.direction === "outgoing" ? "出边" : "入边"}</span>
                   <span>{item.relation}</span>
                   <span>{item.confidence || "-"}</span>
+                  {item.documentCount ? <span>{item.documentCount} 个文档</span> : null}
                 </div>
                 <div className="detail-list-copy">
                   {item.direction === "outgoing" ? "指向" : "来自"} {item.otherLabel}
                   {item.locator ? ` · ${item.locator}` : ""}
                 </div>
+                {item.documents?.length ? <div className="detail-list-note">{item.documents.join(" / ")}</div> : null}
                 {item.quote ? <div className="detail-list-note">{item.quote}</div> : null}
               </article>
             ))}
@@ -140,13 +146,23 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         </div>
       ) : null}
 
-      {metadata ? (
+      {(node.documentTitle || metadata) ? (
         <div className="detail-panel-section detail-panel-footer">
           <div className="detail-section-title">数据来源</div>
           <div className="detail-copy">
-            {metadata.documentName}
-            <br />
-            {metadata.runLabel}
+            {node.documentTitle || node.documentName}
+            {node.documentTitle && node.documentName && node.documentTitle !== node.documentName ? (
+              <>
+                <br />
+                {node.documentName}
+              </>
+            ) : null}
+            {metadata?.runLabel ? (
+              <>
+                <br />
+                {metadata.runLabel}
+              </>
+            ) : null}
           </div>
         </div>
       ) : null}

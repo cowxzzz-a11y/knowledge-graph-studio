@@ -2,10 +2,11 @@ import { useSigma } from "@react-sigma/core";
 import { Attributes } from "graphology-types";
 import { FC, useEffect, useRef } from "react";
 
-import { GraphControls } from "../types";
+import { GraphControls, GraphScene } from "../types";
 
 type Props = {
   controls: GraphControls;
+  scene: GraphScene | null;
 };
 
 function clamp(value: number, min: number, max: number) {
@@ -27,7 +28,12 @@ function parseRgba(color: string) {
   };
 }
 
-const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
+function truncateLabel(value: string, maxLength = 24) {
+  if (value.length <= maxLength) return value;
+  return `${value.slice(0, maxLength - 3)}...`;
+}
+
+const GraphEdgeOverlay: FC<Props> = ({ controls, scene }) => {
   const sigma = useSigma();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -51,23 +57,32 @@ const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
       }
     };
 
-    const draw = () => {
-      resizeCanvas();
+    const drawDocumentZones = (context: CanvasRenderingContext2D) => {
+      if (!scene?.documentZones.length) return;
 
-      const context = canvas.getContext("2d");
-      if (!context) return;
+      scene.documentZones.forEach((zone) => {
+        const center = sigma.framedGraphToViewport({ x: zone.centerX, y: zone.centerY });
+        const boundaryPoint = sigma.framedGraphToViewport({ x: zone.centerX + zone.radius, y: zone.centerY });
+        const radius = Math.max(24, Math.abs(boundaryPoint.x - center.x));
+        const label = truncateLabel(zone.name || zone.title || zone.label);
 
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      const pixelRatio = window.devicePixelRatio || 1;
+        context.beginPath();
+        context.fillStyle = controls.viewMode === "relations" ? "rgba(108, 124, 146, 0.05)" : "rgba(108, 124, 146, 0.035)";
+        context.strokeStyle = controls.viewMode === "relations" ? "rgba(214, 223, 234, 0.24)" : "rgba(204, 214, 226, 0.18)";
+        context.lineWidth = 1.3;
+        context.arc(center.x, center.y, radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
 
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.scale(pixelRatio, pixelRatio);
-      context.clearRect(0, 0, width, height);
+        context.fillStyle = "rgba(236, 242, 250, 0.94)";
+        context.font = "600 15px Inter, 'PingFang SC', sans-serif";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText(label, center.x, center.y + radius + 28);
+      });
+    };
 
-      if (controls.viewMode !== "relations") return;
-
+    const drawRelationEdges = (context: CanvasRenderingContext2D) => {
       const drawableEdges: Array<{
         color: string;
         size: number;
@@ -88,7 +103,7 @@ const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
 
         drawableEdges.push({
           color: String(edgeData.color || "rgba(160,160,160,0.3)"),
-          size: clamp(sigma.scaleSize(edgeData.size || 1) * (0.68 + controls.edgeScale * 0.34), 1.3, 6.4),
+          size: clamp(sigma.scaleSize(edgeData.size || 1) * (0.68 + controls.edgeScale * 0.34), 1.2, 5.8),
           source: sourceData,
           target: targetData,
           zIndex: typeof edgeData.zIndex === "number" ? edgeData.zIndex : 0,
@@ -108,8 +123,8 @@ const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
         const gray = clamp(Math.round(controls.edgeGray), 96, 220);
         const strokeStyle =
           edge.zIndex > 0
-            ? `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${clamp(parsed.a * Math.max(0.75, controls.edgeOpacity), 0.22, 0.95)})`
-            : `rgba(${gray}, ${gray}, ${gray}, ${clamp(parsed.a * controls.edgeOpacity * 1.18, 0.08, 0.96)})`;
+            ? `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${clamp(parsed.a * Math.max(0.72, controls.edgeOpacity), 0.18, 0.88)})`
+            : `rgba(${gray}, ${gray}, ${gray}, ${clamp(parsed.a * controls.edgeOpacity * 0.92, 0.04, 0.32)})`;
 
         context.beginPath();
         context.strokeStyle = strokeStyle;
@@ -118,6 +133,28 @@ const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
         context.lineTo(target.x, target.y);
         context.stroke();
       });
+    };
+
+    const draw = () => {
+      resizeCanvas();
+
+      const context = canvas.getContext("2d");
+      if (!context) return;
+
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const pixelRatio = window.devicePixelRatio || 1;
+
+      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.scale(pixelRatio, pixelRatio);
+      context.clearRect(0, 0, width, height);
+
+      drawDocumentZones(context);
+
+      if (controls.viewMode === "relations") {
+        drawRelationEdges(context);
+      }
     };
 
     draw();
@@ -130,7 +167,7 @@ const GraphEdgeOverlay: FC<Props> = ({ controls }) => {
       sigma.removeListener("resize", draw);
       window.removeEventListener("resize", draw);
     };
-  }, [controls, sigma]);
+  }, [controls, scene, sigma]);
 
   return <canvas ref={canvasRef} className="graph-edge-overlay" aria-hidden="true" />;
 };

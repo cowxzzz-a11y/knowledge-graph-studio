@@ -201,10 +201,17 @@ const GraphSettingsController: FC<
         const adaptiveNodeScale = getAdaptiveNodeScale(cameraRatio, data, controls);
         const visibleByZoom = labelFade > 0;
         const hiddenByView = Boolean(data.hiddenByView);
+        const relationFullyZoomedIn = cameraRatio < 0.14;
+        const relationDefaultLabelVisible =
+          relationFullyZoomedIn ||
+          data.nodeRole === "primary_category" ||
+          (data.nodeRole === "secondary_category" && cameraRatio < 0.22);
         const shouldShowLabel = !activeNode
           ? normalizedQuery
             ? matchesSearch
-            : visibleByZoom
+            : controls.viewMode === "relations"
+              ? relationDefaultLabelVisible && visibleByZoom
+              : visibleByZoom
           : neighborhood.has(node) || node === debouncedHoveredNode || node === selectedNode;
         const baseLabelSize = data.alwaysShowLabel ? 17 : data.degree === 0 ? 13 : 14;
         const baseLabelOpacity = clamp(controls.textOpacity * Math.pow(labelFade, 2.15), 0, 1);

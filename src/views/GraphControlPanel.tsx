@@ -85,13 +85,13 @@ const GraphControlPanel: FC<Props> = ({ controls, collapsed, onChange, onToggleC
                 mode="structure"
                 currentMode={controls.viewMode}
                 onSelect={(mode) => onChange({ viewMode: mode })}
-                label="知识图谱"
+                label="知识结构"
               />
               <ViewModeButton
                 mode="relations"
                 currentMode={controls.viewMode}
                 onSelect={(mode) => onChange({ viewMode: mode })}
-                label="关系视图"
+                label="关系图谱"
               />
             </div>
           </div>

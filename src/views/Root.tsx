@@ -14,7 +14,7 @@ import GraphSettingsController from "./GraphSettingsController";
 import GraphViewportController from "./GraphViewportController";
 import NodeDetailPanel from "./NodeDetailPanel";
 
-const DEFAULT_DATASET_URL = "/datasets/zhuanghe-current.json";
+const DEFAULT_DATASET_URL = "/datasets/knowledge-base-current.json";
 
 const DEFAULT_CONTROLS: GraphControls = {
   searchQuery: "",
@@ -62,10 +62,8 @@ const Root: FC = () => {
     [controls.gravity, controls.linkLength, controls.neighborAttraction, controls.repulsion, viewportKey],
   );
 
-  const selectedNodeData =
-    scene && selectedNode && scene.nodeIndex[selectedNode] && !scene.nodeIndex[selectedNode].hiddenByView
-      ? scene.nodeIndex[selectedNode]
-      : null;
+  const selectedNodeData = scene && selectedNode ? scene.nodeIndex[selectedNode] || null : null;
+  const documentCount = dataset?.metadata?.documentCount ?? scene?.documentZones.length ?? 0;
 
   const sigmaSettings: Partial<Settings> = useMemo(
     () => ({
@@ -150,8 +148,7 @@ const Root: FC = () => {
     setHoveredNode(null);
     setSelectedNode((current) => {
       if (!current) return null;
-      const next = scene.nodeIndex[current];
-      return next && !next.hiddenByView ? current : null;
+      return scene.nodeIndex[current] ? current : null;
     });
   }, [graph, scene]);
 
@@ -163,14 +160,9 @@ const Root: FC = () => {
           <span>{dataset?.metadata?.title || "Knowledge Graph Studio"}</span>
         </div>
         <div className="graph-topbar-meta">
-          <span>{dataset?.metadata?.documentName || "等待数据集加载"}</span>
-          <span>{controls.viewMode === "structure" ? "知识图谱" : "关系视图"}</span>
+          <span>{documentCount ? `${documentCount} 个文档` : "等待数据集加载"}</span>
+          <span>{controls.viewMode === "structure" ? "知识结构视图" : "关系图谱视图"}</span>
         </div>
-      </div>
-
-      <div className="graph-hint">
-        知识图谱模式不显示连线。关系视图会优先展示二级家族骨架，再叠加真实关系；跨家族的真实关系会保留，但默认更淡，
-        避免整张图被长线抢画面。
       </div>
 
       <GraphControlPanel
@@ -186,7 +178,7 @@ const Root: FC = () => {
       {!loading && error ? <div className="graph-status-card graph-status-error">数据加载失败: {error}</div> : null}
 
       <SigmaContainer graph={graph} settings={sigmaSettings} className="obsidian-sigma">
-        <GraphEdgeOverlay controls={controls} />
+        <GraphEdgeOverlay controls={controls} scene={scene} />
         <GraphViewportController viewportKey={viewportKey} />
         <GraphSettingsController hoveredNode={hoveredNode} selectedNode={selectedNode} controls={controls} />
         <GraphEventsController setHoveredNode={setHoveredNode} setSelectedNode={setSelectedNode} />

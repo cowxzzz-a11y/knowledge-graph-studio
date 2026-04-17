@@ -16,6 +16,10 @@ type NodeSnapshot = {
   degree: number;
   relationDegree: number;
   familyKey?: string;
+  documentKey?: string;
+  documentCenterX?: number;
+  documentCenterY?: number;
+  documentRadius?: number;
   homeX: number;
   homeY: number;
   isSynthetic?: boolean;
@@ -36,12 +40,24 @@ function projectInsideBoundary(point: Point, radius: number): Point {
   };
 }
 
+function projectInsideDocumentBoundary(point: Point, center: Point, radius: number) {
+  const dx = point.x - center.x;
+  const dy = point.y - center.y;
+  const distance = Math.hypot(dx, dy);
+  if (distance <= radius) return point;
+  return {
+    x: center.x + (dx / distance) * radius,
+    y: center.y + (dy / distance) * radius,
+  };
+}
+
 function getBoundaryRadius(nodeCount: number) {
   return Math.max(24.5, 12 + Math.sqrt(Math.max(1, nodeCount)) * 1.5);
 }
 
 function getSpacing(left: NodeSnapshot, right: NodeSnapshot) {
   const base = (left.size + right.size) * 0.3 + 1.65;
+  if (left.documentKey && right.documentKey && left.documentKey !== right.documentKey) return base + 2.8;
   if (left.familyKey && right.familyKey && left.familyKey !== right.familyKey) return base + 1.45;
   if (left.familyKey && right.familyKey && left.familyKey === right.familyKey) return Math.max(1.8, base - 0.18);
   if (left.degree === 0 && right.degree === 0) return base + 0.55;
@@ -81,6 +97,10 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         degree: attributes.degree || 0,
         relationDegree: attributes.relationDegree || 0,
         familyKey: attributes.familyKey,
+        documentKey: attributes.documentKey,
+        documentCenterX: attributes.documentCenterX,
+        documentCenterY: attributes.documentCenterY,
+        documentRadius: attributes.documentRadius,
         homeX: typeof attributes.homeX === "number" ? attributes.homeX : attributes.x,
         homeY: typeof attributes.homeY === "number" ? attributes.homeY : attributes.y,
         isSynthetic: attributes.isSynthetic,
@@ -187,15 +207,38 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         shift.x += (snapshot.homeX - snapshot.x) * homeStrength;
         shift.y += (snapshot.homeY - snapshot.y) * homeStrength;
 
-        const radius = Math.hypot(snapshot.x, snapshot.y);
-        if (radius > innerBoundaryRadius) {
-          const overflow = radius - innerBoundaryRadius;
-          shift.x -= (snapshot.x / radius) * overflow * 0.22;
-          shift.y -= (snapshot.y / radius) * overflow * 0.22;
-        } else if (snapshot.degree === 0 && radius > innerBoundaryRadius - 1.8) {
-          const rimBias = radius - (innerBoundaryRadius - 1.8);
-          shift.x -= (snapshot.x / radius) * rimBias * 0.018;
-          shift.y -= (snapshot.y / radius) * rimBias * 0.018;
+        const hasDocumentBoundary =
+          typeof snapshot.documentCenterX === "number" &&
+          typeof snapshot.documentCenterY === "number" &&
+          typeof snapshot.documentRadius === "number";
+
+        if (hasDocumentBoundary) {
+          const center = { x: snapshot.documentCenterX!, y: snapshot.documentCenterY! };
+          const allowedRadius = Math.max(2.4, snapshot.documentRadius! - Math.max(1.6, snapshot.size * 0.95));
+          const dx = snapshot.x - center.x;
+          const dy = snapshot.y - center.y;
+          const radius = Math.hypot(dx, dy);
+
+          if (radius > allowedRadius) {
+            const overflow = radius - allowedRadius;
+            shift.x -= (dx / radius) * overflow * 0.34;
+            shift.y -= (dy / radius) * overflow * 0.34;
+          } else if (snapshot.degree === 0 && radius > allowedRadius - 1.5) {
+            const rimBias = radius - (allowedRadius - 1.5);
+            shift.x -= (dx / Math.max(radius, 0.001)) * rimBias * 0.028;
+            shift.y -= (dy / Math.max(radius, 0.001)) * rimBias * 0.028;
+          }
+        } else {
+          const radius = Math.hypot(snapshot.x, snapshot.y);
+          if (radius > innerBoundaryRadius) {
+            const overflow = radius - innerBoundaryRadius;
+            shift.x -= (snapshot.x / radius) * overflow * 0.22;
+            shift.y -= (snapshot.y / radius) * overflow * 0.22;
+          } else if (snapshot.degree === 0 && radius > innerBoundaryRadius - 1.8) {
+            const rimBias = radius - (innerBoundaryRadius - 1.8);
+            shift.x -= (snapshot.x / radius) * rimBias * 0.018;
+            shift.y -= (snapshot.y / radius) * rimBias * 0.018;
+          }
         }
 
         const step = Math.hypot(shift.x, shift.y);
@@ -206,9 +249,18 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
           y: snapshot.y + shift.y * ratio,
         };
 
-        const boundedPoint = Math.hypot(nextPoint.x, nextPoint.y) > boundaryRadius + 2
-          ? projectInsideBoundary(nextPoint, boundaryRadius + 2)
-          : nextPoint;
+        const boundedPoint =
+          typeof snapshot.documentCenterX === "number" &&
+          typeof snapshot.documentCenterY === "number" &&
+          typeof snapshot.documentRadius === "number"
+            ? projectInsideDocumentBoundary(
+                nextPoint,
+                { x: snapshot.documentCenterX, y: snapshot.documentCenterY },
+                Math.max(2.2, snapshot.documentRadius - Math.max(1.3, snapshot.size)),
+              )
+            : Math.hypot(nextPoint.x, nextPoint.y) > boundaryRadius + 2
+              ? projectInsideBoundary(nextPoint, boundaryRadius + 2)
+              : nextPoint;
 
         graph.mergeNodeAttributes(snapshot.node, {
           x: boundedPoint.x,
@@ -274,13 +326,45 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         }
 
         draggedNodeRef.current = node;
-        moveNode(node, sigma.viewportToGraph(event));
+        const attributes = graph.getNodeAttributes(node) as {
+          documentCenterX?: number;
+          documentCenterY?: number;
+          documentRadius?: number;
+        };
+        const rawPoint = sigma.viewportToGraph(event);
+        const point =
+          typeof attributes.documentCenterX === "number" &&
+          typeof attributes.documentCenterY === "number" &&
+          typeof attributes.documentRadius === "number"
+            ? projectInsideDocumentBoundary(
+                rawPoint,
+                { x: attributes.documentCenterX, y: attributes.documentCenterY },
+                Math.max(2.2, attributes.documentRadius - 1.4),
+              )
+            : rawPoint;
+        moveNode(node, point);
       },
       moveBody({ event }) {
         const draggedNode = draggedNodeRef.current;
         if (!draggedNode) return;
 
-        moveNode(draggedNode, sigma.viewportToGraph(event));
+        const attributes = graph.getNodeAttributes(draggedNode) as {
+          documentCenterX?: number;
+          documentCenterY?: number;
+          documentRadius?: number;
+        };
+        const rawPoint = sigma.viewportToGraph(event);
+        const point =
+          typeof attributes.documentCenterX === "number" &&
+          typeof attributes.documentCenterY === "number" &&
+          typeof attributes.documentRadius === "number"
+            ? projectInsideDocumentBoundary(
+                rawPoint,
+                { x: attributes.documentCenterX, y: attributes.documentCenterY },
+                Math.max(2.2, attributes.documentRadius - 1.4),
+              )
+            : rawPoint;
+        moveNode(draggedNode, point);
         runRelaxationStep(draggedNode);
 
         event.preventSigmaDefault();
@@ -291,8 +375,23 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         const draggedNode = draggedNodeRef.current;
         if (!draggedNode) return;
 
-        const attributes = graph.getNodeAttributes(draggedNode) as { x: number; y: number };
-        const homePoint = projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
+        const attributes = graph.getNodeAttributes(draggedNode) as {
+          x: number;
+          y: number;
+          documentCenterX?: number;
+          documentCenterY?: number;
+          documentRadius?: number;
+        };
+        const homePoint =
+          typeof attributes.documentCenterX === "number" &&
+          typeof attributes.documentCenterY === "number" &&
+          typeof attributes.documentRadius === "number"
+            ? projectInsideDocumentBoundary(
+                toPoint(attributes),
+                { x: attributes.documentCenterX, y: attributes.documentCenterY },
+                Math.max(2.2, attributes.documentRadius - 1.4),
+              )
+            : projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
         graph.mergeNodeAttributes(draggedNode, {
           homeX: homePoint.x,
           homeY: homePoint.y,
@@ -305,8 +404,23 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         const draggedNode = draggedNodeRef.current;
         if (!draggedNode) return;
 
-        const attributes = graph.getNodeAttributes(draggedNode) as { x: number; y: number };
-        const homePoint = projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
+        const attributes = graph.getNodeAttributes(draggedNode) as {
+          x: number;
+          y: number;
+          documentCenterX?: number;
+          documentCenterY?: number;
+          documentRadius?: number;
+        };
+        const homePoint =
+          typeof attributes.documentCenterX === "number" &&
+          typeof attributes.documentCenterY === "number" &&
+          typeof attributes.documentRadius === "number"
+            ? projectInsideDocumentBoundary(
+                toPoint(attributes),
+                { x: attributes.documentCenterX, y: attributes.documentCenterY },
+                Math.max(2.2, attributes.documentRadius - 1.4),
+              )
+            : projectInsideBoundary(toPoint(attributes), getBoundaryRadius(graph.order));
         graph.mergeNodeAttributes(draggedNode, {
           homeX: homePoint.x,
           homeY: homePoint.y,

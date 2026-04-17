@@ -394,6 +394,7 @@ function toGraphNode(seed: SeedNode, point: Point, degree: number): GraphNodeAtt
 
   return {
     ...seed,
+    originKey: seed.key,
     x: point.x,
     y: point.y,
     anchorX: point.x,
@@ -560,5 +561,6 @@ export function createObsidianScene(dataset: Dataset): GraphScene {
     nodes: [...assignedRealNodes, ...assignedMicroNodes, ...assignedOrphans],
     edges,
     nodeIndex,
+    documentZones: [],
   };
 }

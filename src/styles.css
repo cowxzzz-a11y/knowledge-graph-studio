@@ -72,7 +72,6 @@ body {
 }
 
 .graph-topbar,
-.graph-hint,
 .focus-card,
 .graph-controls {
   position: absolute;
@@ -127,21 +126,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 999px;
   background: rgba(25, 29, 36, 0.6);
-}
-
-.graph-hint {
-  top: 82px;
-  left: 18px;
-  max-width: 460px;
-  padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  background: rgba(23, 27, 34, 0.56);
-  color: rgba(204, 213, 224, 0.7);
-  font-size: 12px;
-  line-height: 1.6;
-  backdrop-filter: blur(8px);
-  pointer-events: none;
 }
 
 .focus-card {
@@ -582,11 +566,6 @@ canvas {
     align-items: flex-start;
     flex-direction: column;
     right: auto;
-  }
-
-  .graph-hint {
-    top: 120px;
-    max-width: calc(100vw - 36px);
   }
 
   .focus-card {
