@@ -86,6 +86,8 @@ const Root: FC = () => {
       antiAliasingFeather: 0.45,
       hideEdgesOnMove: false,
       zIndex: true,
+      doubleClickZoomingRatio: 1,
+      doubleClickZoomingDuration: 0,
     }),
     [],
   );
