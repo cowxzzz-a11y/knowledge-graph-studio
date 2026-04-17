@@ -195,6 +195,24 @@ const GraphSettingsController: FC<
       minEdgeThickness: clamp(0.5 + controls.edgeScale * 0.4, 0.82, 2.1),
       antiAliasingFeather: 0.92,
       nodeReducer: (node: string, data: Attributes) => {
+        if (data.isDocumentLabel) {
+          return {
+            ...data,
+            color: "rgba(0, 0, 0, 0)",
+            size: 0.01,
+            hidden: false,
+            label: data.label,
+            forceLabel: true,
+            highlighted: false,
+            dimmed: false,
+            selected: false,
+            labelSize: 16,
+            labelOpacity: 1,
+            labelTone: 1,
+            zIndex: 3,
+          };
+        }
+
         const matchesSearch = !normalizedQuery || searchMatches.has(node);
         const allowOrphan = controls.showOrphans || data.degree > 0;
         const labelFade = getLabelFade(cameraRatio, data);

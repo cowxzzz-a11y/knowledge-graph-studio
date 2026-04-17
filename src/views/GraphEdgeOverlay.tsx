@@ -61,24 +61,8 @@ const GraphEdgeOverlay: FC<Props> = ({ controls, scene }) => {
       if (!scene?.documentZones.length) return;
 
       scene.documentZones.forEach((zone) => {
-        const center = sigma.framedGraphToViewport({ x: zone.centerX, y: zone.centerY });
-        const boundaryPoint = sigma.framedGraphToViewport({ x: zone.centerX + zone.radius, y: zone.centerY });
-        const radius = Math.max(24, Math.abs(boundaryPoint.x - center.x));
-        const label = truncateLabel(zone.name || zone.title || zone.label);
-
-        context.beginPath();
-        context.fillStyle = controls.viewMode === "relations" ? "rgba(108, 124, 146, 0.05)" : "rgba(108, 124, 146, 0.035)";
-        context.strokeStyle = controls.viewMode === "relations" ? "rgba(214, 223, 234, 0.24)" : "rgba(204, 214, 226, 0.18)";
-        context.lineWidth = 1.3;
-        context.arc(center.x, center.y, radius, 0, Math.PI * 2);
-        context.fill();
-        context.stroke();
-
-        context.fillStyle = "rgba(236, 242, 250, 0.94)";
-        context.font = "600 15px Inter, 'PingFang SC', sans-serif";
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.fillText(label, center.x, center.y + radius + 28);
+        void zone;
+        void context;
       });
     };
 

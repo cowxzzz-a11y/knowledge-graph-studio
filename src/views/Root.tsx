@@ -62,7 +62,10 @@ const Root: FC = () => {
     [controls.gravity, controls.linkLength, controls.neighborAttraction, controls.repulsion, viewportKey],
   );
 
-  const selectedNodeData = scene && selectedNode ? scene.nodeIndex[selectedNode] || null : null;
+  const selectedNodeData =
+    scene && selectedNode && scene.nodeIndex[selectedNode] && !scene.nodeIndex[selectedNode].isDocumentLabel
+      ? scene.nodeIndex[selectedNode]
+      : null;
   const documentCount = dataset?.metadata?.documentCount ?? scene?.documentZones.length ?? 0;
 
   const sigmaSettings: Partial<Settings> = useMemo(
@@ -172,14 +175,14 @@ const Root: FC = () => {
         onToggleCollapsed={() => setControlsCollapsed((current) => !current)}
       />
 
-      <NodeDetailPanel metadata={dataset?.metadata || null} node={selectedNodeData} />
+      {selectedNodeData ? <NodeDetailPanel metadata={dataset?.metadata || null} node={selectedNodeData} /> : null}
 
       {loading ? <div className="graph-status-card">正在加载图谱数据...</div> : null}
       {!loading && error ? <div className="graph-status-card graph-status-error">数据加载失败: {error}</div> : null}
 
       <SigmaContainer graph={graph} settings={sigmaSettings} className="obsidian-sigma">
         <GraphEdgeOverlay controls={controls} scene={scene} />
-        <GraphViewportController viewportKey={viewportKey} />
+        <GraphViewportController viewportKey={viewportKey} expectedNodeCount={scene?.nodes.length || 0} scene={scene} />
         <GraphSettingsController hoveredNode={hoveredNode} selectedNode={selectedNode} controls={controls} />
         <GraphEventsController setHoveredNode={setHoveredNode} setSelectedNode={setSelectedNode} />
         <GraphPhysicsController controls={controls} settleKey={settleKey} />

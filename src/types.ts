@@ -134,6 +134,7 @@ export interface GraphNodeAttributes extends KnowledgeNode {
   documentKey?: string;
   documentName?: string;
   documentTitle?: string;
+  isDocumentLabel?: boolean;
   documentCenterX?: number;
   documentCenterY?: number;
   documentRadius?: number;

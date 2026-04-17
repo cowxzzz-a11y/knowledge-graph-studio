@@ -1104,6 +1104,8 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
   const documentLayouts = buildDocumentLayouts(visualNodes, familyEdges, relationEdges, documents);
   const documentCenters = resolveDocumentCenters(documentLayouts, viewMode);
   const documentZones = buildDocumentZones(documentLayouts, documentCenters, viewMode);
+  const documentLabelBaselineY =
+    documentZones.length > 0 ? Math.max(...documentZones.map((zone) => zone.centerY + zone.radius)) + 4.4 : 0;
   const documentZoneMap = new Map(documentZones.map((zone) => [zone.key, zone]));
   const familyKeyMap = new Map<string, string>();
   const relationDegreeMap = new Map<string, number>();
@@ -1161,6 +1163,45 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
       hiddenByView: false,
       alwaysShowLabel: node.nodeRole === "primary_category",
     };
+  });
+
+  documentZones.forEach((zone) => {
+    nodes.push({
+      key: `document-label::${zone.key}`,
+      originKey: `document-label::${zone.key}`,
+      label: zone.name || zone.title || zone.label,
+      nodeType: "document_label",
+      nodeRole: "entity",
+      parentKey: null,
+      group: zone.key,
+      level: 99,
+      x: zone.centerX,
+      y: documentLabelBaselineY,
+      description: zone.name || zone.title || zone.label,
+      content: "",
+      learningValue: "",
+      relationHint: "",
+      childCount: 0,
+      color: "rgba(0, 0, 0, 0)",
+      documentKey: zone.key,
+      documentName: zone.name,
+      documentTitle: zone.title,
+      isDocumentLabel: true,
+      documentCenterX: zone.centerX,
+      documentCenterY: zone.centerY,
+      documentRadius: zone.radius,
+      size: 0.01,
+      anchorX: zone.centerX,
+      anchorY: documentLabelBaselineY,
+      homeX: zone.centerX,
+      homeY: documentLabelBaselineY,
+      degree: 0,
+      relationDegree: 0,
+      importance: 0,
+      isSynthetic: true,
+      hiddenByView: false,
+      alwaysShowLabel: true,
+    });
   });
 
   const nodeIndex = nodes.reduce<Record<string, GraphNodeAttributes>>((index, node) => {

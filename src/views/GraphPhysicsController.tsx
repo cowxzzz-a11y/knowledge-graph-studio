@@ -23,6 +23,7 @@ type NodeSnapshot = {
   homeX: number;
   homeY: number;
   isSynthetic?: boolean;
+  isDocumentLabel?: boolean;
 };
 
 const SETTLE_FRAMES = 160;
@@ -104,9 +105,10 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         homeX: typeof attributes.homeX === "number" ? attributes.homeX : attributes.x,
         homeY: typeof attributes.homeY === "number" ? attributes.homeY : attributes.y,
         isSynthetic: attributes.isSynthetic,
+        isDocumentLabel: attributes.isDocumentLabel,
       });
     });
-    return snapshots;
+    return snapshots.filter((snapshot) => !snapshot.isDocumentLabel);
   }, [graph]);
 
   const runRelaxationStep = useCallback(
