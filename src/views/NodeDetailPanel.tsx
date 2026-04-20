@@ -1,13 +1,29 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
-import { DatasetMetadata, GraphNodeAttributes } from "../types";
+import { DatasetMetadata, GraphNodeAttributes, NodeEvidence } from "../types";
 
 type Props = {
   metadata: DatasetMetadata | null;
   node: GraphNodeAttributes | null;
 };
 
+function evidenceKey(item: NodeEvidence, index: number) {
+  return [
+    item.documentId || item.documentName || "",
+    item.locator || "",
+    item.evidenceType || "",
+    item.paragraphIndex ?? item.tableIndex ?? item.figureIndex ?? "",
+    index,
+  ].join(":");
+}
+
 const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
+  const [expandedEvidenceKey, setExpandedEvidenceKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    setExpandedEvidenceKey(null);
+  }, [node?.key]);
+
   if (!node) {
     return (
       <aside className="detail-panel">
@@ -94,17 +110,39 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         <div className="detail-panel-section">
           <div className="detail-section-title">证据</div>
           <div className="detail-list">
-            {detail.evidence.map((item, index) => (
-              <article key={`${item.locator}:${index}`} className="detail-list-item">
-                <div className="detail-list-meta">
-                  {item.documentName ? <span>{item.documentName}</span> : null}
-                  <span>{item.locator}</span>
-                  <span>{item.evidenceType}</span>
-                  <span>{item.supportType}</span>
-                </div>
-                <div className="detail-list-copy">{item.quote || "暂无引文"}</div>
-              </article>
-            ))}
+            {detail.evidence.map((item, index) => {
+              const key = evidenceKey(item, index);
+              const expanded = expandedEvidenceKey === key;
+              const sourceText = item.sourceText || item.quote;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  className={`detail-list-item detail-evidence-item${expanded ? " is-expanded" : ""}`}
+                  title="查看原文段落"
+                  aria-expanded={expanded}
+                  onClick={() => setExpandedEvidenceKey((current) => (current === key ? null : key))}
+                >
+                  <div className="detail-list-meta">
+                    {item.documentName ? <span>{item.documentName}</span> : null}
+                    <span>{item.locator}</span>
+                    <span>{item.evidenceType}</span>
+                    <span>{item.supportType}</span>
+                  </div>
+                  <div className="detail-list-copy">{item.quote || "暂无引文"}</div>
+                  {expanded ? (
+                    <div className="detail-source-block">
+                      <div className="detail-source-meta">
+                        <span>原文</span>
+                        {item.sectionTitle ? <span>{item.sectionTitle}</span> : null}
+                        {item.pageHint ? <span>页 {item.pageHint}</span> : null}
+                      </div>
+                      <div className="detail-source-text">{sourceText || "暂无原文"}</div>
+                    </div>
+                  ) : null}
+                </button>
+              );
+            })}
           </div>
         </div>
       ) : null}

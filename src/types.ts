@@ -18,6 +18,13 @@ export interface NodeEvidence {
   documentId?: string;
   documentTitle?: string;
   documentName?: string;
+  pageHint?: number | null;
+  sectionId?: string;
+  sectionTitle?: string;
+  paragraphIndex?: number | null;
+  tableIndex?: number | null;
+  figureIndex?: number | null;
+  sourceText?: string;
   confidence?: string;
 }
 

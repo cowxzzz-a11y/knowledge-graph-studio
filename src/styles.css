@@ -511,6 +511,24 @@ canvas {
   background: rgba(38, 45, 55, 0.72);
 }
 
+.detail-evidence-item {
+  appearance: none;
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
+}
+
+.detail-evidence-item:hover,
+.detail-evidence-item.is-expanded {
+  border-color: rgba(129, 183, 255, 0.28);
+  background: rgba(45, 55, 69, 0.82);
+}
+
 .detail-kv-key {
   color: rgba(177, 187, 201, 0.72);
   font-size: 11px;
@@ -535,6 +553,28 @@ canvas {
 .detail-list-note {
   margin-top: 8px;
   color: rgba(164, 174, 188, 0.72);
+}
+
+.detail-source-block {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-source-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: rgba(153, 181, 218, 0.9);
+  font-size: 11px;
+}
+
+.detail-source-text {
+  color: rgba(231, 238, 248, 0.92);
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-wrap;
 }
 
 .detail-panel-footer {
