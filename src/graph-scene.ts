@@ -1099,41 +1099,95 @@ function buildDocumentZones(layouts: DocumentLayout[], centers: Map<string, Poin
   });
 }
 
+function createGlobalDescriptor(dataset: Dataset): DocumentDescriptor {
+  const title = dataset.metadata?.title || "知识库";
+  return {
+    key: "knowledge-base",
+    label: title,
+    name: title,
+    title: dataset.metadata?.generatedFrom || title,
+    order: 0,
+  };
+}
+
+function joinSourceLabels(values: string[] | undefined, fallback: string) {
+  const unique = [...new Set((values || []).map((value) => normalizeText(value)).filter(Boolean))];
+  if (!unique.length) return fallback;
+  if (unique.length === 1) return unique[0];
+  return `${unique.length} 个文档`;
+}
+
+function buildGlobalVisualGraph(dataset: Dataset) {
+  const descriptor = createGlobalDescriptor(dataset);
+  const visualNodes: SceneNode[] = dataset.nodes.map((node) => ({
+    ...node,
+    originKey: node.key,
+    documentKey: descriptor.key,
+    documentName: joinSourceLabels(node.documentNames, descriptor.name),
+    documentTitle: joinSourceLabels(node.documentNames || node.documentIds, descriptor.title),
+    group: node.group || descriptor.key,
+  }));
+
+  const visualNodeKeys = new Set(visualNodes.map((node) => node.key));
+  const familyEdges: SceneEdge[] = dataset.edges
+    .filter((edge) => edge.edgeKind === "structure" || edge.edgeKind === "family")
+    .filter((edge) => visualNodeKeys.has(edge.source) && visualNodeKeys.has(edge.target))
+    .map((edge) => ({
+      ...edge,
+      edgeKind: "family",
+      documentKey: descriptor.key,
+    }));
+
+  const relationEdges: SceneEdge[] = dataset.edges
+    .filter((edge) => edge.edgeKind === "relation")
+    .filter((edge) => visualNodeKeys.has(edge.source) && visualNodeKeys.has(edge.target) && edge.source !== edge.target)
+    .map((edge) => ({
+      ...edge,
+      documentKey: descriptor.key,
+    }));
+
+  return {
+    descriptor,
+    visualNodes,
+    familyEdges,
+    relationEdges,
+  };
+}
+
 export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): GraphScene {
-  const { documents, visualNodes, familyEdges, relationEdges } = buildVisualGraph(dataset);
-  const documentLayouts = buildDocumentLayouts(visualNodes, familyEdges, relationEdges, documents);
-  const documentCenters = resolveDocumentCenters(documentLayouts, viewMode);
-  const documentZones = buildDocumentZones(documentLayouts, documentCenters, viewMode);
-  const documentLabelBaselineY =
-    documentZones.length > 0 ? Math.max(...documentZones.map((zone) => zone.centerY + zone.radius)) + 4.4 : 0;
-  const documentZoneMap = new Map(documentZones.map((zone) => [zone.key, zone]));
-  const familyKeyMap = new Map<string, string>();
-  const relationDegreeMap = new Map<string, number>();
-  const positionMap = new Map<string, Point>();
+  const { descriptor, visualNodes, familyEdges, relationEdges } = buildGlobalVisualGraph(dataset);
+  const rootNodes = visualNodes.filter((node) => node.nodeRole === "root");
+  const layoutNodes = visualNodes.filter((node) => node.nodeRole !== "root");
+  const structurePositions = buildDocumentStructureLayout(layoutNodes);
+  rootNodes.forEach((node) => structurePositions.set(node.key, { x: 0, y: 0 }));
 
-  documentLayouts.forEach((layout) => {
-    const center = documentCenters.get(layout.descriptor.key) || { x: 0, y: 0 };
-    const localPositions = viewMode === "relations" ? layout.relationPositions : layout.structurePositions;
+  const relationLayout = buildDocumentRelationLayout(layoutNodes, relationEdges);
+  rootNodes.forEach((node) => relationLayout.positions.set(node.key, { x: 0, y: 0 }));
+  const positionMap = viewMode === "relations" ? relationLayout.positions : structurePositions;
+  const relationDegreeMap = relationLayout.relationDegreeMap;
+  const familyKeyMap = relationLayout.familyKeyMap;
 
-    layout.familyKeyMap.forEach((value, key) => {
-      familyKeyMap.set(key, value);
-    });
+  const activeEdges = [...familyEdges, ...(viewMode === "relations" ? relationEdges : [])];
+  const radius = measureLayoutRadius(visualNodes, positionMap, familyEdges, relationEdges);
+  const documentZones: DocumentZone[] = [
+    {
+      key: descriptor.key,
+      label: descriptor.label,
+      title: descriptor.title,
+      name: descriptor.name,
+      centerX: 0,
+      centerY: 0,
+      radius,
+      nodeCount: visualNodes.length,
+    },
+  ];
 
-    layout.relationDegreeMap.forEach((value, key) => {
-      relationDegreeMap.set(key, value);
-    });
-
-    localPositions.forEach((point, key) => {
-      positionMap.set(key, add(center, point));
-    });
-  });
-
-  const edges: GraphEdgeAttributes[] = [...familyEdges, ...(viewMode === "relations" ? relationEdges : [])].map((edge) => ({
+  const edges: GraphEdgeAttributes[] = activeEdges.map((edge) => ({
     ...edge,
     size: edge.edgeKind === "relation" ? 1.02 : 0.68,
     color: edge.edgeKind === "relation" ? "rgba(244, 248, 252, 0.24)" : "rgba(184, 195, 207, 0.2)",
     isSynthetic: edge.edgeKind === "family",
-    hiddenByView: viewMode !== "relations",
+    hiddenByView: edge.edgeKind === "relation" ? viewMode !== "relations" : false,
   }));
 
   const degreeMap = createDegreeMap(visualNodes, edges);
@@ -1141,15 +1195,14 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
   const nodes: GraphNodeAttributes[] = visualNodes.map((node) => {
     const degree = degreeMap.get(node.key) || 0;
     const layoutPoint = positionMap.get(node.key) || { x: 0, y: 0 };
-    const zone = documentZoneMap.get(node.documentKey);
 
     return {
       ...node,
       x: layoutPoint.x,
       y: layoutPoint.y,
-      documentCenterX: zone?.centerX,
-      documentCenterY: zone?.centerY,
-      documentRadius: zone?.radius,
+      documentCenterX: 0,
+      documentCenterY: 0,
+      documentRadius: radius,
       size: computeNodeSize(node, degree),
       anchorX: layoutPoint.x,
       anchorY: layoutPoint.y,
@@ -1161,47 +1214,8 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
       importance: computeImportance(node, degree),
       isSynthetic: false,
       hiddenByView: false,
-      alwaysShowLabel: node.nodeRole === "primary_category",
+      alwaysShowLabel: node.nodeRole === "root" || node.nodeRole === "primary_category",
     };
-  });
-
-  documentZones.forEach((zone) => {
-    nodes.push({
-      key: `document-label::${zone.key}`,
-      originKey: `document-label::${zone.key}`,
-      label: zone.name || zone.title || zone.label,
-      nodeType: "document_label",
-      nodeRole: "entity",
-      parentKey: null,
-      group: zone.key,
-      level: 99,
-      x: zone.centerX,
-      y: documentLabelBaselineY,
-      description: zone.name || zone.title || zone.label,
-      content: "",
-      learningValue: "",
-      relationHint: "",
-      childCount: 0,
-      color: "rgba(0, 0, 0, 0)",
-      documentKey: zone.key,
-      documentName: zone.name,
-      documentTitle: zone.title,
-      isDocumentLabel: true,
-      documentCenterX: zone.centerX,
-      documentCenterY: zone.centerY,
-      documentRadius: zone.radius,
-      size: 0.01,
-      anchorX: zone.centerX,
-      anchorY: documentLabelBaselineY,
-      homeX: zone.centerX,
-      homeY: documentLabelBaselineY,
-      degree: 0,
-      relationDegree: 0,
-      importance: 0,
-      isSynthetic: true,
-      hiddenByView: false,
-      alwaysShowLabel: true,
-    });
   });
 
   const nodeIndex = nodes.reduce<Record<string, GraphNodeAttributes>>((index, node) => {

@@ -1,0 +1,2356 @@
+{
+  "schema_version": "schema_config/v1",
+  "source_markdown_path": "E:\\Project\\agent-workspace\\knowledge-graph-service\\schema\\engineering_geology_schema.md",
+  "heading_index": [
+    {
+      "level": 2,
+      "number": "1",
+      "title": "Schema 层级定义"
+    },
+    {
+      "level": 2,
+      "number": "2",
+      "title": "一级实体类总表"
+    },
+    {
+      "level": 3,
+      "number": "2.1",
+      "title": "工程与空间类"
+    },
+    {
+      "level": 3,
+      "number": "2.2",
+      "title": "地质对象类"
+    },
+    {
+      "level": 3,
+      "number": "2.3",
+      "title": "勘察、试验与参数类"
+    },
+    {
+      "level": 3,
+      "number": "2.4",
+      "title": "评价、问题、材料与输出类"
+    },
+    {
+      "level": 2,
+      "number": "3",
+      "title": "工程地质问题三级分类表"
+    },
+    {
+      "level": 2,
+      "number": "4",
+      "title": "评价结论三级分类表"
+    },
+    {
+      "level": 2,
+      "number": "5",
+      "title": "建议措施三级分类表"
+    },
+    {
+      "level": 2,
+      "number": "6",
+      "title": "后续工作三级分类表"
+    },
+    {
+      "level": 2,
+      "number": "7",
+      "title": "关系白名单"
+    },
+    {
+      "level": 2,
+      "number": "8",
+      "title": "抽取结果字段模板"
+    },
+    {
+      "level": 3,
+      "number": "8.1",
+      "title": "实体字段"
+    },
+    {
+      "level": 3,
+      "number": "8.2",
+      "title": "证据字段"
+    },
+    {
+      "level": 3,
+      "number": "8.3",
+      "title": "关系字段"
+    },
+    {
+      "level": 2,
+      "number": "9",
+      "title": "归并规则"
+    }
+  ],
+  "entity_schemas": [
+    {
+      "schema_id": "surrounding_rock_class",
+      "primary_category": "围岩分类",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "围岩类别、工程地质分类结果。",
+      "preferred_evidence": [
+        "table",
+        "paragraph"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "stratigraphic_unit",
+      "primary_category": "地层",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "地层单位、第四系成因层等。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "location",
+      "primary_category": "地理位置",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "行政区、乡镇、村庄、相对区位、交通区位等位置描述。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "rockmass_quality",
+      "primary_category": "岩体质量",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "岩体质量评价结果。",
+      "preferred_evidence": [
+        "table",
+        "paragraph"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "geotechnical_mass",
+      "primary_category": "岩土体",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "岩体、土体、覆盖层、碎石土、砂卵砾石层等工程性对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "lithology_unit",
+      "primary_category": "岩性",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "岩石名称、岩性组合、岩脉岩性。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "issue.stress.in_situ_stress",
+      "primary_category": "工程地质问题",
+      "secondary_category": "应力环境与材料",
+      "tertiary_category": "地应力问题",
+      "priority": "P0",
+      "definition": "地应力条件对工程稳定性的不利影响问题。",
+      "typical_objects": [
+        "地下厂房",
+        "水道系统"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stress.rockburst",
+      "primary_category": "工程地质问题",
+      "secondary_category": "应力环境与材料",
+      "tertiary_category": "岩爆问题",
+      "priority": "P0",
+      "definition": "高地应力环境下岩爆风险问题。",
+      "typical_objects": [
+        "深埋地下洞室"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.inflow",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "地下洞室涌水",
+      "priority": "P0",
+      "definition": "洞室、隧洞等地下工程涌水问题。",
+      "typical_objects": [
+        "厂房洞",
+        "隧洞",
+        "断层出水段"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.dam_foundation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "坝基渗漏",
+      "priority": "P0",
+      "definition": "坝基部位渗漏问题。",
+      "typical_objects": [
+        "下水库坝基",
+        "消力池部位"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.external_water_pressure",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "外水压力",
+      "priority": "P0",
+      "definition": "管道、洞室等受外水压力影响的问题。",
+      "typical_objects": [
+        "输水隧洞",
+        "地下洞室"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.reservoir_leakage",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "水库渗漏",
+      "priority": "P0",
+      "definition": "水库整体渗漏问题的上位类型。",
+      "typical_objects": [
+        "上水库",
+        "下水库"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.underground_cavern",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "地下洞室围岩稳定",
+      "priority": "P0",
+      "definition": "地下洞室围岩稳定问题的上位类型。",
+      "typical_objects": [
+        "引水隧洞",
+        "尾水隧洞",
+        "洞室群"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.foundation_sliding",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "坝基抗滑稳定",
+      "priority": "P0",
+      "definition": "坝基抗滑稳定问题。",
+      "typical_objects": [
+        "下水库坝基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.reservoir_bank",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "库岸稳定",
+      "priority": "P0",
+      "definition": "库岸整体稳定问题的上位类型。",
+      "typical_objects": [
+        "上水库",
+        "下水库"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "边坡稳定",
+      "priority": "P0",
+      "definition": "边坡稳定问题的上位类型。",
+      "typical_objects": [
+        "输水系统边坡",
+        "坝址边坡"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "engineering_geology_issue",
+      "primary_category": "工程地质问题",
+      "secondary_category": "见第3节",
+      "tertiary_category": "见第3节",
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "需要评价、治理、支护、防渗、监测的问题类实体。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "engineering_system",
+      "primary_category": "工程系统",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "上水库、下水库、输水系统、地下厂房系统、厂道系统等系统级对象。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "engineering_part",
+      "primary_category": "工程部位",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "坝基、坝肩、库岸段、洞段、轴线部位、进出水口部位等部位对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "project",
+      "primary_category": "工程项目",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "电站、工程、报告对象本体。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "action.seepage.full_anti_seepage",
+      "primary_category": "建议措施",
+      "secondary_category": "防渗处理",
+      "tertiary_category": "全库盆防渗",
+      "priority": "P0",
+      "definition": "明确建议采取全库盆防渗方案。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "fault_zone",
+      "primary_category": "断层断裂带",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "断层、断裂、断裂带、区域断裂对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "permanent_structure",
+      "primary_category": "永久建筑物",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "坝、隧洞、厂房、主变室、斜井、竖井、廊道等永久工程建筑物。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "spatial_unit",
+      "primary_category": "空间单元",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "库盆、库区、库岸、坝址区、工程区、场地等范围性对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "structural_plane",
+      "primary_category": "结构面",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "I级、II级、III级结构面及软弱结构面对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "natural_geographic_unit",
+      "primary_category": "自然地理单元",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "河流、沟谷、分水岭、垭口、山体、邻谷等自然地貌对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "joint_fracture",
+      "primary_category": "节理裂隙",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "节理、裂隙、裂隙组、裂隙密集带等裂隙性对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "conclusion.classification.surrounding_rock",
+      "primary_category": "评价结论",
+      "secondary_category": "分类与参数判断",
+      "tertiary_category": "围岩分类结论",
+      "priority": "P0",
+      "definition": "如“以Ⅱ、Ⅲ类围岩为主”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.classification.rockmass",
+      "primary_category": "评价结论",
+      "secondary_category": "分类与参数判断",
+      "tertiary_category": "岩体质量结论",
+      "priority": "P0",
+      "definition": "如“岩体质量较好/较差”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.seismic.safety",
+      "primary_category": "评价结论",
+      "secondary_category": "地震与区域判断",
+      "tertiary_category": "地震安全性结论",
+      "priority": "P0",
+      "definition": "如“基本烈度为Ⅶ度”“峰值加速度为102Gal”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.general.overall_condition",
+      "primary_category": "评价结论",
+      "secondary_category": "总体判断",
+      "tertiary_category": "工程地质条件总体评价",
+      "priority": "P0",
+      "definition": "如“工程地质条件总体较好”“具备建设条件”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.stability.seepage",
+      "primary_category": "评价结论",
+      "secondary_category": "稳定与渗漏判断",
+      "tertiary_category": "渗漏评价结论",
+      "priority": "P0",
+      "definition": "如“存在渗漏问题”“不具备局部防渗条件”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.stability.stable",
+      "primary_category": "评价结论",
+      "secondary_category": "稳定与渗漏判断",
+      "tertiary_category": "稳定性结论",
+      "priority": "P0",
+      "definition": "如“整体稳定”“局部稳定性较差”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "evaluation_conclusion",
+      "primary_category": "评价结论",
+      "secondary_category": "见第4节",
+      "tertiary_category": "见第4节",
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "对工程条件、稳定性、渗漏、方案、材料等的判断性结论。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "weathering_zone",
+      "primary_category": "风化带",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P0",
+      "definition": "全风化、强风化、弱风化、微风化、新鲜等风化分带。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "adverse_geological_body",
+      "primary_category": "不良地质体",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "不稳定块体、潜在不稳定体、破碎带等不良地质体对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "temporary_structure",
+      "primary_category": "临时建筑物",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "围堰、明渠、施工支洞等施工期临时建筑物。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "investigation_activity",
+      "primary_category": "勘察工作",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "测绘、钻探、洞探、物探、坑槽探、监测等工作任务。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "exploration_working",
+      "primary_category": "勘探工程",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "钻孔、平洞、支洞、浅井、探洞等勘探工程对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "regional_tectonic_unit",
+      "primary_category": "区域构造单元",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "大地构造单元、新构造分区、构造带等区域级对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "recommended_parameter",
+      "primary_category": "参数建议值",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "参数建议值表、分类评分表、设计参数成果等汇总性参数节点。",
+      "preferred_evidence": [
+        "table"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "followup.monitoring.displacement",
+      "primary_category": "后续工作",
+      "secondary_category": "监测观测",
+      "tertiary_category": "位移监测",
+      "priority": "P1",
+      "definition": "建议开展边坡、库岸、洞室位移监测。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.monitoring.water_level",
+      "primary_category": "后续工作",
+      "secondary_category": "监测观测",
+      "tertiary_category": "地下水位观测",
+      "priority": "P1",
+      "definition": "建议持续观测地下水位。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.monitoring.seepage",
+      "primary_category": "后续工作",
+      "secondary_category": "监测观测",
+      "tertiary_category": "渗流监测",
+      "priority": "P1",
+      "definition": "建议开展渗流、渗漏监测。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.monitoring.long_term",
+      "primary_category": "后续工作",
+      "secondary_category": "监测观测",
+      "tertiary_category": "长期观测",
+      "priority": "P1",
+      "definition": "建议长期观测、长期跟踪。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.investigation.adit",
+      "primary_category": "后续工作",
+      "secondary_category": "补充勘察",
+      "tertiary_category": "补充洞探",
+      "priority": "P1",
+      "definition": "建议补充平洞、探洞、支洞等洞探工作。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.investigation.mapping",
+      "primary_category": "后续工作",
+      "secondary_category": "补充勘察",
+      "tertiary_category": "补充测绘",
+      "priority": "P1",
+      "definition": "建议补充工程地质测绘、专项调查。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.investigation.geophysics",
+      "primary_category": "后续工作",
+      "secondary_category": "补充勘察",
+      "tertiary_category": "补充物探",
+      "priority": "P1",
+      "definition": "建议补充物探或专项探测。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.investigation.drilling",
+      "primary_category": "后续工作",
+      "secondary_category": "补充勘察",
+      "tertiary_category": "补充钻探",
+      "priority": "P1",
+      "definition": "建议下阶段补充钻孔、钻探工作。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.testing.special",
+      "primary_category": "后续工作",
+      "secondary_category": "补充试验",
+      "tertiary_category": "补充专项试验",
+      "priority": "P1",
+      "definition": "建议开展专项试验研究。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.testing.permeability",
+      "primary_category": "后续工作",
+      "secondary_category": "补充试验",
+      "tertiary_category": "补充压水试验",
+      "priority": "P1",
+      "definition": "建议补充压水、高压压水等试验。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.testing.in_situ",
+      "primary_category": "后续工作",
+      "secondary_category": "补充试验",
+      "tertiary_category": "补充原位试验",
+      "priority": "P1",
+      "definition": "建议补充原位试验。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.testing.lab",
+      "primary_category": "后续工作",
+      "secondary_category": "补充试验",
+      "tertiary_category": "补充室内试验",
+      "priority": "P1",
+      "definition": "建议补充室内岩石、土工等试验。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "follow_up_work",
+      "primary_category": "后续工作",
+      "secondary_category": "见第6节",
+      "tertiary_category": "见第6节",
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "下阶段勘察、试验、监测、复核、补充完善等后续行动。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "followup.design.parameter_review",
+      "primary_category": "后续工作",
+      "secondary_category": "设计复核",
+      "tertiary_category": "参数复核",
+      "priority": "P1",
+      "definition": "建议复核参数建议值或设计参数。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.design.scheme_review",
+      "primary_category": "后续工作",
+      "secondary_category": "设计复核",
+      "tertiary_category": "方案复核与优化",
+      "priority": "P1",
+      "definition": "建议复核或优化工程方案。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.design.stability_review",
+      "primary_category": "后续工作",
+      "secondary_category": "设计复核",
+      "tertiary_category": "稳定复核",
+      "priority": "P1",
+      "definition": "建议复核边坡、坝基、洞室稳定性。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.design.seepage_review",
+      "primary_category": "后续工作",
+      "secondary_category": "设计复核",
+      "tertiary_category": "防渗复核",
+      "priority": "P1",
+      "definition": "建议复核防渗线路、防渗范围、防渗措施。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "general_structure",
+      "primary_category": "地质构造",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "褶皱、混熔接触、岩脉侵入、构造线方向等非断层性构造。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "geological_hazard",
+      "primary_category": "地质灾害",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "崩塌、泥石流、塌岸等灾害对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "seismic_zonation_unit",
+      "primary_category": "地震分区单元",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "地震带、地震区、潜在震源区、地震分区等对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "engineering_parameter",
+      "primary_category": "工程地质参数",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "属性优先",
+      "priority": "P1",
+      "definition": "水位、高程、透水率、渗透系数、应力值、峰值加速度等参数。",
+      "preferred_evidence": [
+        "table",
+        "paragraph"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "issue.hazard.regional_stability",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "区域构造稳定性",
+      "priority": "P1",
+      "definition": "工程场地区域构造稳定性问题。",
+      "typical_objects": [
+        "工程场地"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.hazard.earthquake_hazard",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "场地地震地质灾害",
+      "priority": "P1",
+      "definition": "场地地震地质灾害问题。",
+      "typical_objects": [
+        "场地",
+        "坝址"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.hazard.rockfall",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "崩塌",
+      "priority": "P1",
+      "definition": "崩塌问题。",
+      "typical_objects": [
+        "陡坡",
+        "坡脚",
+        "进出水口"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.hazard.bank_collapse",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "库区塌岸",
+      "priority": "P1",
+      "definition": "水库库区塌岸问题。",
+      "typical_objects": [
+        "下水库库区"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.hazard.reservoir_induced_eq",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "水库诱发地震",
+      "priority": "P1",
+      "definition": "水库诱发地震问题。",
+      "typical_objects": [
+        "上水库",
+        "下水库"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.hazard.debris_flow",
+      "primary_category": "工程地质问题",
+      "secondary_category": "地质灾害与地震",
+      "tertiary_category": "泥石流",
+      "priority": "P1",
+      "definition": "泥石流问题。",
+      "typical_objects": [
+        "沟谷"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stress.radon",
+      "primary_category": "工程地质问题",
+      "secondary_category": "应力环境与材料",
+      "tertiary_category": "放射性及环境Rn浓度",
+      "priority": "P1",
+      "definition": "放射性及环境 Rn 浓度相关问题。",
+      "typical_objects": [
+        "地下厂房"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stress.alkali_reactivity",
+      "primary_category": "工程地质问题",
+      "secondary_category": "应力环境与材料",
+      "tertiary_category": "碱活性反应",
+      "priority": "P1",
+      "definition": "骨料碱活性反应问题。",
+      "typical_objects": [
+        "混凝土人工骨料"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.abutment",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "坝肩渗漏",
+      "priority": "P1",
+      "definition": "坝肩部位渗漏问题。",
+      "typical_objects": [
+        "坝肩"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.reservoir_bank",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "库岸渗漏",
+      "priority": "P1",
+      "definition": "库岸、分水岭等部位的渗漏问题。",
+      "typical_objects": [
+        "库岸",
+        "分水岭段"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.reservoir_floor",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "库底渗漏",
+      "priority": "P1",
+      "definition": "库底部位的渗漏问题。",
+      "typical_objects": [
+        "上水库库底"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.outward",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "库水外渗",
+      "priority": "P1",
+      "definition": "库水向库外渗出的特定问题。",
+      "typical_objects": [
+        "分水岭",
+        "垭口",
+        "山包"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.hydraulic_fracturing",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "水力劈裂风险",
+      "priority": "P1",
+      "definition": "抗劈裂能力不足导致的水力劈裂风险。",
+      "typical_objects": [
+        "高压管道围岩",
+        "试验段"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.inundation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "水库浸没",
+      "priority": "P1",
+      "definition": "水库蓄水导致的浸没问题。",
+      "typical_objects": [
+        "下水库库区",
+        "农田",
+        "民居"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.permeability_failure",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "渗透破坏稳定性",
+      "priority": "P1",
+      "definition": "围岩或地基受渗透作用导致的稳定性问题。",
+      "typical_objects": [
+        "压力管道",
+        "岔管部位"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.linear_flow",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "线状流水/涌水",
+      "priority": "P1",
+      "definition": "滴水、线状流水、局部涌水现象对应的问题。",
+      "typical_objects": [
+        "地下洞室"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.seepage.channel",
+      "primary_category": "工程地质问题",
+      "secondary_category": "渗漏与地下水",
+      "tertiary_category": "集中渗漏通道",
+      "priority": "P1",
+      "definition": "沿断层、裂隙密集带等形成的集中渗漏通道。",
+      "typical_objects": [
+        "库底",
+        "库岸"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.differential_settlement",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "不均匀沉降",
+      "priority": "P1",
+      "definition": "差异沉降、不均匀沉降问题。",
+      "typical_objects": [
+        "坝下断层部位",
+        "围堰堰基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.transformer_cavern",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "主变洞围岩稳定",
+      "priority": "P1",
+      "definition": "主变洞围岩稳定问题。",
+      "typical_objects": [
+        "主变室"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.powerhouse_cavern",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "厂房洞围岩稳定",
+      "priority": "P1",
+      "definition": "厂房洞围岩稳定问题。",
+      "typical_objects": [
+        "主厂房"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.block_instability",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "块体不稳定",
+      "priority": "P1",
+      "definition": "由结构面组合形成的块体不稳定问题。",
+      "typical_objects": [
+        "边坡",
+        "洞室围岩"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.foundation_deformation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "坝基变形",
+      "priority": "P1",
+      "definition": "坝基变形问题。",
+      "typical_objects": [
+        "下水库坝基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.foundation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "坝基稳定",
+      "priority": "P1",
+      "definition": "坝基稳定问题的上位类型。",
+      "typical_objects": [
+        "下水库坝基",
+        "围堰堰基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.abutment_slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "坝肩边坡稳定",
+      "priority": "P1",
+      "definition": "坝肩边坡稳定问题。",
+      "typical_objects": [
+        "主坝坝肩",
+        "下水库坝肩"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.rock_pillar",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "岩柱稳定",
+      "priority": "P1",
+      "definition": "主厂房与主变室之间岩柱稳定问题。",
+      "typical_objects": [
+        "厂房-主变室岩柱"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.engineering_slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "工程边坡稳定",
+      "priority": "P1",
+      "definition": "人工形成边坡的稳定问题。",
+      "typical_objects": [
+        "开挖边坡",
+        "施工边坡"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.reservoir_bank_slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "库岸边坡稳定",
+      "priority": "P1",
+      "definition": "库岸边坡稳定性问题。",
+      "typical_objects": [
+        "下水库库岸"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.excavation_slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "开挖边坡稳定",
+      "priority": "P1",
+      "definition": "开挖后形成的工程边坡稳定问题。",
+      "typical_objects": [
+        "库盆开挖边坡",
+        "进出水口边坡"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.scour",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "抗冲稳定",
+      "priority": "P1",
+      "definition": "消力池、护坦、明渠过水段等抗冲稳定问题。",
+      "typical_objects": [
+        "消力池",
+        "护坦",
+        "过水段"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.uplift",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "抗浮稳定",
+      "priority": "P1",
+      "definition": "消力池、护坦等结构的抗浮稳定问题。",
+      "typical_objects": [
+        "消力池",
+        "护坦底板"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.sloping_foundation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "斜坡坝基稳定",
+      "priority": "P1",
+      "definition": "斜坡坝基地基稳定问题。",
+      "typical_objects": [
+        "副坝坝基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.potential_unstable_body",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "潜在不稳定体",
+      "priority": "P1",
+      "definition": "潜在不稳定体问题。",
+      "typical_objects": [
+        "上水库库区",
+        "边坡"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.natural_slope",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "自然边坡稳定",
+      "priority": "P1",
+      "definition": "原始自然边坡稳定问题。",
+      "typical_objects": [
+        "库岸自然边坡",
+        "坝肩自然边坡"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "issue.stability.panel_foundation",
+      "primary_category": "工程地质问题",
+      "secondary_category": "稳定与变形",
+      "tertiary_category": "面板地基稳定",
+      "priority": "P1",
+      "definition": "面板地基稳定问题。",
+      "typical_objects": [
+        "上水库面板地基"
+      ],
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "3"
+    },
+    {
+      "schema_id": "engineering_type",
+      "primary_category": "工程型式",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "坝型、防渗型式、衬砌型式等型式类对象。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "engineering_scheme",
+      "primary_category": "工程方案",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "布置方案、比选方案、推荐方案等方案类对象。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "construction_material",
+      "primary_category": "建筑材料",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "堆石料、骨料、砂砾石、开挖料等材料对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "action.foundation.treatment",
+      "primary_category": "建议措施",
+      "secondary_category": "地基处理",
+      "tertiary_category": "坝基处理",
+      "priority": "P1",
+      "definition": "建议进行坝基处理、建基面处理。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.foundation.structural_plane",
+      "primary_category": "建议措施",
+      "secondary_category": "地基处理",
+      "tertiary_category": "结构面处理",
+      "priority": "P1",
+      "definition": "建议对不利结构面采取处理措施。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.excavation.slope_trimming",
+      "primary_category": "建议措施",
+      "secondary_category": "开挖处理",
+      "tertiary_category": "削坡整平",
+      "priority": "P1",
+      "definition": "建议削坡、整平、清方。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.excavation.slope_ratio",
+      "primary_category": "建议措施",
+      "secondary_category": "开挖处理",
+      "tertiary_category": "开挖坡比优化",
+      "priority": "P1",
+      "definition": "建议调整坡比、优化开挖参数。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.support.reinforcement",
+      "primary_category": "建议措施",
+      "secondary_category": "支护加固",
+      "tertiary_category": "支护加固",
+      "priority": "P1",
+      "definition": "建议采取支护、加固、锚喷等处理。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.support.lining",
+      "primary_category": "建议措施",
+      "secondary_category": "支护加固",
+      "tertiary_category": "衬砌处理",
+      "priority": "P1",
+      "definition": "建议优化或采用衬砌措施。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.scheme.type_selection",
+      "primary_category": "建议措施",
+      "secondary_category": "方案优化",
+      "tertiary_category": "型式选择",
+      "priority": "P1",
+      "definition": "建议采用某坝型、防渗型式或衬砌型式。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.scheme.layout",
+      "primary_category": "建议措施",
+      "secondary_category": "方案优化",
+      "tertiary_category": "布置优化",
+      "priority": "P1",
+      "definition": "建议优化布置、调整空间关系。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.scheme.axis",
+      "primary_category": "建议措施",
+      "secondary_category": "方案优化",
+      "tertiary_category": "轴线调整",
+      "priority": "P1",
+      "definition": "建议调整厂房或洞线轴线方向。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.material.verification",
+      "primary_category": "建议措施",
+      "secondary_category": "材料处理",
+      "tertiary_category": "材料复核",
+      "priority": "P1",
+      "definition": "建议复核材料质量、储量或适用性。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.material.alkali",
+      "primary_category": "建议措施",
+      "secondary_category": "材料处理",
+      "tertiary_category": "碱活性处理",
+      "priority": "P1",
+      "definition": "建议针对碱活性问题采取专门处理。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "recommendation_action",
+      "primary_category": "建议措施",
+      "secondary_category": "见第5节",
+      "tertiary_category": "见第5节",
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "防渗、支护、加固、处理、优化等措施性建议。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "action.seepage.local_anti_seepage",
+      "primary_category": "建议措施",
+      "secondary_category": "防渗处理",
+      "tertiary_category": "局部防渗",
+      "priority": "P1",
+      "definition": "建议局部防渗、局部处理。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "action.seepage.grouting",
+      "primary_category": "建议措施",
+      "secondary_category": "防渗处理",
+      "tertiary_category": "帷幕灌浆/防渗灌浆",
+      "priority": "P1",
+      "definition": "建议布置帷幕灌浆、防渗灌浆等。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "5"
+    },
+    {
+      "schema_id": "material_source",
+      "primary_category": "料场料源",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "石料场、天然砂砾石料场、开挖料来源等。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "construction_site",
+      "primary_category": "施工场地",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "施工区、加工系统、渣场、安装场等施工布置单元。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "hydrogeology_unit",
+      "primary_category": "水文地质单元",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "地下水类型、泉点、含水层、透水分区、水质单元等。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "physical_geological_phenomenon",
+      "primary_category": "物理地质现象",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "崩塌迹象、塌岸现象、卸荷现象、涌水现象等显式现象。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.2"
+    },
+    {
+      "schema_id": "camp",
+      "primary_category": "营地",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "施工营地、业主营地、生活营地等。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "observation_point",
+      "primary_category": "观测点",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "观测孔、观测断面、测试段、泉点观测位等。",
+      "preferred_evidence": [
+        "paragraph",
+        "table",
+        "figure"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "evaluation_activity",
+      "primary_category": "评价工作",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "地震安全性评价、构造稳定性评价、危险性评估、方案比选等。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "conclusion.classification.parameter",
+      "primary_category": "评价结论",
+      "secondary_category": "分类与参数判断",
+      "tertiary_category": "参数建议值结论",
+      "priority": "P1",
+      "definition": "如“给出参数建议值”“参数可供设计采用”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.seismic.regional_stability",
+      "primary_category": "评价结论",
+      "secondary_category": "地震与区域判断",
+      "tertiary_category": "区域构造稳定性结论",
+      "priority": "P1",
+      "definition": "如“场地属于区域构造稳定性较好的工程场地”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.seismic.hazard",
+      "primary_category": "评价结论",
+      "secondary_category": "地震与区域判断",
+      "tertiary_category": "灾害危险性结论",
+      "priority": "P1",
+      "definition": "如“危险性较小”“无重大地质灾害制约”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.general.site_suitability",
+      "primary_category": "评价结论",
+      "secondary_category": "总体判断",
+      "tertiary_category": "场地适宜性结论",
+      "priority": "P1",
+      "definition": "如“适宜建站”“适宜布置某工程”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.scheme.source",
+      "primary_category": "评价结论",
+      "secondary_category": "方案与材料判断",
+      "tertiary_category": "料源储量质量结论",
+      "priority": "P1",
+      "definition": "如“料场储量满足要求”“质量基本满足要求”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.scheme.recommendation",
+      "primary_category": "评价结论",
+      "secondary_category": "方案与材料判断",
+      "tertiary_category": "方案比选推荐结论",
+      "priority": "P1",
+      "definition": "如“推荐小宫屯方案”“推荐采用某坝型”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.scheme.material",
+      "primary_category": "评价结论",
+      "secondary_category": "方案与材料判断",
+      "tertiary_category": "材料适用性结论",
+      "priority": "P1",
+      "definition": "如“储量、质量满足要求”“可作为骨料或堆石料使用”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "conclusion.stability.groundwater",
+      "primary_category": "评价结论",
+      "secondary_category": "稳定与渗漏判断",
+      "tertiary_category": "地下水评价结论",
+      "priority": "P1",
+      "definition": "如“地下水位高于/低于正常蓄水位”。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "4"
+    },
+    {
+      "schema_id": "test_method",
+      "primary_category": "试验方法",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "压水试验、高压压水、地应力测试、原位剪切、波速测试、水质分析等。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "auxiliary_structure",
+      "primary_category": "辅助建筑物",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P1",
+      "definition": "导墙、排水廊道、辅助洞室、附属建筑等。",
+      "preferred_evidence": [
+        "paragraph",
+        "figure"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "power_supply_scope",
+      "primary_category": "供电范围",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P2",
+      "definition": "工程服务的电网、供电系统、受电范围。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "analysis_map",
+      "primary_category": "分析图件",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "证据节点",
+      "priority": "P2",
+      "definition": "地质图、构造纲要图、剖面图、平切图等图件成果。",
+      "preferred_evidence": [
+        "figure"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "parameter_object",
+      "primary_category": "参数对象",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P2",
+      "definition": "岩体、结构面、围岩、断层带、覆盖层等参数归属对象。",
+      "preferred_evidence": [
+        "paragraph",
+        "table"
+      ],
+      "schema_section": "2.3"
+    },
+    {
+      "schema_id": "followup.report.figure_completion",
+      "primary_category": "后续工作",
+      "secondary_category": "成果完善",
+      "tertiary_category": "图件补充",
+      "priority": "P2",
+      "definition": "建议补充剖面图、平切图、专题图。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "followup.report.data_completion",
+      "primary_category": "后续工作",
+      "secondary_category": "成果完善",
+      "tertiary_category": "资料补充",
+      "priority": "P2",
+      "definition": "建议补充数据资料、附件、基础资料。",
+      "storage_mode": "实体节点",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "6"
+    },
+    {
+      "schema_id": "resident_point",
+      "primary_category": "居民点",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P2",
+      "definition": "村庄、居民点、集中安置点等人居对象。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.1"
+    },
+    {
+      "schema_id": "method_rule",
+      "primary_category": "方法规则类",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "引用节点",
+      "priority": "P2",
+      "definition": "计算公式、规范、规程、评价标准、分类标准等。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.4"
+    },
+    {
+      "schema_id": "evaluation_target",
+      "primary_category": "评价对象",
+      "secondary_category": null,
+      "tertiary_category": null,
+      "storage_mode": "实体节点",
+      "priority": "P2",
+      "definition": "被评价的对象名称层，如“场地”“坝址”“库岸稳定对象”。",
+      "preferred_evidence": [
+        "paragraph"
+      ],
+      "schema_section": "2.4"
+    }
+  ],
+  "relation_schemas": [
+    {
+      "relation_type": "affects",
+      "meaning": "影响",
+      "recommended_source_categories": [
+        "工程地质问题",
+        "地质灾害",
+        "不良地质体"
+      ],
+      "recommended_target_categories": [
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "空间单元",
+        "居民点"
+      ]
+    },
+    {
+      "relation_type": "belongs_to",
+      "meaning": "属于",
+      "recommended_source_categories": [
+        "工程部位",
+        "永久建筑物",
+        "临时建筑物",
+        "辅助建筑物",
+        "施工场地",
+        "营地",
+        "勘探工程"
+      ],
+      "recommended_target_categories": [
+        "工程系统",
+        "永久建筑物",
+        "工程项目",
+        "空间单元"
+      ]
+    },
+    {
+      "relation_type": "classified_as",
+      "meaning": "分类为",
+      "recommended_source_categories": [
+        "空间单元",
+        "工程部位",
+        "永久建筑物",
+        "岩土体"
+      ],
+      "recommended_target_categories": [
+        "围岩分类",
+        "岩体质量"
+      ]
+    },
+    {
+      "relation_type": "controlled_by",
+      "meaning": "受控于",
+      "recommended_source_categories": [
+        "工程地质问题"
+      ],
+      "recommended_target_categories": [
+        "断层断裂带",
+        "节理裂隙",
+        "结构面",
+        "水文地质单元",
+        "岩土体",
+        "风化带",
+        "自然地理单元"
+      ]
+    },
+    {
+      "relation_type": "evaluated_as",
+      "meaning": "评价为",
+      "recommended_source_categories": [
+        "工程项目",
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "空间单元",
+        "工程方案",
+        "工程地质问题",
+        "建筑材料",
+        "料场料源"
+      ],
+      "recommended_target_categories": [
+        "评价结论"
+      ]
+    },
+    {
+      "relation_type": "has_groundwater_type",
+      "meaning": "水文地质条件",
+      "recommended_source_categories": [
+        "空间单元",
+        "工程系统",
+        "工程部位",
+        "永久建筑物"
+      ],
+      "recommended_target_categories": [
+        "水文地质单元"
+      ]
+    },
+    {
+      "relation_type": "has_issue",
+      "meaning": "存在问题",
+      "recommended_source_categories": [
+        "空间单元",
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "临时建筑物",
+        "辅助建筑物"
+      ],
+      "recommended_target_categories": [
+        "工程地质问题"
+      ]
+    },
+    {
+      "relation_type": "has_lithology",
+      "meaning": "岩性组成/揭露",
+      "recommended_source_categories": [
+        "地层",
+        "空间单元",
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "岩土体"
+      ],
+      "recommended_target_categories": [
+        "岩性"
+      ]
+    },
+    {
+      "relation_type": "has_part",
+      "meaning": "包含",
+      "recommended_source_categories": [
+        "工程项目",
+        "工程系统",
+        "永久建筑物",
+        "空间单元"
+      ],
+      "recommended_target_categories": [
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "临时建筑物",
+        "辅助建筑物",
+        "施工场地",
+        "营地"
+      ]
+    },
+    {
+      "relation_type": "has_structure",
+      "meaning": "构造/结构发育",
+      "recommended_source_categories": [
+        "空间单元",
+        "工程系统",
+        "工程部位",
+        "永久建筑物"
+      ],
+      "recommended_target_categories": [
+        "地质构造",
+        "断层断裂带",
+        "节理裂隙",
+        "结构面"
+      ]
+    },
+    {
+      "relation_type": "investigated_by",
+      "meaning": "由勘察揭示",
+      "recommended_source_categories": [
+        "空间单元",
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "工程地质问题"
+      ],
+      "recommended_target_categories": [
+        "勘察工作",
+        "勘探工程"
+      ]
+    },
+    {
+      "relation_type": "located_in",
+      "meaning": "位于",
+      "recommended_source_categories": [
+        "工程项目",
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "临时建筑物",
+        "辅助建筑物",
+        "施工场地",
+        "营地",
+        "勘探工程",
+        "观测点",
+        "地质对象"
+      ],
+      "recommended_target_categories": [
+        "地理位置",
+        "自然地理单元",
+        "空间单元"
+      ]
+    },
+    {
+      "relation_type": "mitigated_by",
+      "meaning": "缓解于",
+      "recommended_source_categories": [
+        "工程地质问题"
+      ],
+      "recommended_target_categories": [
+        "建议措施"
+      ]
+    },
+    {
+      "relation_type": "observed_at",
+      "meaning": "观测于",
+      "recommended_source_categories": [
+        "观测点"
+      ],
+      "recommended_target_categories": [
+        "空间单元",
+        "工程部位",
+        "永久建筑物",
+        "地质对象"
+      ]
+    },
+    {
+      "relation_type": "recommended_for",
+      "meaning": "针对",
+      "recommended_source_categories": [
+        "建议措施",
+        "后续工作"
+      ],
+      "recommended_target_categories": [
+        "工程系统",
+        "工程部位",
+        "永久建筑物",
+        "空间单元",
+        "工程地质问题",
+        "工程方案"
+      ]
+    },
+    {
+      "relation_type": "recommends",
+      "meaning": "建议",
+      "recommended_source_categories": [
+        "评价工作",
+        "评价结论"
+      ],
+      "recommended_target_categories": [
+        "建议措施",
+        "后续工作"
+      ]
+    },
+    {
+      "relation_type": "same_as",
+      "meaning": "同一对象",
+      "recommended_source_categories": [
+        "任意类别"
+      ],
+      "recommended_target_categories": [
+        "任意类别"
+      ]
+    },
+    {
+      "relation_type": "tested_by",
+      "meaning": "由试验支持",
+      "recommended_source_categories": [
+        "工程地质参数",
+        "参数建议值",
+        "工程地质问题",
+        "工程对象"
+      ],
+      "recommended_target_categories": [
+        "试验方法"
+      ]
+    }
+  ]
+}

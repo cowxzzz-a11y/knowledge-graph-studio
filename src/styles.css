@@ -128,6 +128,16 @@ body {
   background: rgba(25, 29, 36, 0.6);
 }
 
+.graph-topbar-link {
+  pointer-events: auto;
+  padding: 8px 10px;
+  border: 1px solid rgba(130, 176, 226, 0.28);
+  border-radius: 8px;
+  background: rgba(42, 54, 67, 0.76);
+  color: #edf6ff;
+  text-decoration: none;
+}
+
 .focus-card {
   left: 18px;
   bottom: 18px;
@@ -448,6 +458,37 @@ canvas {
   margin-top: 12px;
 }
 
+.detail-doc-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+}
+
+.detail-doc-tab {
+  appearance: none;
+  max-width: 150px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(40, 47, 57, 0.72);
+  color: rgba(201, 211, 224, 0.78);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.detail-doc-tab.is-active {
+  border-color: rgba(127, 171, 234, 0.62);
+  background: rgba(86, 128, 188, 0.24);
+  color: #f2f7ff;
+}
+
 .detail-panel-section {
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -599,6 +640,412 @@ canvas {
 .graph-status-error {
   border-color: rgba(255, 133, 133, 0.36);
   color: #ffd7d7;
+}
+
+.config-root {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 24px;
+  background: #20252c;
+  color: var(--text);
+}
+
+.config-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1440px;
+  margin: 0 auto 18px;
+}
+
+.config-header h1 {
+  margin: 8px 0 6px;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.config-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.config-back-link {
+  color: #98c5ff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.config-actions,
+.config-toolbar,
+.config-tabs,
+.config-section-title,
+.config-inline-add {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.config-actions button,
+.config-toolbar button,
+.config-tabs button,
+.config-file-button,
+.schema-row button,
+.relation-row button,
+.config-inline-add button,
+.config-chip-list button {
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(41, 49, 59, 0.92);
+  color: #edf3fb;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.config-reset-button {
+  border-color: rgba(255, 185, 110, 0.28) !important;
+  color: #ffe2bd !important;
+}
+
+.config-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.config-tabs {
+  max-width: 1440px;
+  margin: 0 auto 16px;
+}
+
+.config-tabs button.is-active {
+  border-color: rgba(123, 182, 255, 0.55);
+  background: rgba(55, 83, 115, 0.9);
+}
+
+.config-alert,
+.config-workspace {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.config-alert {
+  padding: 12px;
+  border: 1px solid rgba(255, 133, 133, 0.34);
+  border-radius: 8px;
+  color: #ffd7d7;
+}
+
+.config-toolbar,
+.config-section {
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(27, 32, 39, 0.78);
+}
+
+.schema-editor-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.schema-tree {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  scrollbar-color: rgba(122, 142, 164, 0.34) transparent;
+  scrollbar-width: thin;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(27, 32, 39, 0.86);
+}
+
+.schema-tree::-webkit-scrollbar {
+  width: 8px;
+}
+
+.schema-tree::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.schema-tree::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(27, 32, 39, 0.86);
+  border-radius: 999px;
+  background: rgba(122, 142, 164, 0.38);
+}
+
+.schema-tree::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 174, 199, 0.5);
+}
+
+.schema-tree h2 {
+  margin: 0 0 12px;
+  color: #f3f7fd;
+  font-size: 15px;
+}
+
+.schema-tree-group {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.schema-tree button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 32px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  background: rgba(41, 49, 59, 0.82);
+  color: #edf3fb;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.schema-tree button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schema-tree button strong {
+  color: rgba(188, 203, 222, 0.78);
+  font-size: 11px;
+}
+
+.schema-tree-children {
+  display: grid;
+  gap: 5px;
+  padding-left: 12px;
+}
+
+.schema-tree-children button {
+  background: rgba(31, 38, 47, 0.74);
+  color: rgba(225, 233, 243, 0.86);
+}
+
+.config-stat {
+  min-width: 118px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  background: rgba(37, 44, 53, 0.85);
+}
+
+.config-stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.config-stat strong {
+  display: block;
+  margin-top: 4px;
+  color: #f3f8ff;
+  font-size: 18px;
+}
+
+.config-file-button input {
+  display: none;
+}
+
+.config-section-title {
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.config-section h2,
+.config-section-title h2 {
+  margin: 0;
+  color: #f3f7fd;
+  font-size: 16px;
+}
+
+.config-section input,
+.config-section textarea,
+.config-section select,
+.config-section-title input,
+.config-inline-add input {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  background: rgba(18, 22, 28, 0.84);
+  color: #edf3fb;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  padding: 8px 10px;
+}
+
+.config-section textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+
+.config-section-title input {
+  max-width: 320px;
+}
+
+.schema-grid,
+.relation-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.schema-row,
+.relation-row {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  background: rgba(35, 42, 51, 0.78);
+}
+
+.schema-row {
+  grid-template-columns: minmax(130px, 1fr) repeat(5, minmax(96px, 0.8fr)) minmax(130px, 1fr) minmax(220px, 1.5fr) 70px;
+}
+
+.schema-row-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  align-items: center;
+  padding: 9px 10px;
+  background: rgba(47, 57, 69, 0.98);
+  color: #f7fbff;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.schema-row-header span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schema-row.is-highlighted {
+  border-color: rgba(126, 190, 255, 0.78);
+  background:
+    linear-gradient(90deg, rgba(91, 145, 205, 0.26), rgba(35, 42, 51, 0.78) 26%),
+    rgba(35, 42, 51, 0.78);
+  box-shadow:
+    inset 4px 0 0 rgba(126, 190, 255, 0.9),
+    0 0 0 1px rgba(126, 190, 255, 0.18),
+    0 10px 26px rgba(0, 0, 0, 0.22);
+}
+
+.schema-row.is-highlighted input,
+.schema-row.is-highlighted textarea,
+.schema-row.is-highlighted select {
+  border-color: rgba(126, 190, 255, 0.34);
+  background: rgba(18, 25, 34, 0.96);
+}
+
+.relation-row {
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1.1fr) minmax(180px, 1.2fr) minmax(180px, 1.2fr) 70px;
+}
+
+.config-danger {
+  border-color: rgba(255, 132, 132, 0.26) !important;
+  color: #ffdede !important;
+}
+
+.config-sync {
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(41, 49, 59, 0.92);
+  color: rgba(221, 229, 240, 0.8);
+  font-size: 13px;
+}
+
+.config-sync.is-live {
+  border-color: rgba(117, 205, 163, 0.28);
+  color: #bff2d8;
+}
+
+.config-form {
+  display: grid;
+  gap: 14px;
+}
+
+.config-form label {
+  display: grid;
+  gap: 7px;
+  color: rgba(217, 225, 237, 0.84);
+  font-size: 13px;
+}
+
+.config-check {
+  display: flex !important;
+  align-items: center;
+  grid-template-columns: none;
+}
+
+.config-check input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.config-chip-editor {
+  display: grid;
+  gap: 10px;
+}
+
+.config-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.config-chip-list button {
+  min-height: 30px;
+  padding: 6px 9px;
+  background: rgba(51, 62, 73, 0.88);
+}
+
+.config-inline-add input {
+  max-width: 240px;
+}
+
+@media (max-width: 1100px) {
+  .schema-editor-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .schema-tree {
+    position: static;
+    max-height: none;
+  }
+
+  .schema-row,
+  .relation-row {
+    grid-template-columns: 1fr;
+  }
+
+  .config-header {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 720px) {

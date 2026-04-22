@@ -61,8 +61,19 @@ const GraphEdgeOverlay: FC<Props> = ({ controls, scene }) => {
       if (!scene?.documentZones.length) return;
 
       scene.documentZones.forEach((zone) => {
-        void zone;
-        void context;
+        const center = sigma.framedGraphToViewport({ x: zone.centerX, y: zone.centerY });
+        const radiusPoint = sigma.framedGraphToViewport({ x: zone.centerX + zone.radius, y: zone.centerY });
+        const radius = Math.max(16, Math.abs(radiusPoint.x - center.x));
+
+        context.save();
+        context.beginPath();
+        context.arc(center.x, center.y, radius, 0, Math.PI * 2);
+        context.fillStyle = "rgba(225, 232, 242, 0.018)";
+        context.strokeStyle = "rgba(225, 232, 242, 0.12)";
+        context.lineWidth = 1;
+        context.fill();
+        context.stroke();
+        context.restore();
       });
     };
 

@@ -330,7 +330,7 @@
       "x": 31.59,
       "y": 0.9299999999999997,
       "description": "工程地质问题 下共 37 个实体",
-      "content": "固体迳流、库区塌岸问题、泥石流、历史地震影响烈度、区域构造稳定性问题、水库诱发地震问题",
+      "content": "固体迳流、库区塌岸、泥石流、历史地震影响烈度、区域构造稳定性问题、水库诱发地震问题",
       "learningValue": "5 个二级类别",
       "relationHint": "结构分组",
       "childCount": 5,
@@ -356,7 +356,7 @@
         "relations": [],
         "children": [
           "固体迳流",
-          "库区塌岸问题",
+          "库区塌岸",
           "泥石流",
           "历史地震影响烈度",
           "区域构造稳定性问题",
@@ -377,7 +377,7 @@
       "x": 31.59,
       "y": -2.2700000000000005,
       "description": "地质灾害与地震 下共 6 个实体",
-      "content": "库区塌岸问题、泥石流、历史地震影响烈度、区域构造稳定性问题、水库诱发地震问题、危岩体",
+      "content": "库区塌岸、泥石流、历史地震影响烈度、区域构造稳定性问题、水库诱发地震问题、危岩体",
       "learningValue": "结构分组",
       "relationHint": "二级分类",
       "childCount": 6,
@@ -398,7 +398,7 @@
         "evidence": [],
         "relations": [],
         "children": [
-          "库区塌岸问题",
+          "库区塌岸",
           "泥石流",
           "历史地震影响烈度",
           "区域构造稳定性问题",
@@ -457,7 +457,7 @@
       "x": 33.470912807335914,
       "y": 3.518854381999832,
       "description": "渗漏与地下水 下共 14 个实体",
-      "content": "绕坝渗漏、上水库坝基及绕坝渗漏、坝基及坝肩渗漏问题、坝基及绕坝渗漏问题、坝基渗漏、拦沙坝坝基及绕坝渗漏",
+      "content": "绕坝渗漏、上水库坝基及绕坝渗漏、坝基及坝肩渗漏问题、坝基及绕坝渗漏、坝基渗漏、拦沙坝坝基及绕坝渗漏",
       "learningValue": "结构分组",
       "relationHint": "二级分类",
       "childCount": 14,
@@ -481,7 +481,7 @@
           "绕坝渗漏",
           "上水库坝基及绕坝渗漏",
           "坝基及坝肩渗漏问题",
-          "坝基及绕坝渗漏问题",
+          "坝基及绕坝渗漏",
           "坝基渗漏",
           "拦沙坝坝基及绕坝渗漏",
           "外水压力问题",
@@ -500,7 +500,7 @@
       "x": 29.709087192664086,
       "y": 3.518854381999832,
       "description": "稳定与变形 下共 12 个实体",
-      "content": "坝肩边坡稳定问题、左坝肩潜在不稳定体、防渗面板地基不均匀沉降、下水库拦河坝坝基抗滑稳定、坝基抗滑稳定问题、库岸稳定问题",
+      "content": "坝肩边坡稳定问题、左坝肩潜在不稳定体、防渗面板地基不均匀沉降、下水库拦河坝坝基抗滑稳定、坝基抗滑稳定、库岸稳定问题",
       "learningValue": "结构分组",
       "relationHint": "二级分类",
       "childCount": 12,
@@ -525,7 +525,7 @@
           "左坝肩潜在不稳定体",
           "防渗面板地基不均匀沉降",
           "下水库拦河坝坝基抗滑稳定",
-          "坝基抗滑稳定问题",
+          "坝基抗滑稳定",
           "库岸稳定问题",
           "库岸边坡稳定问题",
           "岩柱稳定问题"
@@ -1405,7 +1405,7 @@
       "x": -16.0,
       "y": 23.51,
       "description": "物理地质现象 下共 6 个实体",
-      "content": "局部崩塌现象、岩体卸荷现象、岩体崩塌、岩体风化、岩体风化深度差异大、泥石流堆积迹象",
+      "content": "局部崩塌现象、岩体卸荷、岩体崩塌、岩体风化、岩体风化深度差异大、泥石流堆积迹象",
       "learningValue": "0 个二级类别",
       "relationHint": "结构分组",
       "childCount": 6,
@@ -1431,7 +1431,7 @@
         "relations": [],
         "children": [
           "局部崩塌现象",
-          "岩体卸荷现象",
+          "岩体卸荷",
           "岩体崩塌",
           "岩体风化",
           "岩体风化深度差异大",
@@ -6343,7 +6343,7 @@
     },
     {
       "key": "kb::entity::0118",
-      "label": "库区塌岸问题",
+      "label": "库区塌岸",
       "nodeType": "工程地质问题",
       "nodeRole": "entity",
       "parentKey": "secondary::工程地质问题::地质灾害与地震",
@@ -6397,7 +6397,7 @@
           }
         ],
         "aliases": [
-          "库区塌岸"
+          "库区塌岸问题"
         ],
         "attributes": [
           {
@@ -7770,7 +7770,7 @@
     },
     {
       "key": "kb::entity::0127",
-      "label": "坝基及绕坝渗漏问题",
+      "label": "坝基及绕坝渗漏",
       "nodeType": "工程地质问题",
       "nodeRole": "entity",
       "parentKey": "secondary::工程地质问题::渗漏与地下水",
@@ -7824,7 +7824,7 @@
           }
         ],
         "aliases": [
-          "坝基及绕坝渗漏"
+          "坝基及绕坝渗漏问题"
         ],
         "attributes": [
           {
@@ -8693,7 +8693,7 @@
     },
     {
       "key": "kb::entity::0137",
-      "label": "水库渗漏问题",
+      "label": "水库渗漏",
       "nodeType": "工程地质问题",
       "nodeRole": "entity",
       "parentKey": "secondary::工程地质问题::渗漏与地下水",
@@ -8746,7 +8746,9 @@
             "value": "2"
           }
         ],
-        "aliases": [],
+        "aliases": [
+          "水库渗漏问题"
+        ],
         "attributes": [
           {
             "key": "conclusion",
@@ -9216,7 +9218,7 @@
     },
     {
       "key": "kb::entity::0142",
-      "label": "坝基抗滑稳定问题",
+      "label": "坝基抗滑稳定",
       "nodeType": "工程地质问题",
       "nodeRole": "entity",
       "parentKey": "secondary::工程地质问题::稳定与变形",
@@ -9269,7 +9271,9 @@
             "value": "2"
           }
         ],
-        "aliases": [],
+        "aliases": [
+          "坝基抗滑稳定问题"
+        ],
         "attributes": [
           {
             "key": "evaluation",
@@ -13134,7 +13138,7 @@
             ],
             "direction": "outgoing",
             "otherNodeKey": "kb::entity::0142",
-            "otherLabel": "坝基抗滑稳定问题"
+            "otherLabel": "坝基抗滑稳定"
           }
         ],
         "children": [
@@ -13754,7 +13758,7 @@
             ],
             "direction": "outgoing",
             "otherNodeKey": "kb::entity::0127",
-            "otherLabel": "坝基及绕坝渗漏问题"
+            "otherLabel": "坝基及绕坝渗漏"
           },
           {
             "relation": "建议针对",
@@ -14253,7 +14257,7 @@
             ],
             "direction": "outgoing",
             "otherNodeKey": "kb::entity::0127",
-            "otherLabel": "坝基及绕坝渗漏问题"
+            "otherLabel": "坝基及绕坝渗漏"
           }
         ],
         "children": [
@@ -15723,7 +15727,7 @@
         "attributes": [
           {
             "key": "顶拱高程",
-            "value": "1281m"
+            "value": "['1281m', '110.0m']"
           },
           {
             "key": "底板高程",
@@ -17890,7 +17894,7 @@
         "attributes": [
           {
             "key": "峰值加速度",
-            "value": "134 Gal (50年10%)"
+            "value": "['134 Gal (50年10%)', '102 gal（50年10%）']"
           }
         ],
         "evidence": [
@@ -27313,7 +27317,7 @@
             ],
             "direction": "incoming",
             "otherNodeKey": "kb::entity::0127",
-            "otherLabel": "坝基及绕坝渗漏问题"
+            "otherLabel": "坝基及绕坝渗漏"
           },
           {
             "relation": "affects",
@@ -27381,7 +27385,7 @@
             ],
             "direction": "incoming",
             "otherNodeKey": "kb::entity::0137",
-            "otherLabel": "水库渗漏问题"
+            "otherLabel": "水库渗漏"
           },
           {
             "relation": "存在问题",
@@ -27449,7 +27453,7 @@
             ],
             "direction": "outgoing",
             "otherNodeKey": "kb::entity::0127",
-            "otherLabel": "坝基及绕坝渗漏问题"
+            "otherLabel": "坝基及绕坝渗漏"
           },
           {
             "relation": "存在问题",
@@ -27517,7 +27521,7 @@
             ],
             "direction": "outgoing",
             "otherNodeKey": "kb::entity::0137",
-            "otherLabel": "水库渗漏问题"
+            "otherLabel": "水库渗漏"
           },
           {
             "relation": "组成",
@@ -28427,7 +28431,7 @@
     },
     {
       "key": "kb::entity::0246",
-      "label": "岩体卸荷现象",
+      "label": "岩体卸荷",
       "nodeType": "物理地质现象",
       "nodeRole": "entity",
       "parentKey": "primary::物理地质现象",
@@ -28473,7 +28477,7 @@
           }
         ],
         "aliases": [
-          "岩体卸荷"
+          "岩体卸荷现象"
         ],
         "attributes": [
           {

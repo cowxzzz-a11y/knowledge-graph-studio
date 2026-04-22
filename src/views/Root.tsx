@@ -12,6 +12,7 @@ import GraphEventsController from "./GraphEventsController";
 import GraphPhysicsController from "./GraphPhysicsController";
 import GraphSettingsController from "./GraphSettingsController";
 import GraphViewportController from "./GraphViewportController";
+import ConfigManager from "./ConfigManager";
 import NodeDetailPanel from "./NodeDetailPanel";
 
 const DEFAULT_DATASET_URL = "/datasets/knowledge-base-current.json";
@@ -37,7 +38,7 @@ function resolveDatasetUrl() {
   return params.get("dataset") || DEFAULT_DATASET_URL;
 }
 
-const Root: FC = () => {
+const GraphApp: FC = () => {
   const graph = useMemo(() => new MultiDirectedGraph(), []);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
@@ -165,6 +166,9 @@ const Root: FC = () => {
           <span>{dataset?.metadata?.title || "Knowledge Graph Studio"}</span>
         </div>
         <div className="graph-topbar-meta">
+          <a className="graph-topbar-link" href="?view=config">
+            配置管理
+          </a>
           <span>{documentCount ? `${documentCount} 个文档` : "等待数据集加载"}</span>
           <span>{controls.viewMode === "structure" ? "知识结构视图" : "关系图谱视图"}</span>
         </div>
@@ -191,6 +195,11 @@ const Root: FC = () => {
       </SigmaContainer>
     </div>
   );
+};
+
+const Root: FC = () => {
+  const appView = new URLSearchParams(window.location.search).get("view");
+  return appView === "config" ? <ConfigManager /> : <GraphApp />;
 };
 
 export default Root;

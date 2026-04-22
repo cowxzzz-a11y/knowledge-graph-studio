@@ -1,0 +1,43 @@
+{
+  "version": "entity_merge_config/v1",
+  "normalization": {
+    "generic_trailing_tokens": [
+      "问题",
+      "现象",
+      "情况",
+      "灾害",
+      "事件",
+      "隐患",
+      "建议",
+      "结论",
+      "措施",
+      "工作",
+      "风险",
+      "评价",
+      "判定",
+      "判断",
+      "特征"
+    ],
+    "surface_separator_pattern": "[\\s\\-_()（）\\[\\]【】{}<>《》\\\"'“”‘’.,，。!?！？;；:：/\\\\、·]+",
+    "strip_locator_prefix": true,
+    "min_core_chars_after_suffix_strip": 2
+  },
+  "display_name": {
+    "prefer_non_generic_suffix": true,
+    "prefer_shorter_core_when_same": true
+  },
+  "attrs": {
+    "max_values_per_attr": 4
+  },
+  "evidence": {
+    "dedupe_fields": [
+      "evidence_type",
+      "paragraph_index",
+      "table_index",
+      "figure_index",
+      "quote",
+      "support_type"
+    ],
+    "normalize_quote": true
+  }
+}

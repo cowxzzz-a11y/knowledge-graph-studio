@@ -1,10 +1,15 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
-import { DatasetMetadata, GraphNodeAttributes, NodeEvidence } from "../types";
+import { DatasetMetadata, GraphNodeAttributes, NodeEvidence, NodeRelationDetail, RelationEvidence } from "../types";
 
 type Props = {
   metadata: DatasetMetadata | null;
   node: GraphNodeAttributes | null;
+};
+
+type DocumentTab = {
+  key: string;
+  label: string;
 };
 
 function evidenceKey(item: NodeEvidence, index: number) {
@@ -17,28 +22,61 @@ function evidenceKey(item: NodeEvidence, index: number) {
   ].join(":");
 }
 
+function sourceLabel(item: Pick<NodeEvidence, "documentId" | "documentName" | "documentTitle">) {
+  return item.documentName || item.documentTitle || item.documentId || "未标注文档";
+}
+
+function sourceKey(item: Pick<NodeEvidence, "documentId" | "documentName" | "documentTitle">) {
+  return item.documentId || item.documentName || item.documentTitle || "unknown";
+}
+
+function collectDocumentTabs(node: GraphNodeAttributes, evidence: NodeEvidence[], relations: NodeRelationDetail[]) {
+  const tabs = new Map<string, DocumentTab>();
+
+  node.documentIds?.forEach((documentId, index) => {
+    const label = node.documentNames?.[index] || documentId;
+    if (documentId || label) tabs.set(documentId || label, { key: documentId || label, label });
+  });
+
+  evidence.forEach((item) => {
+    const key = sourceKey(item);
+    tabs.set(key, { key, label: sourceLabel(item) });
+  });
+
+  relations.forEach((relation) => {
+    relation.evidence?.forEach((item) => {
+      const key = sourceKey(item);
+      tabs.set(key, { key, label: sourceLabel(item) });
+    });
+    relation.documents?.forEach((documentName) => {
+      if (documentName) tabs.set(documentName, { key: documentName, label: documentName });
+    });
+  });
+
+  return [...tabs.values()].sort((left, right) => left.label.localeCompare(right.label, "zh-CN"));
+}
+
+function evidenceMatchesDocument(item: NodeEvidence | RelationEvidence, documentKey: string) {
+  return documentKey === "all" || sourceKey(item) === documentKey || sourceLabel(item) === documentKey;
+}
+
+function relationMatchesDocument(item: NodeRelationDetail, documentKey: string) {
+  if (documentKey === "all") return true;
+  if (item.evidence?.some((evidence) => evidenceMatchesDocument(evidence, documentKey))) return true;
+  return Boolean(item.documents?.some((documentName) => documentName === documentKey));
+}
+
 const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
   const [expandedEvidenceKey, setExpandedEvidenceKey] = useState<string | null>(null);
+  const [activeDocumentKey, setActiveDocumentKey] = useState("all");
 
   useEffect(() => {
     setExpandedEvidenceKey(null);
+    setActiveDocumentKey("all");
   }, [node?.key]);
 
-  if (!node) {
-    return (
-      <aside className="detail-panel">
-        <div className="detail-panel-header">
-          <div className="detail-panel-title">实体详情</div>
-          <div className="detail-panel-subtitle">
-            点击图中的节点后，这里会显示摘要、属性、证据、关系以及该节点所属文档。
-          </div>
-        </div>
-      </aside>
-    );
-  }
-
-  const detail = node.detail || {
-    summary: node.description || "暂无摘要",
+  const detail = node?.detail || {
+    summary: node?.description || "暂无摘要",
     stats: [],
     aliases: [],
     attributes: [],
@@ -47,18 +85,58 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
     children: [],
   };
 
+  const documentTabs = useMemo(
+    () => (node ? collectDocumentTabs(node, detail.evidence, detail.relations) : []),
+    [detail.evidence, detail.relations, node],
+  );
+  const filteredEvidence = detail.evidence.filter((item) => evidenceMatchesDocument(item, activeDocumentKey));
+  const filteredRelations = detail.relations.filter((item) => relationMatchesDocument(item, activeDocumentKey));
+
+  if (!node) {
+    return (
+      <aside className="detail-panel">
+        <div className="detail-panel-header">
+          <div className="detail-panel-title">实体详情</div>
+          <div className="detail-panel-subtitle">点击图中的节点后，这里会显示摘要、属性、证据、关系和数据来源。</div>
+        </div>
+      </aside>
+    );
+  }
+
   return (
     <aside className="detail-panel">
       <div className="detail-panel-header">
         <div className="detail-panel-title">{node.label}</div>
         <div className="detail-panel-subtitle">{node.nodeType}</div>
         <div className="detail-chip-row">
-          {node.documentName ? <span className="detail-chip">{node.documentName}</span> : null}
           {node.categoryPath ? <span className="detail-chip">{node.categoryPath}</span> : null}
           {node.schemaId ? <span className="detail-chip">{node.schemaId}</span> : null}
           {node.confidence ? <span className="detail-chip">{node.confidence}</span> : null}
         </div>
       </div>
+
+      {documentTabs.length > 1 ? (
+        <div className="detail-doc-tabs" role="tablist" aria-label="文档筛选">
+          <button
+            type="button"
+            className={`detail-doc-tab${activeDocumentKey === "all" ? " is-active" : ""}`}
+            onClick={() => setActiveDocumentKey("all")}
+          >
+            全部
+          </button>
+          {documentTabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`detail-doc-tab${activeDocumentKey === tab.key ? " is-active" : ""}`}
+              title={tab.label}
+              onClick={() => setActiveDocumentKey(tab.key)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div className="detail-panel-section">
         <div className="detail-section-title">摘要</div>
@@ -106,11 +184,11 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         </div>
       ) : null}
 
-      {detail.evidence.length > 0 ? (
+      {filteredEvidence.length > 0 ? (
         <div className="detail-panel-section">
           <div className="detail-section-title">证据</div>
           <div className="detail-list">
-            {detail.evidence.map((item, index) => {
+            {filteredEvidence.map((item, index) => {
               const key = evidenceKey(item, index);
               const expanded = expandedEvidenceKey === key;
               const sourceText = item.sourceText || item.quote;
@@ -124,7 +202,7 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
                   onClick={() => setExpandedEvidenceKey((current) => (current === key ? null : key))}
                 >
                   <div className="detail-list-meta">
-                    {item.documentName ? <span>{item.documentName}</span> : null}
+                    <span>{sourceLabel(item)}</span>
                     <span>{item.locator}</span>
                     <span>{item.evidenceType}</span>
                     <span>{item.supportType}</span>
@@ -147,33 +225,45 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         </div>
       ) : null}
 
-      {detail.relations.length > 0 ? (
+      {filteredRelations.length > 0 ? (
         <div className="detail-panel-section">
           <div className="detail-section-title">关系</div>
           <div className="detail-list">
-            {detail.relations.map((item, index) => (
-              <article key={`${item.otherNodeKey}:${item.relationType}:${index}`} className="detail-list-item">
-                <div className="detail-list-meta">
-                  <span>{item.direction === "outgoing" ? "出边" : "入边"}</span>
-                  <span>{item.relation}</span>
-                  <span>{item.confidence || "-"}</span>
-                  {item.documentCount ? <span>{item.documentCount} 个文档</span> : null}
-                </div>
-                <div className="detail-list-copy">
-                  {item.direction === "outgoing" ? "指向" : "来自"} {item.otherLabel}
-                  {item.locator ? ` · ${item.locator}` : ""}
-                </div>
-                {item.documents?.length ? <div className="detail-list-note">{item.documents.join(" / ")}</div> : null}
-                {item.quote ? <div className="detail-list-note">{item.quote}</div> : null}
-              </article>
-            ))}
+            {filteredRelations.map((item, index) => {
+              const relationEvidence =
+                activeDocumentKey === "all"
+                  ? item.evidence || []
+                  : (item.evidence || []).filter((evidence) => evidenceMatchesDocument(evidence, activeDocumentKey));
+              return (
+                <article key={`${item.otherNodeKey}:${item.relationType}:${index}`} className="detail-list-item">
+                  <div className="detail-list-meta">
+                    <span>{item.direction === "outgoing" ? "出边" : "入边"}</span>
+                    <span>{item.relation}</span>
+                    <span>{item.confidence || "-"}</span>
+                    {item.documentCount ? <span>{item.documentCount} 个文档</span> : null}
+                  </div>
+                  <div className="detail-list-copy">
+                    {item.direction === "outgoing" ? "指向" : "来自"} {item.otherLabel}
+                    {item.locator ? ` · ${item.locator}` : ""}
+                  </div>
+                  {item.documents?.length ? <div className="detail-list-note">{item.documents.join(" / ")}</div> : null}
+                  {relationEvidence.slice(0, 3).map((evidence, evidenceIndex) => (
+                    <div key={`${sourceKey(evidence)}:${evidence.locator}:${evidenceIndex}`} className="detail-list-note">
+                      {sourceLabel(evidence)} · {evidence.locator}
+                      {evidence.quote ? ` · ${evidence.quote}` : ""}
+                    </div>
+                  ))}
+                  {!relationEvidence.length && item.quote ? <div className="detail-list-note">{item.quote}</div> : null}
+                </article>
+              );
+            })}
           </div>
         </div>
       ) : null}
 
       {detail.children.length > 0 ? (
         <div className="detail-panel-section">
-          <div className="detail-section-title">代表子项</div>
+          <div className="detail-section-title">所属文档</div>
           <div className="detail-chip-row">
             {detail.children.map((item) => (
               <span key={item} className="detail-chip">
@@ -188,13 +278,7 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         <div className="detail-panel-section detail-panel-footer">
           <div className="detail-section-title">数据来源</div>
           <div className="detail-copy">
-            {node.documentTitle || node.documentName}
-            {node.documentTitle && node.documentName && node.documentTitle !== node.documentName ? (
-              <>
-                <br />
-                {node.documentName}
-              </>
-            ) : null}
+            {metadata?.title || node.documentTitle || node.documentName}
             {metadata?.runLabel ? (
               <>
                 <br />
