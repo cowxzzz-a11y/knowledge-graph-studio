@@ -59,8 +59,8 @@ function getBoundaryRadius(nodeCount: number) {
 function getSpacing(left: NodeSnapshot, right: NodeSnapshot) {
   const base = (left.size + right.size) * 0.3 + 1.65;
   if (left.documentKey && right.documentKey && left.documentKey !== right.documentKey) return base + 2.8;
-  if (left.familyKey && right.familyKey && left.familyKey !== right.familyKey) return base + 1.45;
-  if (left.familyKey && right.familyKey && left.familyKey === right.familyKey) return Math.max(1.8, base - 0.18);
+  if (left.familyKey && right.familyKey && left.familyKey !== right.familyKey) return base + 2.35;
+  if (left.familyKey && right.familyKey && left.familyKey === right.familyKey) return Math.max(1.08, base - 0.78);
   if (left.degree === 0 && right.degree === 0) return base + 0.55;
   if (left.degree === 0 || right.degree === 0) return base + 0.28;
   return base + 0.1;
@@ -164,12 +164,14 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         const distance = Math.max(0.001, Math.hypot(dx, dy));
         const isRelationEdge = attributes.edgeKind === "relation";
         const isFamilyEdge = attributes.edgeKind === "family";
-        const desiredBase = isRelationEdge ? 2.5 : isFamilyEdge ? 1.95 : 3.45;
+        const isCrossFamilyRelation =
+          isRelationEdge && left.familyKey && right.familyKey && left.familyKey !== right.familyKey;
+        const desiredBase = isRelationEdge ? (isCrossFamilyRelation ? 9.5 : 2.8) : isFamilyEdge ? 1.72 : 3.45;
         const desired = desiredBase * controls.linkLength + (Math.max(left.size, right.size) - 2.6) * 0.15;
         const delta = distance - desired;
         if (Math.abs(delta) < 0.02) return;
 
-        const attractionWeight = isFamilyEdge ? 0.032 : isRelationEdge ? 0.012 : 0.0075;
+        const attractionWeight = isFamilyEdge ? 0.052 : isRelationEdge ? (isCrossFamilyRelation ? 0.0018 : 0.006) : 0.0075;
         const strength = delta * attractionWeight * controls.neighborAttraction;
         const nx = dx / distance;
         const ny = dy / distance;
@@ -199,13 +201,13 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
             ? 0.034 * controls.gravity
             : controls.viewMode === "relations"
               ? snapshot.relationDegree > 0
-                ? 0.032 * controls.gravity
-                : 0.052 * controls.gravity
+                ? 0.075 * controls.gravity
+                : 0.08 * controls.gravity
               : snapshot.relationDegree > 0
-                ? 0.016 * controls.gravity
+                ? 0.05 * controls.gravity
                 : snapshot.degree === 0
-                  ? 0.024 * controls.gravity
-                  : 0.03 * controls.gravity;
+                  ? 0.04 * controls.gravity
+                  : 0.06 * controls.gravity;
         shift.x += (snapshot.homeX - snapshot.x) * homeStrength;
         shift.y += (snapshot.homeY - snapshot.y) * homeStrength;
 
@@ -244,7 +246,7 @@ const GraphPhysicsController: FC<PropsWithChildren<{ controls: GraphControls; se
         }
 
         const step = Math.hypot(shift.x, shift.y);
-        const maxStep = controls.viewMode === "relations" ? 0.12 : 0.22;
+        const maxStep = controls.viewMode === "relations" ? 0.085 : 0.13;
         const ratio = step > maxStep ? maxStep / step : 1;
         const nextPoint = {
           x: snapshot.x + shift.x * ratio,

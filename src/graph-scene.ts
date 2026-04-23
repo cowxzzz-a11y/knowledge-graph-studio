@@ -776,44 +776,6 @@ function placeNodesOnOrbit(
   }
 }
 
-function normalizeArc(startAngle: number, endAngle: number) {
-  let span = endAngle - startAngle;
-  while (span <= 0) span += Math.PI * 2;
-  return span;
-}
-
-function placeNodesInArc(
-  nodes: SceneNode[],
-  center: Point,
-  initialRadius: number,
-  ringGap: number,
-  startAngle: number,
-  endAngle: number,
-  positions: Map<string, Point>,
-) {
-  if (!nodes.length) return;
-
-  const span = normalizeArc(startAngle, endAngle);
-  let placed = 0;
-  let ringIndex = 0;
-
-  while (placed < nodes.length) {
-    const radius = initialRadius + ringGap * ringIndex;
-    const arcLength = Math.max(5.8, radius * span);
-    const ringCapacity = Math.max(3, Math.floor(arcLength / 1.8));
-    const ringNodes = nodes.slice(placed, placed + ringCapacity);
-
-    ringNodes.forEach((node, index) => {
-      const ratio = ringNodes.length === 1 ? 0.5 : index / (ringNodes.length - 1);
-      const angle = startAngle + span * ratio;
-      positions.set(node.key, add(center, polar(radius, angle)));
-    });
-
-    placed += ringNodes.length;
-    ringIndex += 1;
-  }
-}
-
 function recenterPositions(positions: Map<string, Point>) {
   const points = [...positions.values()];
   if (!points.length) return;
@@ -854,24 +816,127 @@ function measureLayoutRadius(nodes: SceneNode[], positions: Map<string, Point>, 
   return radius + DOCUMENT_PADDING;
 }
 
-function buildDocumentStructureLayout(nodes: SceneNode[]) {
+function estimateOrbitRadius(itemCount: number, initialRadius: number, ringGap: number) {
+  if (itemCount <= 0) return 0;
+
+  let placed = 0;
+  let ringIndex = 0;
+  let radius = initialRadius;
+
+  while (placed < itemCount) {
+    radius = initialRadius + ringGap * ringIndex;
+    const circumference = Math.max(8, Math.PI * 2 * radius);
+    const ringCapacity = Math.max(6, Math.floor(circumference / 2.12));
+    placed += ringCapacity;
+    ringIndex += 1;
+  }
+
+  return radius;
+}
+
+function estimateStructureFamilyRadius(cluster: FamilyCluster, entitiesBySecondary: Map<string, SceneNode[]>) {
+  const secondaryOrbit = 2.25 + Math.min(2.2, cluster.secondaries.length * 0.08);
+  const largestSecondaryChildRadius = cluster.secondaries.reduce((maxRadius, secondary) => {
+    const children = entitiesBySecondary.get(secondary.key) || [];
+    return Math.max(maxRadius, estimateOrbitRadius(children.length, 1.35, 0.82));
+  }, 0);
+  const directEntityRadius = estimateOrbitRadius(cluster.directEntities.length, cluster.secondaries.length ? secondaryOrbit + 2.3 : 2.6, 0.92);
+
+  return Math.max(
+    3.8,
+    secondaryOrbit + largestSecondaryChildRadius + 1.25,
+    directEntityRadius + 1.2,
+    3 + Math.sqrt(Math.max(1, cluster.primary.childCount)) * 0.38,
+  );
+}
+
+function resolveIslandStructureFamilyCenters(clusters: FamilyCluster[], radiusMap: Map<string, number>) {
+  const centers = new Map<string, Point>();
+  const targets = new Map<string, Point>();
+  const sorted = [...clusters].sort((left, right) => {
+    const leftRadius = radiusMap.get(left.primaryKey) || left.radius;
+    const rightRadius = radiusMap.get(right.primaryKey) || right.radius;
+    if (leftRadius !== rightRadius) return rightRadius - leftRadius;
+    return sortByLabel(left.primary, right.primary);
+  });
+
+  if (!sorted.length) return centers;
+
+  const maxRadius = Math.max(...sorted.map((cluster) => radiusMap.get(cluster.primaryKey) || cluster.radius));
+  let placed = 0;
+  let ringIndex = 0;
+
+  while (placed < sorted.length) {
+    const ringRadius = maxRadius + 3.2 + ringIndex * (maxRadius * 1.82 + 3.4);
+    const ringCapacity = Math.max(5, Math.floor((Math.PI * 2 * ringRadius) / Math.max(5.4, maxRadius * 1.35)));
+    const ringClusters = sorted.slice(placed, placed + ringCapacity);
+    const offset = ringIndex % 2 === 0 ? -Math.PI / 2 : -Math.PI / 2 + Math.PI / Math.max(2, ringClusters.length);
+
+    ringClusters.forEach((cluster, index) => {
+      const angle = offset + (Math.PI * 2 * index) / ringClusters.length;
+      const point = polar(ringRadius, angle);
+      centers.set(cluster.primaryKey, { ...point });
+      targets.set(cluster.primaryKey, point);
+    });
+
+    placed += ringClusters.length;
+    ringIndex += 1;
+  }
+
+  for (let step = 0; step < 260; step += 1) {
+    sorted.forEach((cluster, index) => {
+      const current = centers.get(cluster.primaryKey)!;
+      const radius = radiusMap.get(cluster.primaryKey) || cluster.radius;
+      const distance = Math.max(0.001, length(current));
+      const minDistanceFromRoot = radius + 2.8;
+
+      if (distance < minDistanceFromRoot) {
+        const direction = normalize(current, -Math.PI / 2 + (Math.PI * 2 * index) / sorted.length);
+        const push = (minDistanceFromRoot - distance) * 0.18;
+        current.x += direction.x * push;
+        current.y += direction.y * push;
+      }
+    });
+
+    for (let index = 0; index < sorted.length; index += 1) {
+      for (let otherIndex = index + 1; otherIndex < sorted.length; otherIndex += 1) {
+        const left = sorted[index];
+        const right = sorted[otherIndex];
+        const leftPoint = centers.get(left.primaryKey)!;
+        const rightPoint = centers.get(right.primaryKey)!;
+        const leftRadius = radiusMap.get(left.primaryKey) || left.radius;
+        const rightRadius = radiusMap.get(right.primaryKey) || right.radius;
+        const delta = { x: rightPoint.x - leftPoint.x, y: rightPoint.y - leftPoint.y };
+        const distance = Math.max(0.001, length(delta));
+        const minDistance = leftRadius + rightRadius + 2.1;
+
+        if (distance >= minDistance) continue;
+
+        const push = ((minDistance - distance) / minDistance) * 0.62;
+        const direction = normalize(delta, (Math.PI * 2 * index) / sorted.length);
+
+        leftPoint.x -= direction.x * push;
+        leftPoint.y -= direction.y * push;
+        rightPoint.x += direction.x * push;
+        rightPoint.y += direction.y * push;
+      }
+    }
+
+    sorted.forEach((cluster) => {
+      const current = centers.get(cluster.primaryKey)!;
+      const target = targets.get(cluster.primaryKey)!;
+      current.x += (target.x - current.x) * 0.018;
+      current.y += (target.y - current.y) * 0.018;
+    });
+  }
+
+  return centers;
+}
+
+function buildDocumentIslandStructureLayout(nodes: SceneNode[]) {
   const nodeMap = new Map(nodes.map((node) => [node.key, node]));
   const positions = new Map<string, Point>();
-  const primaryNodes = nodes.filter((node) => node.nodeRole === "primary_category").sort(sortByLabel);
-  const secondaryByPrimary = groupBy(
-    nodes.filter((node) => node.nodeRole === "secondary_category"),
-    (node) => {
-      const parent = node.parentKey ? nodeMap.get(node.parentKey) : null;
-      return parent?.nodeRole === "primary_category" ? parent.key : null;
-    },
-  );
-  const directEntitiesByPrimary = groupBy(
-    nodes.filter((node) => node.nodeRole === "entity"),
-    (node) => {
-      const parent = node.parentKey ? nodeMap.get(node.parentKey) : null;
-      return parent?.nodeRole === "primary_category" ? parent.key : null;
-    },
-  );
+  const clusters = buildPrimaryFamilyClusters(nodes, nodeMap);
   const entitiesBySecondary = groupBy(
     nodes.filter((node) => node.nodeRole === "entity"),
     (node) => {
@@ -880,59 +945,210 @@ function buildDocumentStructureLayout(nodes: SceneNode[]) {
     },
   );
 
-  if (!primaryNodes.length) {
+  if (!clusters.length) {
     placeNodesOnOrbit(nodes.sort(sortByLabel), { x: 0, y: 0 }, 2.8, 1.35, -Math.PI / 2, positions);
     recenterPositions(positions);
     return positions;
   }
 
-  const primaryRing = primaryNodes.length <= 2 ? 2.8 : 3.6;
-  const sectorPadding = 0.12;
+  const structureRadiusMap = new Map(
+    clusters.map((cluster) => [cluster.primaryKey, estimateStructureFamilyRadius(cluster, entitiesBySecondary)]),
+  );
+  const familyCenters = resolveIslandStructureFamilyCenters(clusters, structureRadiusMap);
 
-  primaryNodes.forEach((primary, index) => {
-    const ratio = primaryNodes.length === 1 ? 0 : index / primaryNodes.length;
-    const angle = -Math.PI / 2 + ratio * Math.PI * 2;
-    positions.set(primary.key, polar(primaryRing, angle));
-  });
+  clusters.forEach((cluster, clusterIndex) => {
+    const center = familyCenters.get(cluster.primaryKey) || polar(structureRadiusMap.get(cluster.primaryKey) || 4.4, -Math.PI / 2);
+    const outward = normalize(center, -Math.PI / 2 + (Math.PI * 2 * clusterIndex) / clusters.length);
+    const baseAngle = getAngle(outward);
+    const secondaryOrbit = 2.25 + Math.min(2.2, cluster.secondaries.length * 0.08);
+    const directEntityOrbit = cluster.secondaries.length ? secondaryOrbit + 2.35 : 2.65;
 
-  primaryNodes.forEach((primary, index) => {
-    const baseAngle = getAngle(positions.get(primary.key) || { x: 0, y: 0 });
-    const sectorSpan = (Math.PI * 2) / Math.max(primaryNodes.length, 1);
-    const startAngle = baseAngle - sectorSpan / 2 + sectorPadding;
-    const endAngle = baseAngle + sectorSpan / 2 - sectorPadding;
+    positions.set(cluster.primaryKey, center);
 
-    const secondaries = [...(secondaryByPrimary.get(primary.key) || [])].sort(sortByLabel);
-    placeNodesInArc(secondaries, { x: 0, y: 0 }, 6.6, 1.1, startAngle, endAngle, positions);
+    cluster.secondaries.forEach((secondary, secondaryIndex) => {
+      const angle =
+        baseAngle +
+        (cluster.secondaries.length === 1 ? 0 : (Math.PI * 2 * secondaryIndex) / cluster.secondaries.length);
+      const secondaryCenter = add(center, polar(secondaryOrbit, angle));
+      positions.set(secondary.key, secondaryCenter);
 
-    secondaries.forEach((secondary, secondaryIndex) => {
-      const secondaryAngle =
-        secondaries.length <= 1
-          ? baseAngle
-          : startAngle + ((endAngle - startAngle) * secondaryIndex) / Math.max(1, secondaries.length - 1);
-      const childArc = 0.42;
       const secondaryChildren = [...(entitiesBySecondary.get(secondary.key) || [])].sort(sortByLabel);
-      placeNodesInArc(
-        secondaryChildren,
-        { x: 0, y: 0 },
-        10.1,
-        1.08,
-        secondaryAngle - childArc,
-        secondaryAngle + childArc,
-        positions,
-      );
+      placeNodesOnOrbit(secondaryChildren, secondaryCenter, 1.35, 0.82, angle + Math.PI / 5, positions);
     });
 
-    const directEntities = [...(directEntitiesByPrimary.get(primary.key) || [])].sort(sortByLabel);
-    placeNodesInArc(directEntities, { x: 0, y: 0 }, 8.9, 1.15, startAngle, endAngle, positions);
+    placeNodesOnOrbit(cluster.directEntities, center, directEntityOrbit, 0.92, baseAngle + Math.PI / 7, positions);
   });
 
   const unpositioned = nodes.filter((node) => !positions.has(node.key)).sort(sortByLabel);
-  placeNodesOnOrbit(unpositioned, { x: 0, y: 0 }, 11.2, 1.25, -Math.PI / 2, positions);
+  const fallbackRadius = Math.max(8, Math.max(...[...structureRadiusMap.values()]) + 5);
+  placeNodesOnOrbit(unpositioned, { x: 0, y: 0 }, fallbackRadius, 1.25, -Math.PI / 2, positions);
   recenterPositions(positions);
   return positions;
 }
 
-function buildDocumentRelationLayout(nodes: SceneNode[], relationEdges: SceneEdge[]) {
+function compactRingCapacity(radius: number, itemGap: number) {
+  return Math.max(6, Math.floor((Math.PI * 2 * radius) / itemGap));
+}
+
+function placeNodesOnCompactOrbit(
+  nodes: SceneNode[],
+  center: Point,
+  initialRadius: number,
+  ringGap: number,
+  itemGap: number,
+  startAngle: number,
+  positions: Map<string, Point>,
+) {
+  if (!nodes.length) return;
+
+  let placed = 0;
+  let ringIndex = 0;
+
+  while (placed < nodes.length) {
+    const radius = initialRadius + ringGap * ringIndex;
+    const capacity = compactRingCapacity(radius, itemGap);
+    const ringNodes = nodes.slice(placed, placed + capacity);
+    const offset = ringIndex % 2 === 0 ? 0 : Math.PI / Math.max(2, ringNodes.length);
+
+    ringNodes.forEach((node, index) => {
+      const angle = startAngle + offset + (Math.PI * 2 * index) / ringNodes.length;
+      positions.set(node.key, add(center, polar(radius, angle)));
+    });
+
+    placed += ringNodes.length;
+    ringIndex += 1;
+  }
+}
+
+function estimateCompactFamilyRadius(cluster: FamilyCluster, entitiesBySecondary: Map<string, SceneNode[]>) {
+  const secondaryOrbit = cluster.secondaries.length ? 1.65 + Math.min(1.15, cluster.secondaries.length * 0.055) : 0;
+  const secondaryChildRadius = cluster.secondaries.reduce((maxRadius, secondary) => {
+    const children = entitiesBySecondary.get(secondary.key) || [];
+    return Math.max(maxRadius, estimateOrbitRadius(children.length, 1.02, 0.58));
+  }, 0);
+  const directRadius = estimateOrbitRadius(cluster.directEntities.length, cluster.secondaries.length ? 2.35 : 1.55, 0.62);
+
+  return Math.max(2.5, secondaryOrbit + secondaryChildRadius + 0.65, directRadius + 0.55);
+}
+
+function resolveCompactStructureFamilyCenters(clusters: FamilyCluster[], radiusMap: Map<string, number>) {
+  const centers = new Map<string, Point>();
+  const sorted = [...clusters].sort((left, right) => {
+    const leftWeight = left.primary.childCount + left.secondaries.length + left.directEntities.length;
+    const rightWeight = right.primary.childCount + right.secondaries.length + right.directEntities.length;
+    if (leftWeight !== rightWeight) return rightWeight - leftWeight;
+    return sortByLabel(left.primary, right.primary);
+  });
+
+  if (!sorted.length) return centers;
+  if (sorted.length === 1) {
+    centers.set(sorted[0].primaryKey, { x: 0, y: 0 });
+    return centers;
+  }
+
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  const averageRadius = sorted.reduce((sum, cluster) => sum + (radiusMap.get(cluster.primaryKey) || cluster.radius), 0) / sorted.length;
+  const step = Math.max(1.85, averageRadius * 0.56);
+
+  sorted.forEach((cluster, index) => {
+    if (index === 0) {
+      centers.set(cluster.primaryKey, { x: 0, y: 0 });
+      return;
+    }
+
+    const ringRadius = step * Math.sqrt(index) + (index % 5) * 0.12;
+    const angle = -Math.PI / 2 + index * goldenAngle;
+    centers.set(cluster.primaryKey, polar(ringRadius, angle));
+  });
+
+  for (let stepIndex = 0; stepIndex < 180; stepIndex += 1) {
+    for (let index = 0; index < sorted.length; index += 1) {
+      for (let otherIndex = index + 1; otherIndex < sorted.length; otherIndex += 1) {
+        const left = sorted[index];
+        const right = sorted[otherIndex];
+        const leftPoint = centers.get(left.primaryKey)!;
+        const rightPoint = centers.get(right.primaryKey)!;
+        const leftRadius = radiusMap.get(left.primaryKey) || left.radius;
+        const rightRadius = radiusMap.get(right.primaryKey) || right.radius;
+        const delta = { x: rightPoint.x - leftPoint.x, y: rightPoint.y - leftPoint.y };
+        const distance = Math.max(0.001, length(delta));
+        const minDistance = leftRadius * 0.48 + rightRadius * 0.48 + 0.92;
+
+        if (distance >= minDistance) continue;
+
+        const push = ((minDistance - distance) / minDistance) * 0.36;
+        const direction = normalize(delta, (Math.PI * 2 * index) / sorted.length);
+        leftPoint.x -= direction.x * push;
+        leftPoint.y -= direction.y * push;
+        rightPoint.x += direction.x * push;
+        rightPoint.y += direction.y * push;
+      }
+    }
+
+    centers.forEach((point) => {
+      point.x *= 0.992;
+      point.y *= 0.992;
+    });
+  }
+
+  return centers;
+}
+
+function buildDocumentCompactStructureLayout(nodes: SceneNode[]) {
+  const nodeMap = new Map(nodes.map((node) => [node.key, node]));
+  const positions = new Map<string, Point>();
+  const clusters = buildPrimaryFamilyClusters(nodes, nodeMap);
+  const entitiesBySecondary = groupBy(
+    nodes.filter((node) => node.nodeRole === "entity"),
+    (node) => {
+      const parent = node.parentKey ? nodeMap.get(node.parentKey) : null;
+      return parent?.nodeRole === "secondary_category" ? parent.key : null;
+    },
+  );
+
+  if (!clusters.length) {
+    placeNodesOnCompactOrbit(nodes.sort(sortByLabel), { x: 0, y: 0 }, 2.4, 0.72, 1.38, -Math.PI / 2, positions);
+    recenterPositions(positions);
+    return positions;
+  }
+
+  const compactRadiusMap = new Map(
+    clusters.map((cluster) => [cluster.primaryKey, estimateCompactFamilyRadius(cluster, entitiesBySecondary)]),
+  );
+  const familyCenters = resolveCompactStructureFamilyCenters(clusters, compactRadiusMap);
+
+  clusters.forEach((cluster, clusterIndex) => {
+    const center = familyCenters.get(cluster.primaryKey) || polar(2.4 + Math.sqrt(clusterIndex), -Math.PI / 2);
+    const outward = normalize(center, -Math.PI / 2 + (Math.PI * 2 * clusterIndex) / clusters.length);
+    const baseAngle = getAngle(outward);
+    const secondaryOrbit = 1.55 + Math.min(1.05, cluster.secondaries.length * 0.055);
+    const directEntityOrbit = cluster.secondaries.length ? secondaryOrbit + 1.05 : 1.55;
+
+    positions.set(cluster.primaryKey, center);
+
+    cluster.secondaries.forEach((secondary, secondaryIndex) => {
+      const angle =
+        baseAngle +
+        Math.PI / 7 +
+        (cluster.secondaries.length === 1 ? 0 : (Math.PI * 2 * secondaryIndex) / cluster.secondaries.length);
+      const secondaryCenter = add(center, polar(secondaryOrbit, angle));
+      positions.set(secondary.key, secondaryCenter);
+
+      const secondaryChildren = [...(entitiesBySecondary.get(secondary.key) || [])].sort(sortByLabel);
+      placeNodesOnCompactOrbit(secondaryChildren, secondaryCenter, 0.98, 0.58, 1.32, angle + Math.PI / 5, positions);
+    });
+
+    placeNodesOnCompactOrbit(cluster.directEntities, center, directEntityOrbit, 0.62, 1.36, baseAngle + Math.PI / 9, positions);
+  });
+
+  const unpositioned = nodes.filter((node) => !positions.has(node.key)).sort(sortByLabel);
+  const fallbackRadius = Math.max(5.5, Math.sqrt(nodes.length) * 0.62);
+  placeNodesOnCompactOrbit(unpositioned, { x: 0, y: 0 }, fallbackRadius, 0.76, 1.45, -Math.PI / 2, positions);
+  recenterPositions(positions);
+  return positions;
+}
+
+function buildDocumentRelationLayout(nodes: SceneNode[], relationEdges: SceneEdge[], structurePositions?: Map<string, Point>) {
   const nodeMap = new Map(nodes.map((node) => [node.key, node]));
   const positions = new Map<string, Point>();
   const relationDegreeMap = createRelationDegreeMap(relationEdges);
@@ -953,6 +1169,24 @@ function buildDocumentRelationLayout(nodes: SceneNode[], relationEdges: SceneEdg
     const familyKey = getPrimaryFamilyKey(node, nodeMap);
     if (familyKey) familyKeyMap.set(node.key, familyKey);
   });
+
+  if (structurePositions) {
+    nodes.forEach((node) => {
+      const point = structurePositions.get(node.key);
+      if (point) positions.set(node.key, { ...point });
+    });
+
+    const unpositioned = nodes.filter((node) => !positions.has(node.key)).sort(sortByLabel);
+    if (unpositioned.length) {
+      placeNodesOnOrbit(unpositioned, { x: 0, y: 0 }, 4.4, 1.15, -Math.PI / 2, positions);
+    }
+
+    return {
+      positions,
+      familyKeyMap,
+      relationDegreeMap,
+    };
+  }
 
   clusters.forEach((cluster) => {
     const primaryCenter = familyCenters.get(cluster.primaryKey) || { x: 0, y: 0 };
@@ -1010,8 +1244,9 @@ function buildDocumentRelationLayout(nodes: SceneNode[], relationEdges: SceneEdg
 }
 
 function buildDocumentLocalLayout(nodes: SceneNode[], relationEdges: SceneEdge[], hierarchyEdges: SceneEdge[], descriptor: DocumentDescriptor): DocumentLayout {
-  const structurePositions = buildDocumentStructureLayout(nodes);
-  const relationLayout = buildDocumentRelationLayout(nodes, relationEdges);
+  const structurePositions = buildDocumentCompactStructureLayout(nodes);
+  const relationAnchorPositions = buildDocumentIslandStructureLayout(nodes);
+  const relationLayout = buildDocumentRelationLayout(nodes, relationEdges, relationAnchorPositions);
   const structureRadius = measureLayoutRadius(nodes, structurePositions, hierarchyEdges, relationEdges);
   const relationRadius = measureLayoutRadius(nodes, relationLayout.positions, hierarchyEdges, relationEdges);
 
@@ -1158,10 +1393,12 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
   const { descriptor, visualNodes, familyEdges, relationEdges } = buildGlobalVisualGraph(dataset);
   const rootNodes = visualNodes.filter((node) => node.nodeRole === "root");
   const layoutNodes = visualNodes.filter((node) => node.nodeRole !== "root");
-  const structurePositions = buildDocumentStructureLayout(layoutNodes);
+  const structurePositions = buildDocumentCompactStructureLayout(layoutNodes);
+  const relationAnchorPositions = buildDocumentIslandStructureLayout(layoutNodes);
   rootNodes.forEach((node) => structurePositions.set(node.key, { x: 0, y: 0 }));
+  rootNodes.forEach((node) => relationAnchorPositions.set(node.key, { x: 0, y: 0 }));
 
-  const relationLayout = buildDocumentRelationLayout(layoutNodes, relationEdges);
+  const relationLayout = buildDocumentRelationLayout(layoutNodes, relationEdges, relationAnchorPositions);
   rootNodes.forEach((node) => relationLayout.positions.set(node.key, { x: 0, y: 0 }));
   const positionMap = viewMode === "relations" ? relationLayout.positions : structurePositions;
   const relationDegreeMap = relationLayout.relationDegreeMap;
@@ -1210,7 +1447,7 @@ export function buildGraphScene(dataset: Dataset, viewMode: GraphViewMode): Grap
       homeY: layoutPoint.y,
       degree,
       relationDegree: relationDegreeMap.get(node.key) || 0,
-      familyKey: familyKeyMap.get(node.key),
+      familyKey: viewMode === "relations" ? familyKeyMap.get(node.key) : undefined,
       importance: computeImportance(node, degree),
       isSynthetic: false,
       hiddenByView: false,

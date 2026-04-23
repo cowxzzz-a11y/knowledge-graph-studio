@@ -17,369 +17,17 @@
     "entityCount": 261,
     "categoryCount": 52,
     "relationCount": 147,
-    "structureEdgeCount": 312,
+    "structureEdgeCount": 275,
     "dbPath": "E:\\Project\\agent-workspace\\knowledge-graph-service\\data\\20260423_093501_知识库1\\knowledge_base.sqlite",
     "generatedFrom": "4工程地质；辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）"
   },
   "nodes": [
     {
-      "key": "kb::entity::0158",
-      "label": "大同浑源抽水蓄能电站",
-      "nodeType": "工程项目",
-      "nodeRole": "root",
-      "parentKey": null,
-      "group": "root",
-      "level": 0,
-      "x": 0,
-      "y": 0,
-      "description": "一等大（1）型抽水蓄能电站",
-      "content": "4预可研工程地质(审定稿).docx；辽宁庄河抽水蓄能电站.docx",
-      "learningValue": "261 个实体，147 条关系",
-      "relationHint": "项目总入口",
-      "childCount": 38,
-      "color": "rgba(240, 245, 252, 0.96)",
-      "schemaId": "project",
-      "categoryPath": "工程项目",
-      "confidence": "high",
-      "detail": {
-        "summary": "一等大（1）型抽水蓄能电站",
-        "stats": [
-          {
-            "label": "知识库",
-            "value": "知识库1"
-          },
-          {
-            "label": "文档数",
-            "value": "2"
-          },
-          {
-            "label": "实体数",
-            "value": "261"
-          },
-          {
-            "label": "关系数",
-            "value": "147"
-          }
-        ],
-        "aliases": [],
-        "attributes": [
-          {
-            "key": "装机容量",
-            "value": "1200MW"
-          },
-          {
-            "key": "等别",
-            "value": "一等"
-          },
-          {
-            "key": "规模",
-            "value": "大（1）型"
-          }
-        ],
-        "evidence": [
-          {
-            "locator": "P12",
-            "quote": "大同浑源抽水蓄能电站……规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）",
-            "evidenceType": "paragraph",
-            "supportType": "direct",
-            "documentId": "4预可研工程地质(审定稿)_d05ef288",
-            "documentTitle": "4工程地质",
-            "documentName": "4预可研工程地质(审定稿).docx",
-            "pageHint": null,
-            "sectionId": "sec_ff9a0e97",
-            "sectionTitle": "工程概况",
-            "paragraphIndex": 12,
-            "tableIndex": null,
-            "figureIndex": null,
-            "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-          }
-        ],
-        "relations": [
-          {
-            "relation": "属于",
-            "relationType": "belongs_to",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "incoming",
-            "otherNodeKey": "kb::entity::0189",
-            "otherLabel": "地下厂房"
-          },
-          {
-            "relation": "属于",
-            "relationType": "belongs_to",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "incoming",
-            "otherNodeKey": "kb::entity::0196",
-            "otherLabel": "钢筋混凝土面板堆石坝"
-          },
-          {
-            "relation": "评价为",
-            "relationType": "evaluated_as",
-            "confidence": "high",
-            "locator": "P315",
-            "quote": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P315",
-                "quote": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_c3ee151c",
-                "sectionTitle": "区域构造稳定性评价",
-                "paragraphIndex": 315,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0242",
-            "otherLabel": "区域构造稳定性"
-          },
-          {
-            "relation": "评价为",
-            "relationType": "evaluated_as",
-            "confidence": "high",
-            "locator": "P302",
-            "quote": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概...",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P302",
-                "quote": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概...",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_b8d3203f",
-                "sectionTitle": "地震安全性分析",
-                "paragraphIndex": 302,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概率10%的峰值加速度为134Gal，根据基岩与中硬场地峰值转换关系以及GB18306－2001《中国地震动参数区划图》中地震加速度峰值与地震基本烈度的对应关系，确定工程场地地震基本烈度为Ⅶ度。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0247",
-            "otherLabel": "工程场地地震基本烈度"
-          },
-          {
-            "relation": "组成",
-            "relationType": "has_part",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0145",
-            "otherLabel": "上水库"
-          },
-          {
-            "relation": "组成",
-            "relationType": "has_part",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0146",
-            "otherLabel": "下水库"
-          },
-          {
-            "relation": "组成",
-            "relationType": "has_part",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0149",
-            "otherLabel": "地下厂房系统"
-          },
-          {
-            "relation": "组成",
-            "relationType": "has_part",
-            "confidence": "high",
-            "locator": "P12",
-            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "4预可研工程地质(审定稿).docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "4预可研工程地质(审定稿)_d05ef288",
-                "documentTitle": "4工程地质",
-                "documentName": "4预可研工程地质(审定稿).docx",
-                "locator": "P12",
-                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_ff9a0e97",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 12,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0151",
-            "otherLabel": "水道系统"
-          }
-        ],
-        "children": [
-          "4预可研工程地质(审定稿).docx",
-          "辽宁庄河抽水蓄能电站.docx"
-        ]
-      }
-    },
-    {
       "key": "primary::工程地质问题",
       "label": "工程地质问题",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程地质问题",
       "level": 1,
       "x": 31.4,
@@ -592,7 +240,7 @@
       "label": "评价结论",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "评价结论",
       "level": 1,
       "x": 30.97,
@@ -872,7 +520,7 @@
       "label": "工程地质参数",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程地质参数",
       "level": 1,
       "x": 29.7,
@@ -919,7 +567,7 @@
       "label": "后续工作",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "后续工作",
       "level": 1,
       "x": 27.62,
@@ -1123,7 +771,7 @@
       "label": "永久建筑物",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "永久建筑物",
       "level": 1,
       "x": 24.78,
@@ -1170,7 +818,7 @@
       "label": "空间单元",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "空间单元",
       "level": 1,
       "x": 21.27,
@@ -1217,7 +865,7 @@
       "label": "工程系统",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程系统",
       "level": 1,
       "x": 17.17,
@@ -1264,7 +912,7 @@
       "label": "料场料源",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "料场料源",
       "level": 1,
       "x": 12.61,
@@ -1311,7 +959,7 @@
       "label": "地震分区单元",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "地震分区单元",
       "level": 1,
       "x": 7.71,
@@ -1358,7 +1006,7 @@
       "label": "岩性",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "岩性",
       "level": 1,
       "x": 2.5900000000000003,
@@ -1405,7 +1053,7 @@
       "label": "断层断裂带",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "断层断裂带",
       "level": 1,
       "x": -2.5899999999999994,
@@ -1452,7 +1100,7 @@
       "label": "围岩分类",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "围岩分类",
       "level": 1,
       "x": -7.71,
@@ -1498,7 +1146,7 @@
       "label": "区域构造单元",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "区域构造单元",
       "level": 1,
       "x": -12.61,
@@ -1543,7 +1191,7 @@
       "label": "岩土体",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "岩土体",
       "level": 1,
       "x": -17.17,
@@ -1588,7 +1236,7 @@
       "label": "节理裂隙",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "节理裂隙",
       "level": 1,
       "x": -21.27,
@@ -1633,7 +1281,7 @@
       "label": "勘探工程",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "勘探工程",
       "level": 1,
       "x": -24.78,
@@ -1677,7 +1325,7 @@
       "label": "地层",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "地层",
       "level": 1,
       "x": -27.62,
@@ -1721,7 +1369,7 @@
       "label": "物理地质现象",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "物理地质现象",
       "level": 1,
       "x": -29.7,
@@ -1765,7 +1413,7 @@
       "label": "自然地理单元",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "自然地理单元",
       "level": 1,
       "x": -30.97,
@@ -1809,7 +1457,7 @@
       "label": "评价工作",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "评价工作",
       "level": 1,
       "x": -31.4,
@@ -1853,7 +1501,7 @@
       "label": "勘察工作",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "勘察工作",
       "level": 1,
       "x": -30.97,
@@ -1896,7 +1544,7 @@
       "label": "参数建议值",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "参数建议值",
       "level": 1,
       "x": -29.7,
@@ -1939,7 +1587,7 @@
       "label": "工程部位",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程部位",
       "level": 1,
       "x": -27.62,
@@ -1982,7 +1630,7 @@
       "label": "试验方法",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "试验方法",
       "level": 1,
       "x": -24.78,
@@ -2025,7 +1673,7 @@
       "label": "参数对象",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "参数对象",
       "level": 1,
       "x": -21.27,
@@ -2067,7 +1715,7 @@
       "label": "工程型式",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程型式",
       "level": 1,
       "x": -17.17,
@@ -2105,15 +1753,57 @@
       }
     },
     {
+      "key": "primary::工程项目",
+      "label": "工程项目",
+      "nodeType": "一级类别",
+      "nodeRole": "primary_category",
+      "parentKey": null,
+      "group": "工程项目",
+      "level": 1,
+      "x": -12.61,
+      "y": -32.96,
+      "description": "工程项目 下共 3 个实体",
+      "content": "大同浑源抽水蓄能电站、庄河抽水蓄能电站、辽宁庄河抽水蓄能电站",
+      "learningValue": "0 个二级类别",
+      "relationHint": "结构分组",
+      "childCount": 3,
+      "color": "rgba(195, 142, 230, 0.92)",
+      "schemaId": "",
+      "categoryPath": "工程项目",
+      "confidence": "",
+      "detail": {
+        "summary": "工程项目 是当前知识库的一级类别。",
+        "stats": [
+          {
+            "label": "实体数",
+            "value": "3"
+          },
+          {
+            "label": "二级类别",
+            "value": "0"
+          }
+        ],
+        "aliases": [],
+        "attributes": [],
+        "evidence": [],
+        "relations": [],
+        "children": [
+          "大同浑源抽水蓄能电站",
+          "庄河抽水蓄能电站",
+          "辽宁庄河抽水蓄能电站"
+        ]
+      }
+    },
+    {
       "key": "primary::风化带",
       "label": "风化带",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "风化带",
       "level": 1,
-      "x": -12.61,
-      "y": -32.96,
+      "x": -7.71,
+      "y": -34.64,
       "description": "风化带 下共 3 个实体",
       "content": "全强风化带深度、全风化带、弱风化带",
       "learningValue": "0 个二级类别",
@@ -2151,11 +1841,11 @@
       "label": "临时建筑物",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "临时建筑物",
       "level": 1,
-      "x": -7.71,
-      "y": -34.64,
+      "x": -2.5899999999999994,
+      "y": -35.49,
       "description": "临时建筑物 下共 2 个实体",
       "content": "一期导流明渠、一期纵向围堰",
       "learningValue": "0 个二级类别",
@@ -2192,10 +1882,10 @@
       "label": "地质灾害",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "地质灾害",
       "level": 1,
-      "x": -2.5899999999999994,
+      "x": 2.5900000000000003,
       "y": -35.49,
       "description": "地质灾害 下共 2 个实体",
       "content": "泥石流、泥石流冲沟",
@@ -2233,11 +1923,11 @@
       "label": "居民点",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "居民点",
       "level": 1,
-      "x": 2.5900000000000003,
-      "y": -35.49,
+      "x": 7.71,
+      "y": -34.64,
       "description": "居民点 下共 2 个实体",
       "content": "东大地集中居民点、小宫屯集中居民点",
       "learningValue": "0 个二级类别",
@@ -2274,11 +1964,11 @@
       "label": "工程方案",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "工程方案",
       "level": 1,
-      "x": 7.71,
-      "y": -34.64,
+      "x": 12.61,
+      "y": -32.96,
       "description": "工程方案 下共 2 个实体",
       "content": "方案一枢纽布置、方案二枢纽布置",
       "learningValue": "0 个二级类别",
@@ -2311,52 +2001,11 @@
       }
     },
     {
-      "key": "primary::工程项目",
-      "label": "工程项目",
-      "nodeType": "一级类别",
-      "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
-      "group": "工程项目",
-      "level": 1,
-      "x": 12.61,
-      "y": -32.96,
-      "description": "工程项目 下共 2 个实体",
-      "content": "庄河抽水蓄能电站、辽宁庄河抽水蓄能电站",
-      "learningValue": "0 个二级类别",
-      "relationHint": "结构分组",
-      "childCount": 2,
-      "color": "rgba(195, 142, 230, 0.92)",
-      "schemaId": "",
-      "categoryPath": "工程项目",
-      "confidence": "",
-      "detail": {
-        "summary": "工程项目 是当前知识库的一级类别。",
-        "stats": [
-          {
-            "label": "实体数",
-            "value": "2"
-          },
-          {
-            "label": "二级类别",
-            "value": "0"
-          }
-        ],
-        "aliases": [],
-        "attributes": [],
-        "evidence": [],
-        "relations": [],
-        "children": [
-          "庄河抽水蓄能电站",
-          "辽宁庄河抽水蓄能电站"
-        ]
-      }
-    },
-    {
       "key": "primary::施工场地",
       "label": "施工场地",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "施工场地",
       "level": 1,
       "x": 17.17,
@@ -2397,7 +2046,7 @@
       "label": "水文地质单元",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "水文地质单元",
       "level": 1,
       "x": 21.27,
@@ -2438,7 +2087,7 @@
       "label": "结构面",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "结构面",
       "level": 1,
       "x": 24.78,
@@ -2479,7 +2128,7 @@
       "label": "不良地质体",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "不良地质体",
       "level": 1,
       "x": 27.62,
@@ -2519,7 +2168,7 @@
       "label": "分析图件",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "分析图件",
       "level": 1,
       "x": 29.7,
@@ -2559,7 +2208,7 @@
       "label": "地质构造",
       "nodeType": "一级类别",
       "nodeRole": "primary_category",
-      "parentKey": "kb::entity::0158",
+      "parentKey": null,
       "group": "地质构造",
       "level": 1,
       "x": 30.97,
@@ -31443,6 +31092,690 @@
       }
     },
     {
+      "key": "kb::entity::0158",
+      "label": "大同浑源抽水蓄能电站",
+      "nodeType": "工程项目",
+      "nodeRole": "entity",
+      "parentKey": "primary::工程项目",
+      "group": "工程项目",
+      "level": 2,
+      "x": -9.83836140246614,
+      "y": -31.81194970290473,
+      "description": "一等大（1）型抽水蓄能电站",
+      "content": "工程项目",
+      "learningValue": "1 条证据，8 条关系",
+      "relationHint": "project",
+      "childCount": 0,
+      "color": "rgba(195, 142, 230, 0.62)",
+      "schemaId": "project",
+      "categoryPath": "工程项目",
+      "confidence": "high",
+      "documentIds": [
+        "4预可研工程地质(审定稿)_d05ef288"
+      ],
+      "documentNames": [
+        "4预可研工程地质(审定稿).docx"
+      ],
+      "detail": {
+        "summary": "一等大（1）型抽水蓄能电站",
+        "stats": [
+          {
+            "label": "分类",
+            "value": "工程项目"
+          },
+          {
+            "label": "Schema",
+            "value": "project"
+          },
+          {
+            "label": "置信度",
+            "value": "high"
+          },
+          {
+            "label": "文档数",
+            "value": "1"
+          }
+        ],
+        "aliases": [],
+        "attributes": [
+          {
+            "key": "装机容量",
+            "value": "1200MW"
+          },
+          {
+            "key": "等别",
+            "value": "一等"
+          },
+          {
+            "key": "规模",
+            "value": "大（1）型"
+          }
+        ],
+        "evidence": [
+          {
+            "locator": "P12",
+            "quote": "大同浑源抽水蓄能电站……规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）",
+            "evidenceType": "paragraph",
+            "supportType": "direct",
+            "documentId": "4预可研工程地质(审定稿)_d05ef288",
+            "documentTitle": "4工程地质",
+            "documentName": "4预可研工程地质(审定稿).docx",
+            "pageHint": null,
+            "sectionId": "sec_ff9a0e97",
+            "sectionTitle": "工程概况",
+            "paragraphIndex": 12,
+            "tableIndex": null,
+            "figureIndex": null,
+            "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+          }
+        ],
+        "relations": [
+          {
+            "relation": "属于",
+            "relationType": "belongs_to",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "incoming",
+            "otherNodeKey": "kb::entity::0189",
+            "otherLabel": "地下厂房"
+          },
+          {
+            "relation": "属于",
+            "relationType": "belongs_to",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "incoming",
+            "otherNodeKey": "kb::entity::0196",
+            "otherLabel": "钢筋混凝土面板堆石坝"
+          },
+          {
+            "relation": "评价为",
+            "relationType": "evaluated_as",
+            "confidence": "high",
+            "locator": "P315",
+            "quote": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P315",
+                "quote": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_c3ee151c",
+                "sectionTitle": "区域构造稳定性评价",
+                "paragraphIndex": 315,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "根据《水电水利工程区域构造稳定性勘察规程》（DL/T5335-2006），工程区域构造稳定性分级为稳定性较差的区域。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0242",
+            "otherLabel": "区域构造稳定性"
+          },
+          {
+            "relation": "评价为",
+            "relationType": "evaluated_as",
+            "confidence": "high",
+            "locator": "P302",
+            "quote": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概...",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P302",
+                "quote": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概...",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_b8d3203f",
+                "sectionTitle": "地震安全性分析",
+                "paragraphIndex": 302,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "据中国地震局以“中震安评[2016]7号”文批复的《山西大同浑源抽水蓄能电站工程场地地震安全性评价报告》（中国地震局地壳应力研究所），上、下水库坝址基岩场地50年超越概率10%、5%和100年超越概率2%、1%的基岩峰值加速度结果见表4.2-13，表中K为设计地震系数（K = Am/g，g为重力加速度）。表4.2-13同时表明，坝址基岩场地50年超越概率10%的峰值加速度为134Gal，根据基岩与中硬场地峰值转换关系以及GB18306－2001《中国地震动参数区划图》中地震加速度峰值与地震基本烈度的对应关系，确定工程场地地震基本烈度为Ⅶ度。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0247",
+            "otherLabel": "工程场地地震基本烈度"
+          },
+          {
+            "relation": "组成",
+            "relationType": "has_part",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0145",
+            "otherLabel": "上水库"
+          },
+          {
+            "relation": "组成",
+            "relationType": "has_part",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0146",
+            "otherLabel": "下水库"
+          },
+          {
+            "relation": "组成",
+            "relationType": "has_part",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0149",
+            "otherLabel": "地下厂房系统"
+          },
+          {
+            "relation": "组成",
+            "relationType": "has_part",
+            "confidence": "high",
+            "locator": "P12",
+            "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "4预可研工程地质(审定稿).docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "4预可研工程地质(审定稿)_d05ef288",
+                "documentTitle": "4工程地质",
+                "documentName": "4预可研工程地质(审定稿).docx",
+                "locator": "P12",
+                "quote": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_ff9a0e97",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 12,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "规划阶段电站初拟装机容量1200MW，工程等别为一等，工程规模为大（1）型，主要建筑物为1级建筑物。电站枢纽工程由上水库、水道系统、地下厂房及其附属建筑物、下水库等组成。上水库与下水库建筑物、水道系统和厂房系统设计洪水标准为200年一遇，校核洪水标准为1000年一遇。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0151",
+            "otherLabel": "水道系统"
+          }
+        ],
+        "children": [
+          "4预可研工程地质(审定稿).docx"
+        ]
+      }
+    },
+    {
+      "key": "kb::entity::0159",
+      "label": "庄河抽水蓄能电站",
+      "nodeType": "工程项目",
+      "nodeRole": "entity",
+      "parentKey": "primary::工程项目",
+      "group": "工程项目",
+      "level": 2,
+      "x": -14.990060020873704,
+      "y": -31.13371571297384,
+      "description": "辽宁庄河抽水蓄能工程",
+      "content": "工程项目",
+      "learningValue": "1 条证据，1 条关系",
+      "relationHint": "project",
+      "childCount": 0,
+      "color": "rgba(195, 142, 230, 0.62)",
+      "schemaId": "project",
+      "categoryPath": "工程项目",
+      "confidence": "high",
+      "documentIds": [
+        "辽宁庄河抽水蓄能电站_56b28c04"
+      ],
+      "documentNames": [
+        "辽宁庄河抽水蓄能电站.docx"
+      ],
+      "detail": {
+        "summary": "辽宁庄河抽水蓄能工程",
+        "stats": [
+          {
+            "label": "分类",
+            "value": "工程项目"
+          },
+          {
+            "label": "Schema",
+            "value": "project"
+          },
+          {
+            "label": "置信度",
+            "value": "high"
+          },
+          {
+            "label": "文档数",
+            "value": "1"
+          }
+        ],
+        "aliases": [],
+        "attributes": [],
+        "evidence": [
+          {
+            "locator": "P498",
+            "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部",
+            "evidenceType": "paragraph",
+            "supportType": "direct",
+            "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+            "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+            "documentName": "辽宁庄河抽水蓄能电站.docx",
+            "pageHint": null,
+            "sectionId": "sec_3_1",
+            "sectionTitle": "地形地貌",
+            "paragraphIndex": 498,
+            "tableIndex": null,
+            "figureIndex": null,
+            "sourceText": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。"
+          }
+        ],
+        "relations": [
+          {
+            "relation": "位于",
+            "relationType": "located_in",
+            "confidence": "high",
+            "locator": "P498",
+            "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "辽宁庄河抽水蓄能电站.docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+                "documentName": "辽宁庄河抽水蓄能电站.docx",
+                "locator": "P498",
+                "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_3_1",
+                "sectionTitle": "地形地貌",
+                "paragraphIndex": 498,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0210",
+            "otherLabel": "工程区"
+          }
+        ],
+        "children": [
+          "辽宁庄河抽水蓄能电站.docx"
+        ]
+      }
+    },
+    {
+      "key": "kb::entity::0160",
+      "label": "辽宁庄河抽水蓄能电站",
+      "nodeType": "工程项目",
+      "nodeRole": "entity",
+      "parentKey": "primary::工程项目",
+      "group": "工程项目",
+      "level": 2,
+      "x": -13.001578576660156,
+      "y": -35.93433458412143,
+      "description": "装机容量1000 MW的辽宁电网调峰电站",
+      "content": "工程项目",
+      "learningValue": "1 条证据，4 条关系",
+      "relationHint": "project",
+      "childCount": 0,
+      "color": "rgba(195, 142, 230, 0.62)",
+      "schemaId": "project",
+      "categoryPath": "工程项目",
+      "confidence": "high",
+      "documentIds": [
+        "辽宁庄河抽水蓄能电站_56b28c04"
+      ],
+      "documentNames": [
+        "辽宁庄河抽水蓄能电站.docx"
+      ],
+      "detail": {
+        "summary": "装机容量1000 MW的辽宁电网调峰电站",
+        "stats": [
+          {
+            "label": "分类",
+            "value": "工程项目"
+          },
+          {
+            "label": "Schema",
+            "value": "project"
+          },
+          {
+            "label": "置信度",
+            "value": "high"
+          },
+          {
+            "label": "文档数",
+            "value": "1"
+          }
+        ],
+        "aliases": [],
+        "attributes": [
+          {
+            "key": "location",
+            "value": "庄河市桂云花乡"
+          },
+          {
+            "key": "capacity_MW",
+            "value": "1000"
+          },
+          {
+            "key": "units",
+            "value": "4"
+          }
+        ],
+        "evidence": [
+          {
+            "locator": "P158",
+            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内...装机容量1000MW，安装4台单",
+            "evidenceType": "paragraph",
+            "supportType": "direct",
+            "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+            "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+            "documentName": "辽宁庄河抽水蓄能电站.docx",
+            "pageHint": null,
+            "sectionId": "sec_1_1",
+            "sectionTitle": "工程概况",
+            "paragraphIndex": 158,
+            "tableIndex": null,
+            "figureIndex": null,
+            "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
+          }
+        ],
+        "relations": [
+          {
+            "relation": "位于",
+            "relationType": "located_in",
+            "confidence": "high",
+            "locator": "P158",
+            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "辽宁庄河抽水蓄能电站.docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+                "documentName": "辽宁庄河抽水蓄能电站.docx",
+                "locator": "P158",
+                "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_1_1",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 158,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0203",
+            "otherLabel": "上水库"
+          },
+          {
+            "relation": "位于",
+            "relationType": "located_in",
+            "confidence": "high",
+            "locator": "P158",
+            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "辽宁庄河抽水蓄能电站.docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+                "documentName": "辽宁庄河抽水蓄能电站.docx",
+                "locator": "P158",
+                "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_1_1",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 158,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0206",
+            "otherLabel": "下水库"
+          },
+          {
+            "relation": "位于",
+            "relationType": "located_in",
+            "confidence": "high",
+            "locator": "P159",
+            "quote": "图1.1-1 工程区交通位置示意图",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "辽宁庄河抽水蓄能电站.docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+                "documentName": "辽宁庄河抽水蓄能电站.docx",
+                "locator": "P159",
+                "quote": "图1.1-1 工程区交通位置示意图",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_1_1",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 159,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "图1.1-1 工程区交通位置示意图"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0209",
+            "otherLabel": "地下厂房系统"
+          },
+          {
+            "relation": "位于",
+            "relationType": "located_in",
+            "confidence": "high",
+            "locator": "P159",
+            "quote": "图1.1-1 工程区交通位置示意图",
+            "supportCount": 1,
+            "documentCount": 1,
+            "documents": [
+              "辽宁庄河抽水蓄能电站.docx"
+            ],
+            "evidence": [
+              {
+                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
+                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
+                "documentName": "辽宁庄河抽水蓄能电站.docx",
+                "locator": "P159",
+                "quote": "图1.1-1 工程区交通位置示意图",
+                "evidenceType": "paragraph",
+                "supportType": "relation",
+                "confidence": "high",
+                "pageHint": null,
+                "sectionId": "sec_1_1",
+                "sectionTitle": "工程概况",
+                "paragraphIndex": 159,
+                "tableIndex": null,
+                "figureIndex": null,
+                "sourceText": "图1.1-1 工程区交通位置示意图"
+              }
+            ],
+            "direction": "outgoing",
+            "otherNodeKey": "kb::entity::0213",
+            "otherLabel": "输水系统"
+          }
+        ],
+        "children": [
+          "辽宁庄河抽水蓄能电站.docx"
+        ]
+      }
+    },
+    {
       "key": "kb::entity::0259",
       "label": "全强风化带深度",
       "nodeType": "风化带",
@@ -31450,8 +31783,8 @@
       "parentKey": "primary::风化带",
       "group": "风化带",
       "level": 2,
-      "x": -9.83836140246614,
-      "y": -31.81194970290473,
+      "x": -4.93836140246614,
+      "y": -33.49194970290473,
       "description": "中木沟1.7~19.1m，下水库0.5~13.4m",
       "content": "风化带",
       "learningValue": "1 条证据，0 条关系",
@@ -31530,8 +31863,8 @@
       "parentKey": "primary::风化带",
       "group": "风化带",
       "level": 2,
-      "x": -14.990060020873704,
-      "y": -31.13371571297384,
+      "x": -10.090060020873706,
+      "y": -32.81371571297384,
       "description": "分水岭顶部松散风化岩层",
       "content": "风化带",
       "learningValue": "1 条证据，0 条关系",
@@ -31610,8 +31943,8 @@
       "parentKey": "primary::风化带",
       "group": "风化带",
       "level": 2,
-      "x": -13.001578576660156,
-      "y": -35.93433458412143,
+      "x": -8.101578576660158,
+      "y": -37.61433458412143,
       "description": "副坝区连续中-厚层弱风化岩体",
       "content": "风化带",
       "learningValue": "3 条证据，0 条关系",
@@ -31734,8 +32067,8 @@
       "parentKey": "primary::临时建筑物",
       "group": "临时建筑物",
       "level": 2,
-      "x": -4.93836140246614,
-      "y": -33.49194970290473,
+      "x": 0.18163859753386058,
+      "y": -34.341949702904735,
       "description": "一期施工576 m导流明渠",
       "content": "临时建筑物",
       "learningValue": "1 条证据，0 条关系",
@@ -31814,8 +32147,8 @@
       "parentKey": "primary::临时建筑物",
       "group": "临时建筑物",
       "level": 2,
-      "x": -10.48163859753386,
-      "y": -35.78805029709527,
+      "x": -5.36163859753386,
+      "y": -36.63805029709527,
       "description": "河床642 m纵向围堰",
       "content": "临时建筑物",
       "learningValue": "1 条证据，0 条关系",
@@ -31894,7 +32227,7 @@
       "parentKey": "primary::地质灾害",
       "group": "地质灾害",
       "level": 2,
-      "x": 0.18163859753386058,
+      "x": 5.36163859753386,
       "y": -34.341949702904735,
       "description": "暴雨引发的山洪携砂现象",
       "content": "地质灾害",
@@ -32115,7 +32448,7 @@
       "parentKey": "primary::地质灾害",
       "group": "地质灾害",
       "level": 2,
-      "x": -5.36163859753386,
+      "x": -0.18163859753386014,
       "y": -36.63805029709527,
       "description": "中木沟等6条冲沟，多为老年期或终止期",
       "content": "地质灾害",
@@ -32195,8 +32528,8 @@
       "parentKey": "primary::居民点",
       "group": "居民点",
       "level": 2,
-      "x": 5.36163859753386,
-      "y": -34.341949702904735,
+      "x": 10.481638597533859,
+      "y": -33.49194970290473,
       "description": "下水库库尾Ⅰ级阶地安置点",
       "content": "居民点",
       "learningValue": "1 条证据，0 条关系",
@@ -32275,8 +32608,8 @@
       "parentKey": "primary::居民点",
       "group": "居民点",
       "level": 2,
-      "x": -0.18163859753386014,
-      "y": -36.63805029709527,
+      "x": 4.938361402466139,
+      "y": -35.78805029709527,
       "description": "大坝下游左岸山包安置点",
       "content": "居民点",
       "learningValue": "1 条证据，0 条关系",
@@ -32351,8 +32684,8 @@
       "parentKey": "primary::工程方案",
       "group": "工程方案",
       "level": 2,
-      "x": 10.481638597533859,
-      "y": -33.49194970290473,
+      "x": 15.38163859753386,
+      "y": -31.81194970290473,
       "description": "中木沟上水库—红岭下水库，距高比5.4",
       "content": "工程方案",
       "learningValue": "1 条证据，0 条关系",
@@ -32435,8 +32768,8 @@
       "parentKey": "primary::工程方案",
       "group": "工程方案",
       "level": 2,
-      "x": 4.938361402466139,
-      "y": -35.78805029709527,
+      "x": 9.83836140246614,
+      "y": -34.10805029709527,
       "description": "佛耳朵山上水库—红岭下水库，距高比3.8",
       "content": "工程方案",
       "learningValue": "1 条证据，0 条关系",
@@ -32508,333 +32841,6 @@
         "relations": [],
         "children": [
           "4预可研工程地质(审定稿).docx"
-        ]
-      }
-    },
-    {
-      "key": "kb::entity::0159",
-      "label": "庄河抽水蓄能电站",
-      "nodeType": "工程项目",
-      "nodeRole": "entity",
-      "parentKey": "primary::工程项目",
-      "group": "工程项目",
-      "level": 2,
-      "x": 15.38163859753386,
-      "y": -31.81194970290473,
-      "description": "辽宁庄河抽水蓄能工程",
-      "content": "工程项目",
-      "learningValue": "1 条证据，1 条关系",
-      "relationHint": "project",
-      "childCount": 0,
-      "color": "rgba(195, 142, 230, 0.62)",
-      "schemaId": "project",
-      "categoryPath": "工程项目",
-      "confidence": "high",
-      "documentIds": [
-        "辽宁庄河抽水蓄能电站_56b28c04"
-      ],
-      "documentNames": [
-        "辽宁庄河抽水蓄能电站.docx"
-      ],
-      "detail": {
-        "summary": "辽宁庄河抽水蓄能工程",
-        "stats": [
-          {
-            "label": "分类",
-            "value": "工程项目"
-          },
-          {
-            "label": "Schema",
-            "value": "project"
-          },
-          {
-            "label": "置信度",
-            "value": "high"
-          },
-          {
-            "label": "文档数",
-            "value": "1"
-          }
-        ],
-        "aliases": [],
-        "attributes": [],
-        "evidence": [
-          {
-            "locator": "P498",
-            "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部",
-            "evidenceType": "paragraph",
-            "supportType": "direct",
-            "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-            "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-            "documentName": "辽宁庄河抽水蓄能电站.docx",
-            "pageHint": null,
-            "sectionId": "sec_3_1",
-            "sectionTitle": "地形地貌",
-            "paragraphIndex": 498,
-            "tableIndex": null,
-            "figureIndex": null,
-            "sourceText": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。"
-          }
-        ],
-        "relations": [
-          {
-            "relation": "位于",
-            "relationType": "located_in",
-            "confidence": "high",
-            "locator": "P498",
-            "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "辽宁庄河抽水蓄能电站.docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-                "documentName": "辽宁庄河抽水蓄能电站.docx",
-                "locator": "P498",
-                "quote": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_3_1",
-                "sectionTitle": "地形地貌",
-                "paragraphIndex": 498,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "庄河抽水蓄能电站区域位于辽东半岛千山山脉南部，为构造运动间歇性上升并长期遭受侵蚀、剥蚀作用形成的低山～丘陵地貌形态。山脉走向与辽东半岛走向一致，北宽南狭，北高南低，一般山顶高程为200m～450m，步云山峰顶海拔1130.7m，是区域内碧流河、庄河、英那河的分水岭。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0210",
-            "otherLabel": "工程区"
-          }
-        ],
-        "children": [
-          "辽宁庄河抽水蓄能电站.docx"
-        ]
-      }
-    },
-    {
-      "key": "kb::entity::0160",
-      "label": "辽宁庄河抽水蓄能电站",
-      "nodeType": "工程项目",
-      "nodeRole": "entity",
-      "parentKey": "primary::工程项目",
-      "group": "工程项目",
-      "level": 2,
-      "x": 9.83836140246614,
-      "y": -34.10805029709527,
-      "description": "装机容量1000 MW的辽宁电网调峰电站",
-      "content": "工程项目",
-      "learningValue": "1 条证据，4 条关系",
-      "relationHint": "project",
-      "childCount": 0,
-      "color": "rgba(195, 142, 230, 0.62)",
-      "schemaId": "project",
-      "categoryPath": "工程项目",
-      "confidence": "high",
-      "documentIds": [
-        "辽宁庄河抽水蓄能电站_56b28c04"
-      ],
-      "documentNames": [
-        "辽宁庄河抽水蓄能电站.docx"
-      ],
-      "detail": {
-        "summary": "装机容量1000 MW的辽宁电网调峰电站",
-        "stats": [
-          {
-            "label": "分类",
-            "value": "工程项目"
-          },
-          {
-            "label": "Schema",
-            "value": "project"
-          },
-          {
-            "label": "置信度",
-            "value": "high"
-          },
-          {
-            "label": "文档数",
-            "value": "1"
-          }
-        ],
-        "aliases": [],
-        "attributes": [
-          {
-            "key": "location",
-            "value": "庄河市桂云花乡"
-          },
-          {
-            "key": "capacity_MW",
-            "value": "1000"
-          },
-          {
-            "key": "units",
-            "value": "4"
-          }
-        ],
-        "evidence": [
-          {
-            "locator": "P158",
-            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内...装机容量1000MW，安装4台单",
-            "evidenceType": "paragraph",
-            "supportType": "direct",
-            "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-            "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-            "documentName": "辽宁庄河抽水蓄能电站.docx",
-            "pageHint": null,
-            "sectionId": "sec_1_1",
-            "sectionTitle": "工程概况",
-            "paragraphIndex": 158,
-            "tableIndex": null,
-            "figureIndex": null,
-            "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
-          }
-        ],
-        "relations": [
-          {
-            "relation": "位于",
-            "relationType": "located_in",
-            "confidence": "high",
-            "locator": "P158",
-            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "辽宁庄河抽水蓄能电站.docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-                "documentName": "辽宁庄河抽水蓄能电站.docx",
-                "locator": "P158",
-                "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_1_1",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 158,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0203",
-            "otherLabel": "上水库"
-          },
-          {
-            "relation": "位于",
-            "relationType": "located_in",
-            "confidence": "high",
-            "locator": "P158",
-            "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "辽宁庄河抽水蓄能电站.docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-                "documentName": "辽宁庄河抽水蓄能电站.docx",
-                "locator": "P158",
-                "quote": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛...",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_1_1",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 158,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "庄河抽水蓄能电站位于辽宁省大连市东北部的庄河市桂云花乡境内，上水库位于蒲东沟沟脑部位，下水库位于宫屯村与东地村之间的蛤蜊河上。工程区距沈阳市直线距离215km，最近公路里程为276km；距大连市直线距离147km，最近公路里程为217km；距离庄河市最近公路里程为58km；距离盖州市最近公路里程为80km（图1.1-1）。电站对外交通较便利，是辽东半岛地区条件较好的抽水蓄能站址。"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0206",
-            "otherLabel": "下水库"
-          },
-          {
-            "relation": "位于",
-            "relationType": "located_in",
-            "confidence": "high",
-            "locator": "P159",
-            "quote": "图1.1-1 工程区交通位置示意图",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "辽宁庄河抽水蓄能电站.docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-                "documentName": "辽宁庄河抽水蓄能电站.docx",
-                "locator": "P159",
-                "quote": "图1.1-1 工程区交通位置示意图",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_1_1",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 159,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "图1.1-1 工程区交通位置示意图"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0209",
-            "otherLabel": "地下厂房系统"
-          },
-          {
-            "relation": "位于",
-            "relationType": "located_in",
-            "confidence": "high",
-            "locator": "P159",
-            "quote": "图1.1-1 工程区交通位置示意图",
-            "supportCount": 1,
-            "documentCount": 1,
-            "documents": [
-              "辽宁庄河抽水蓄能电站.docx"
-            ],
-            "evidence": [
-              {
-                "documentId": "辽宁庄河抽水蓄能电站_56b28c04",
-                "documentTitle": "辽宁庄河抽水蓄能电站 可行性研究报告 第四篇 工程地质 （送审稿）",
-                "documentName": "辽宁庄河抽水蓄能电站.docx",
-                "locator": "P159",
-                "quote": "图1.1-1 工程区交通位置示意图",
-                "evidenceType": "paragraph",
-                "supportType": "relation",
-                "confidence": "high",
-                "pageHint": null,
-                "sectionId": "sec_1_1",
-                "sectionTitle": "工程概况",
-                "paragraphIndex": 159,
-                "tableIndex": null,
-                "figureIndex": null,
-                "sourceText": "图1.1-1 工程区交通位置示意图"
-              }
-            ],
-            "direction": "outgoing",
-            "otherNodeKey": "kb::entity::0213",
-            "otherLabel": "输水系统"
-          }
-        ],
-        "children": [
-          "辽宁庄河抽水蓄能电站.docx"
         ]
       }
     },
@@ -33832,16 +33838,6 @@
   ],
   "edges": [
     {
-      "key": "struct::kb::entity::0158::primary::工程地质问题",
-      "source": "kb::entity::0158",
-      "target": "primary::工程地质问题",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
       "key": "struct::primary::工程地质问题::secondary::工程地质问题::地质灾害与地震",
       "source": "primary::工程地质问题",
       "target": "secondary::工程地质问题::地质灾害与地震",
@@ -33876,16 +33872,6 @@
       "source": "primary::工程地质问题",
       "target": "secondary::工程地质问题::稳定与变形",
       "relation": "二级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::评价结论",
-      "source": "kb::entity::0158",
-      "target": "primary::评价结论",
-      "relation": "一级类别",
       "edgeKind": "structure",
       "confidence": "",
       "locator": "",
@@ -33952,26 +33938,6 @@
       "quote": ""
     },
     {
-      "key": "struct::kb::entity::0158::primary::工程地质参数",
-      "source": "kb::entity::0158",
-      "target": "primary::工程地质参数",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::后续工作",
-      "source": "kb::entity::0158",
-      "target": "primary::后续工作",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
       "key": "struct::primary::后续工作::secondary::后续工作::监测观测",
       "source": "primary::后续工作",
       "target": "secondary::后续工作::监测观测",
@@ -34006,346 +33972,6 @@
       "source": "primary::后续工作",
       "target": "secondary::后续工作::设计复核",
       "relation": "二级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::永久建筑物",
-      "source": "kb::entity::0158",
-      "target": "primary::永久建筑物",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::空间单元",
-      "source": "kb::entity::0158",
-      "target": "primary::空间单元",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::工程系统",
-      "source": "kb::entity::0158",
-      "target": "primary::工程系统",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::料场料源",
-      "source": "kb::entity::0158",
-      "target": "primary::料场料源",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::地震分区单元",
-      "source": "kb::entity::0158",
-      "target": "primary::地震分区单元",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::岩性",
-      "source": "kb::entity::0158",
-      "target": "primary::岩性",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::断层断裂带",
-      "source": "kb::entity::0158",
-      "target": "primary::断层断裂带",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::围岩分类",
-      "source": "kb::entity::0158",
-      "target": "primary::围岩分类",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::区域构造单元",
-      "source": "kb::entity::0158",
-      "target": "primary::区域构造单元",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::岩土体",
-      "source": "kb::entity::0158",
-      "target": "primary::岩土体",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::节理裂隙",
-      "source": "kb::entity::0158",
-      "target": "primary::节理裂隙",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::勘探工程",
-      "source": "kb::entity::0158",
-      "target": "primary::勘探工程",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::地层",
-      "source": "kb::entity::0158",
-      "target": "primary::地层",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::物理地质现象",
-      "source": "kb::entity::0158",
-      "target": "primary::物理地质现象",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::自然地理单元",
-      "source": "kb::entity::0158",
-      "target": "primary::自然地理单元",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::评价工作",
-      "source": "kb::entity::0158",
-      "target": "primary::评价工作",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::勘察工作",
-      "source": "kb::entity::0158",
-      "target": "primary::勘察工作",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::参数建议值",
-      "source": "kb::entity::0158",
-      "target": "primary::参数建议值",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::工程部位",
-      "source": "kb::entity::0158",
-      "target": "primary::工程部位",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::试验方法",
-      "source": "kb::entity::0158",
-      "target": "primary::试验方法",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::参数对象",
-      "source": "kb::entity::0158",
-      "target": "primary::参数对象",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::工程型式",
-      "source": "kb::entity::0158",
-      "target": "primary::工程型式",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::风化带",
-      "source": "kb::entity::0158",
-      "target": "primary::风化带",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::临时建筑物",
-      "source": "kb::entity::0158",
-      "target": "primary::临时建筑物",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::地质灾害",
-      "source": "kb::entity::0158",
-      "target": "primary::地质灾害",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::居民点",
-      "source": "kb::entity::0158",
-      "target": "primary::居民点",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::工程方案",
-      "source": "kb::entity::0158",
-      "target": "primary::工程方案",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::工程项目",
-      "source": "kb::entity::0158",
-      "target": "primary::工程项目",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::施工场地",
-      "source": "kb::entity::0158",
-      "target": "primary::施工场地",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::水文地质单元",
-      "source": "kb::entity::0158",
-      "target": "primary::水文地质单元",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::结构面",
-      "source": "kb::entity::0158",
-      "target": "primary::结构面",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::不良地质体",
-      "source": "kb::entity::0158",
-      "target": "primary::不良地质体",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::分析图件",
-      "source": "kb::entity::0158",
-      "target": "primary::分析图件",
-      "relation": "一级类别",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::kb::entity::0158::primary::地质构造",
-      "source": "kb::entity::0158",
-      "target": "primary::地质构造",
-      "relation": "一级类别",
       "edgeKind": "structure",
       "confidence": "",
       "locator": "",
@@ -36732,6 +36358,36 @@
       "quote": ""
     },
     {
+      "key": "struct::primary::工程项目::kb::entity::0158",
+      "source": "primary::工程项目",
+      "target": "kb::entity::0158",
+      "relation": "包含实体",
+      "edgeKind": "structure",
+      "confidence": "",
+      "locator": "",
+      "quote": ""
+    },
+    {
+      "key": "struct::primary::工程项目::kb::entity::0159",
+      "source": "primary::工程项目",
+      "target": "kb::entity::0159",
+      "relation": "包含实体",
+      "edgeKind": "structure",
+      "confidence": "",
+      "locator": "",
+      "quote": ""
+    },
+    {
+      "key": "struct::primary::工程项目::kb::entity::0160",
+      "source": "primary::工程项目",
+      "target": "kb::entity::0160",
+      "relation": "包含实体",
+      "edgeKind": "structure",
+      "confidence": "",
+      "locator": "",
+      "quote": ""
+    },
+    {
       "key": "struct::primary::风化带::kb::entity::0259",
       "source": "primary::风化带",
       "target": "kb::entity::0259",
@@ -36835,26 +36491,6 @@
       "key": "struct::primary::工程方案::kb::entity::0144",
       "source": "primary::工程方案",
       "target": "kb::entity::0144",
-      "relation": "包含实体",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::primary::工程项目::kb::entity::0159",
-      "source": "primary::工程项目",
-      "target": "kb::entity::0159",
-      "relation": "包含实体",
-      "edgeKind": "structure",
-      "confidence": "",
-      "locator": "",
-      "quote": ""
-    },
-    {
-      "key": "struct::primary::工程项目::kb::entity::0160",
-      "source": "primary::工程项目",
-      "target": "kb::entity::0160",
       "relation": "包含实体",
       "edgeKind": "structure",
       "confidence": "",

@@ -41,23 +41,32 @@ function getEdgeGrayColor(gray: number, alpha: number) {
 }
 
 function getLabelFade(cameraRatio: number, data: Attributes) {
-  let start = 0.68;
-  let full = 0.2;
+  let start = 0.28;
+  let full = 0.12;
 
-  if (data.alwaysShowLabel) {
-    start = 0.98;
-    full = 0.34;
-  } else if (!data.isSynthetic && data.degree > 0) {
-    start = 0.88;
-    full = 0.28;
-  } else if (data.degree > 0) {
-    start = 0.78;
+  if (data.nodeRole === "primary_category" || data.alwaysShowLabel) {
+    start = 1.08;
+    full = 0.42;
+  } else if (data.nodeRole === "secondary_category") {
+    start = 0.54;
     full = 0.24;
+  } else if (!data.isSynthetic && data.degree > 1) {
+    start = 0.34;
+    full = 0.14;
+  } else if (!data.isSynthetic && data.degree > 0) {
+    start = 0.3;
+    full = 0.12;
   }
 
   if (cameraRatio >= start) return 0;
   if (cameraRatio <= full) return 1;
   return clamp((start - cameraRatio) / (start - full), 0, 1);
+}
+
+function getLabelVisibilityThreshold(data: Attributes) {
+  if (data.nodeRole === "primary_category" || data.alwaysShowLabel) return 0.02;
+  if (data.nodeRole === "secondary_category") return 0.28;
+  return 0.58;
 }
 
 function getAdaptiveNodeScale(cameraRatio: number, data: Attributes, controls: GraphControls) {
@@ -216,8 +225,9 @@ const GraphSettingsController: FC<
         const matchesSearch = !normalizedQuery || searchMatches.has(node);
         const allowOrphan = controls.showOrphans || data.degree > 0;
         const labelFade = getLabelFade(cameraRatio, data);
+        const labelVisibilityThreshold = getLabelVisibilityThreshold(data);
         const adaptiveNodeScale = getAdaptiveNodeScale(cameraRatio, data, controls);
-        const visibleByZoom = labelFade > 0;
+        const visibleByZoom = labelFade >= labelVisibilityThreshold;
         const hiddenByView = Boolean(data.hiddenByView);
         const relationFullyZoomedIn = cameraRatio < 0.14;
         const relationDefaultLabelVisible =

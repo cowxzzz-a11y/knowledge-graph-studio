@@ -32,24 +32,46 @@ function sourceKey(item: Pick<NodeEvidence, "documentId" | "documentName" | "doc
 
 function collectDocumentTabs(node: GraphNodeAttributes, evidence: NodeEvidence[], relations: NodeRelationDetail[]) {
   const tabs = new Map<string, DocumentTab>();
+  const tabKeyByLabel = new Map<string, string>();
+
+  const addTab = (key: string, label: string) => {
+    const cleanKey = key.trim();
+    const cleanLabel = label.trim();
+    if (!cleanKey || !cleanLabel) return;
+
+    const normalizedLabel = cleanLabel.toLowerCase();
+    const existingKey = tabKeyByLabel.get(normalizedLabel);
+    if (existingKey) {
+      const existing = tabs.get(existingKey);
+      if (existing && existing.key === existing.label && cleanKey !== cleanLabel) {
+        tabs.delete(existingKey);
+        tabs.set(cleanKey, { key: cleanKey, label: cleanLabel });
+        tabKeyByLabel.set(normalizedLabel, cleanKey);
+      }
+      return;
+    }
+
+    tabs.set(cleanKey, { key: cleanKey, label: cleanLabel });
+    tabKeyByLabel.set(normalizedLabel, cleanKey);
+  };
 
   node.documentIds?.forEach((documentId, index) => {
     const label = node.documentNames?.[index] || documentId;
-    if (documentId || label) tabs.set(documentId || label, { key: documentId || label, label });
+    addTab(documentId || label, label);
   });
 
   evidence.forEach((item) => {
     const key = sourceKey(item);
-    tabs.set(key, { key, label: sourceLabel(item) });
+    addTab(key, sourceLabel(item));
   });
 
   relations.forEach((relation) => {
     relation.evidence?.forEach((item) => {
       const key = sourceKey(item);
-      tabs.set(key, { key, label: sourceLabel(item) });
+      addTab(key, sourceLabel(item));
     });
     relation.documents?.forEach((documentName) => {
-      if (documentName) tabs.set(documentName, { key: documentName, label: documentName });
+      if (documentName) addTab(documentName, documentName);
     });
   });
 
@@ -57,22 +79,22 @@ function collectDocumentTabs(node: GraphNodeAttributes, evidence: NodeEvidence[]
 }
 
 function evidenceMatchesDocument(item: NodeEvidence | RelationEvidence, documentKey: string) {
-  return documentKey === "all" || sourceKey(item) === documentKey || sourceLabel(item) === documentKey;
+  return !documentKey || sourceKey(item) === documentKey || sourceLabel(item) === documentKey;
 }
 
 function relationMatchesDocument(item: NodeRelationDetail, documentKey: string) {
-  if (documentKey === "all") return true;
+  if (!documentKey) return true;
   if (item.evidence?.some((evidence) => evidenceMatchesDocument(evidence, documentKey))) return true;
   return Boolean(item.documents?.some((documentName) => documentName === documentKey));
 }
 
 const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
   const [expandedEvidenceKey, setExpandedEvidenceKey] = useState<string | null>(null);
-  const [activeDocumentKey, setActiveDocumentKey] = useState("all");
+  const [activeDocumentKey, setActiveDocumentKey] = useState("");
 
   useEffect(() => {
     setExpandedEvidenceKey(null);
-    setActiveDocumentKey("all");
+    setActiveDocumentKey("");
   }, [node?.key]);
 
   const detail = node?.detail || {
@@ -89,6 +111,18 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
     () => (node ? collectDocumentTabs(node, detail.evidence, detail.relations) : []),
     [detail.evidence, detail.relations, node],
   );
+
+  useEffect(() => {
+    if (documentTabs.length > 1 && !documentTabs.some((tab) => tab.key === activeDocumentKey)) {
+      setActiveDocumentKey(documentTabs[0].key);
+      return;
+    }
+
+    if (documentTabs.length <= 1 && activeDocumentKey) {
+      setActiveDocumentKey("");
+    }
+  }, [activeDocumentKey, documentTabs]);
+
   const filteredEvidence = detail.evidence.filter((item) => evidenceMatchesDocument(item, activeDocumentKey));
   const filteredRelations = detail.relations.filter((item) => relationMatchesDocument(item, activeDocumentKey));
 
@@ -117,13 +151,6 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
 
       {documentTabs.length > 1 ? (
         <div className="detail-doc-tabs" role="tablist" aria-label="文档筛选">
-          <button
-            type="button"
-            className={`detail-doc-tab${activeDocumentKey === "all" ? " is-active" : ""}`}
-            onClick={() => setActiveDocumentKey("all")}
-          >
-            全部
-          </button>
           {documentTabs.map((tab) => (
             <button
               key={tab.key}
@@ -142,20 +169,6 @@ const NodeDetailPanel: FC<Props> = ({ metadata, node }) => {
         <div className="detail-section-title">摘要</div>
         <div className="detail-copy">{detail.summary || node.description || "暂无摘要"}</div>
       </div>
-
-      {detail.stats.length > 0 ? (
-        <div className="detail-panel-section">
-          <div className="detail-section-title">关键信息</div>
-          <div className="detail-stats">
-            {detail.stats.map((item) => (
-              <div key={`${item.label}:${item.value}`} className="detail-stat-card">
-                <div className="detail-stat-label">{item.label}</div>
-                <div className="detail-stat-value">{item.value}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : null}
 
       {detail.aliases.length > 0 ? (
         <div className="detail-panel-section">
