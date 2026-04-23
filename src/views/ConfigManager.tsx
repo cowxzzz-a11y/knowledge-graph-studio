@@ -22,6 +22,17 @@ interface SchemaRelationRow {
   recommended_target_categories?: string[];
 }
 
+interface SpecialCanonicalEntityRule {
+  name: string;
+  enabled: boolean;
+  schema_ids: string[];
+  canonical_name: string;
+  code_attr: string;
+  code_pattern: string;
+  allowed_residue_tokens: string[];
+  max_codes: number;
+}
+
 interface SchemaConfig {
   schema_version: string;
   source_markdown_path?: string;
@@ -49,6 +60,7 @@ interface MergeConfig {
     dedupe_fields: string[];
     normalize_quote: boolean;
   };
+  special_canonical_entities?: SpecialCanonicalEntityRule[];
 }
 
 const SCHEMA_CONFIG_URL = "/configs/schema_config.json";
@@ -169,6 +181,7 @@ const ConfigManager: FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [liveSync, setLiveSync] = useState(false);
   const [highlightedEntityIndex, setHighlightedEntityIndex] = useState<number | null>(null);
+  const [selectedTreeItem, setSelectedTreeItem] = useState<string | null>(null);
   const skipAutoSaveRef = useRef({ schema: true, merge: true });
 
   useEffect(() => {
@@ -323,6 +336,16 @@ const ConfigManager: FC = () => {
     });
   }
 
+  function updateSpecialCanonicalRule(index: number, patch: Partial<SpecialCanonicalEntityRule>) {
+    setMergeConfig((current) => {
+      if (!current) return current;
+      const rules = [...(current.special_canonical_entities || [])];
+      if (!rules[index]) return current;
+      rules[index] = { ...rules[index], ...patch };
+      return { ...current, special_canonical_entities: rules };
+    });
+  }
+
   async function persistConfig(kind: "schema" | "merge", data: unknown) {
     try {
       await writeConfig(kind, data);
@@ -373,8 +396,9 @@ const ConfigManager: FC = () => {
     }
   }
 
-  function scrollToEntity(index: number) {
+  function scrollToEntity(index: number, treeItemKey: string) {
     setSchemaQuery("");
+    setSelectedTreeItem(treeItemKey);
     window.setTimeout(() => {
       document.getElementById(`schema-entity-${index}`)?.scrollIntoView({ block: "center", behavior: "smooth" });
       setHighlightedEntityIndex(index);
@@ -477,14 +501,23 @@ const ConfigManager: FC = () => {
               <h2>对象树</h2>
               {entityTree.map((group) => (
                 <div className="schema-tree-group" key={group.primary}>
-                  <button type="button" onClick={() => scrollToEntity(group.firstIndex)}>
+                  <button
+                    className={selectedTreeItem === `primary:${group.primary}` ? "is-selected" : ""}
+                    type="button"
+                    onClick={() => scrollToEntity(group.firstIndex, `primary:${group.primary}`)}
+                  >
                     <span>{group.primary}</span>
                     <strong>{group.count}</strong>
                   </button>
                   {group.children.length ? (
                     <div className="schema-tree-children">
                       {group.children.map((child) => (
-                        <button type="button" key={`${group.primary}:${child.secondary}`} onClick={() => scrollToEntity(child.firstIndex)}>
+                        <button
+                          className={selectedTreeItem === `secondary:${group.primary}:${child.secondary}` ? "is-selected" : ""}
+                          type="button"
+                          key={`${group.primary}:${child.secondary}`}
+                          onClick={() => scrollToEntity(child.firstIndex, `secondary:${group.primary}:${child.secondary}`)}
+                        >
                           <span>{child.secondary}</span>
                           <strong>{child.count}</strong>
                         </button>
@@ -596,6 +629,10 @@ const ConfigManager: FC = () => {
               <span>证据去重字段</span>
               <strong>{mergeConfig.evidence.dedupe_fields.length}</strong>
             </div>
+            <div className="config-stat">
+              <span>固化规则</span>
+              <strong>{mergeConfig.special_canonical_entities?.length || 0}</strong>
+            </div>
           </section>
 
           <section className="config-section config-form">
@@ -647,6 +684,60 @@ const ConfigManager: FC = () => {
                 </button>
               </div>
             </div>
+          </section>
+
+          <section className="config-section config-form">
+            <h2>固化实体归一规则</h2>
+            {(mergeConfig.special_canonical_entities || []).map((rule, index) => (
+              <div className="config-rule-card" key={`${rule.name}:${index}`}>
+                <label className="config-check">
+                  <input
+                    type="checkbox"
+                    checked={rule.enabled}
+                    onChange={(event) => updateSpecialCanonicalRule(index, { enabled: event.target.checked })}
+                  />
+                  启用：{rule.name}
+                </label>
+                <label>
+                  作用 schema
+                  <input
+                    value={joinList(rule.schema_ids)}
+                    onChange={(event) => updateSpecialCanonicalRule(index, { schema_ids: splitList(event.target.value) })}
+                  />
+                </label>
+                <label>
+                  统一实体名
+                  <input
+                    value={rule.canonical_name}
+                    onChange={(event) => updateSpecialCanonicalRule(index, { canonical_name: event.target.value })}
+                  />
+                </label>
+                <label>
+                  编号属性名
+                  <input value={rule.code_attr} onChange={(event) => updateSpecialCanonicalRule(index, { code_attr: event.target.value })} />
+                </label>
+                <label>
+                  编号正则
+                  <input value={rule.code_pattern} onChange={(event) => updateSpecialCanonicalRule(index, { code_pattern: event.target.value })} />
+                </label>
+                <label>
+                  可忽略尾词
+                  <input
+                    value={joinList(rule.allowed_residue_tokens)}
+                    onChange={(event) => updateSpecialCanonicalRule(index, { allowed_residue_tokens: splitList(event.target.value) })}
+                  />
+                </label>
+                <label>
+                  编号最多保留数
+                  <input
+                    type="number"
+                    min={1}
+                    value={rule.max_codes}
+                    onChange={(event) => updateSpecialCanonicalRule(index, { max_codes: Number(event.target.value) })}
+                  />
+                </label>
+              </div>
+            ))}
           </section>
 
           <section className="config-section config-form">

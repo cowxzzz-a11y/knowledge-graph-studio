@@ -642,6 +642,126 @@ canvas {
   color: #ffd7d7;
 }
 
+.kb-selector-root {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 28px;
+  background: #20252c;
+  color: var(--text);
+}
+
+.kb-selector-header,
+.kb-selector-main {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.kb-selector-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0 24px;
+}
+
+.kb-selector-header h1 {
+  margin: 0 0 8px;
+  color: #f3f7fd;
+  font-size: 30px;
+  letter-spacing: 0;
+}
+
+.kb-selector-header p,
+.kb-selector-empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.kb-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 14px;
+}
+
+.kb-card {
+  appearance: none;
+  display: grid;
+  gap: 10px;
+  min-height: 156px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(27, 32, 39, 0.86);
+  color: #edf3fb;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.kb-card:hover {
+  border-color: rgba(126, 190, 255, 0.48);
+  background: rgba(35, 43, 53, 0.92);
+  transform: translateY(-1px);
+}
+
+.kb-card-title {
+  color: #f4f8ff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.kb-card-dir {
+  overflow: hidden;
+  color: rgba(194, 203, 216, 0.72);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kb-card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: rgba(225, 233, 243, 0.84);
+  font-size: 13px;
+}
+
+.kb-card-stats strong {
+  color: #f3f8ff;
+  font-size: 16px;
+}
+
+.kb-card-time {
+  align-self: end;
+  color: rgba(170, 181, 195, 0.72);
+  font-size: 12px;
+}
+
+.kb-selector-empty {
+  display: grid;
+  gap: 12px;
+  width: min(520px, 100%);
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(27, 32, 39, 0.86);
+}
+
+.kb-selector-empty h2 {
+  margin: 0;
+  color: #f3f7fd;
+  font-size: 18px;
+}
+
 .config-root {
   position: absolute;
   inset: 0;
@@ -829,6 +949,20 @@ canvas {
   font-size: 11px;
 }
 
+.schema-tree button.is-selected {
+  border-color: rgba(126, 190, 255, 0.78);
+  background:
+    linear-gradient(90deg, rgba(91, 145, 205, 0.28), rgba(41, 49, 59, 0.88) 42%),
+    rgba(41, 49, 59, 0.88);
+  box-shadow:
+    inset 4px 0 0 rgba(126, 190, 255, 0.9),
+    0 0 0 1px rgba(126, 190, 255, 0.16);
+}
+
+.schema-tree button.is-selected strong {
+  color: #d8ecff;
+}
+
 .schema-tree-children {
   display: grid;
   gap: 5px;
@@ -894,6 +1028,53 @@ canvas {
   padding: 8px 10px;
 }
 
+.config-section input,
+.config-section textarea,
+.config-section-title input,
+.config-inline-add input {
+  scrollbar-color: rgba(126, 142, 162, 0.46) rgba(12, 16, 21, 0.28);
+  scrollbar-width: thin;
+}
+
+.config-section input::-webkit-scrollbar,
+.config-section textarea::-webkit-scrollbar,
+.config-section-title input::-webkit-scrollbar,
+.config-inline-add input::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.config-section input::-webkit-scrollbar-track,
+.config-section textarea::-webkit-scrollbar-track,
+.config-section-title input::-webkit-scrollbar-track,
+.config-inline-add input::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(12, 16, 21, 0.22);
+}
+
+.config-section input::-webkit-scrollbar-thumb,
+.config-section textarea::-webkit-scrollbar-thumb,
+.config-section-title input::-webkit-scrollbar-thumb,
+.config-inline-add input::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(18, 22, 28, 0.84);
+  border-radius: 999px;
+  background: rgba(126, 142, 162, 0.56);
+}
+
+.config-section input::-webkit-scrollbar-thumb:hover,
+.config-section textarea::-webkit-scrollbar-thumb:hover,
+.config-section-title input::-webkit-scrollbar-thumb:hover,
+.config-inline-add input::-webkit-scrollbar-thumb:hover {
+  background: rgba(154, 174, 196, 0.68);
+}
+
+.config-section input::-webkit-scrollbar-corner,
+.config-section textarea::-webkit-scrollbar-corner,
+.config-section-title input::-webkit-scrollbar-corner,
+.config-inline-add input::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 .config-section textarea {
   min-height: 76px;
   resize: vertical;
@@ -941,6 +1122,26 @@ canvas {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.schema-row input,
+.schema-row textarea,
+.schema-row select,
+.relation-row input,
+.relation-row textarea,
+.relation-row select {
+  text-align: center;
+}
+
+.schema-row select,
+.relation-row select {
+  text-align-last: center;
+}
+
+.schema-row textarea {
+  align-content: center;
+  resize: none;
+  scrollbar-gutter: stable;
 }
 
 .schema-row.is-highlighted {
@@ -994,6 +1195,15 @@ canvas {
   gap: 7px;
   color: rgba(217, 225, 237, 0.84);
   font-size: 13px;
+}
+
+.config-rule-card {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(126, 190, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(26, 32, 40, 0.66);
 }
 
 .config-check {

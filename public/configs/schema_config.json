@@ -411,7 +411,7 @@
       "tertiary_category": null,
       "storage_mode": "实体节点",
       "priority": "P0",
-      "definition": "断层、断裂、断裂带、区域断裂对象。",
+      "definition": "断层、断裂、断裂带、区域断裂对象；带有编号型断层统一实体名为“断层”，具体有几个编号的实体就都写入属性，不单列实体；带有特色名称的断裂等命名断裂保留原名。",
       "preferred_evidence": [
         "paragraph",
         "figure"

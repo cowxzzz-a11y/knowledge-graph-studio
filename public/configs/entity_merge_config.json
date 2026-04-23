@@ -39,5 +39,28 @@
       "support_type"
     ],
     "normalize_quote": true
-  }
+  },
+  "special_canonical_entities": [
+    {
+      "name": "numbered_fault_zone",
+      "enabled": true,
+      "schema_ids": [
+        "fault_zone"
+      ],
+      "canonical_name": "断层",
+      "code_attr": "fault_codes",
+      "code_pattern": "(?i)(?<![A-Za-z0-9])FP?\\d+[A-Za-z]?(?![A-Za-z0-9])",
+      "allowed_residue_tokens": [
+        "断裂带",
+        "断层",
+        "断裂",
+        "以及",
+        "及",
+        "和",
+        "与",
+        "号"
+      ],
+      "max_codes": 128
+    }
+  ]
 }

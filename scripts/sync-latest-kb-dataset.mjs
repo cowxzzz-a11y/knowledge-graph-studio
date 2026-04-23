@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join, resolve } from "node:path";
 
 const studioRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const serviceKbRoot = resolve(studioRoot, "..", "knowledge-graph-service", "data", "knowledge_bases");
+const serviceKbRoot = resolve(studioRoot, "..", "knowledge-graph-service", "data");
 const targetPath = resolve(studioRoot, "public", "datasets", "knowledge-base-current.json");
 
 function latestKnowledgeBaseDir(rootPath) {
